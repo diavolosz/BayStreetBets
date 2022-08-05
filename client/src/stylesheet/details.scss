@@ -1,0 +1,34 @@
+.description-block-1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100vw;
+  
+  .blockquote {
+    color: rgb(255, 255, 255);
+    width: 50%;
+    top: 50em;
+    margin: 17% 8%;
+    // margin-bottom: 150%;
+    font-family: 'Amiri';
+    font-size: 1.5em;
+    overflow: hidden;
+  }
+  
+  #img1 {
+    height: 20%;
+    width: 20%;
+    position: relative;
+    bottom: 10em;
+    overflow: hidden;
+  }
+  
+  #img2 {
+    height: 40%;
+    width: 40%;
+    position: relative;
+    z-index: -1;
+    right: 6em;
+    overflow: hidden;
+  }
+}
