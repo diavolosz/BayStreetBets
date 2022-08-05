@@ -1,0 +1,41 @@
+.info-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  header {
+    margin: 4rem 6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    h1 {
+      margin: 0;
+      color: white;
+      font-size: 160px;
+      font-style: italic;
+      font-weight: 600;
+      max-width: fit-content;
+    }
+  }
+
+  nav {
+    width: 60%;
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 15vh;
+
+    span {
+      color: white;
+      font-family: 'Amiri';
+      font-size: 40px;
+    }
+  }
+}
+
+.route-link {
+  text-decoration: none;
+  color: white;
+}
