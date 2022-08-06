@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 
 export default function Footer() {
   useEffect(() => {
-    Aos.init({duration: 200})
+    Aos.init({duration: 800})
   }, [])
   
   return (

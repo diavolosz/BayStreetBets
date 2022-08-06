@@ -10,8 +10,6 @@ function App() {
         <img src="img/background.jpg" className="background-image" />
         <NonLogged />
         <Details />
-        <Details />
-        <Details />
 
         <Footer />
       </div>

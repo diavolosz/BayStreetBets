@@ -1,34 +1,127 @@
-.description-block-1 {
+
+
+// styling for first description block 
+#description-block-1 {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100vw;
-  
-  .blockquote {
+
+  div {
+    display: flex;
+    flex-direction: column;
     color: rgb(255, 255, 255);
     width: 50%;
     top: 50em;
     margin: 17% 8%;
-    // margin-bottom: 150%;
     font-family: 'Amiri';
     font-size: 1.5em;
     overflow: hidden;
+
+    h2 {
+      margin-bottom: 45px;
+      font-size: 55px;
+    }
   }
-  
+
   #img1 {
-    height: 20%;
-    width: 20%;
+    width: 25%;
     position: relative;
-    bottom: 10em;
+    bottom: 8em;
     overflow: hidden;
   }
-  
+
   #img2 {
     height: 40%;
     width: 40%;
     position: relative;
     z-index: -1;
     right: 6em;
+    top: 2em;
     overflow: hidden;
+  }
+}
+
+
+// styling for content advertisement 
+#description-block-2 {
+  display: flex;
+  justify-content: center;
+  width: 80%;
+  margin: 22% auto;
+
+  #inner-container-3 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 30%;
+    position: relative;
+    bottom: 13em;
+    margin-right: 2em;
+
+    #img3 {
+      height: 400px;
+      width: 100%;
+      object-fit: cover;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #small-quote-3 {
+      width: 90%;
+      margin-top: 13px;
+      font-size: 25px;
+      color: white;
+      font-weight: 300;
+    }
+  }
+
+  #inner-container-4 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    margin-left: 3em;
+
+
+    #img4 {
+      height: 300px;
+      width: 100%;
+      object-fit: cover;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #small-quote-4 {
+      width: 90%;
+      margin-top: 13px;
+      font-size: 25px;
+      color: white;
+      font-weight: 300;
+    }
+  }
+}
+
+// styling of image display
+.awssld {
+  --content-background-color:none !important;
+  --organic-arrow-color: rgb(255, 255, 255) !important;;
+
+  margin: 17% 0;
+  top: -100px;
+}
+
+.awssld__bullets {
+  top: 650px;
+}
+
+.awssld__controls__arrow-left {
+}
+
+.item {
+
+  .block-3-img {
+    border: rgb(92, 92, 92) 5px solid;
+    width: 50vw;
   }
 }
