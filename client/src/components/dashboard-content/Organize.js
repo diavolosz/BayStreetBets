@@ -1,5 +1,6 @@
 import "../../stylesheet/Organize.scss"
 import { useForm } from "../../hooks/useForm";
+import OrganizeCalendar from "./organize-content/OrganizeCalendar";
 
 export default function Organize() {
 
@@ -71,7 +72,7 @@ export default function Organize() {
       <div id="calender-container">
         <img src="img/bear.png" className="bull-bear" />
         <div id="calender">
-          Calender
+          <OrganizeCalendar />
         </div>
         <img src="img/bull.png" className="bull-bear" />
       </div>
