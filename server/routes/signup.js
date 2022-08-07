@@ -16,7 +16,7 @@ module.exports = db => {
     const password = req.body["2"].value;
     const password_confirmation = req.body["3"].value;
 
-    // Validate values
+    // Set validation flag variables
     const isValidEmail = validateEmail(email) || { error: "Invalid email." };
     const isValidPassword = validatePassword(password) || {
       error: "Password must be at least 8 characters long.",
@@ -36,7 +36,8 @@ module.exports = db => {
       isValidPasswordConfirmation,
     ];
 
-    let validated = { error: null };
+    let validated = { error: null }; // No errors before running validations
+    // Run validations
     validations.forEach(validation => {
       if (validation !== true) {
         validated.error = validation.error;
@@ -44,11 +45,13 @@ module.exports = db => {
       }
     });
 
+    // Send JSON response with error property
     if (validated.error) {
-      return res.json({ ...validated, user: null });
+      return res.json({ ...validated });
     }
 
     const hashedPassword = bcrypt.hashSync(password, 10);
+
     // Insert new user into database
     db.query(
       `INSERT INTO users (email, username, password) VALUES ($1, $2, $3) RETURNING *`,
@@ -59,12 +62,14 @@ module.exports = db => {
           // const accessToken = jwt.sign(
           //   result.rows[0], process.env.ACCESS_TOKEN_SECRET
           //   );
+
+          // Send JSON response with newly registered user information
           return res.json({ user: result.rows[0].id });
         }
-        return res.json({ user: result });
+        return res.json({ error: "Operation failed." });
       })
       .catch(err => {
-        // Handle general errors and case where email and username unavailable
+        // Handle general errors and case where email or username unavailable
         const { constraint } = err;
 
         switch (constraint) {
