@@ -1,22 +1,26 @@
+import { useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
+import axios from "axios";
+
+import Alert from "./Alert";
 import { useForm } from "../hooks/useForm";
-import axios from 'axios';
 import "../stylesheet/LoginForm.scss";
 
 const LoginForm = () => {
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
   const [formValues, parsedFormData, handleInput, errors] = useForm([
     {
       name: "email",
       value: "",
       placeholder: "Email",
-      type: "email",
-      required: true,
+      type: "text",
     },
     {
       name: "password",
       placeholder: "Password",
       value: "",
       type: "password",
-      required: true,
     },
   ]);
 
@@ -40,17 +44,23 @@ const LoginForm = () => {
 
   const onSubmit = event => {
     event.preventDefault();
-    console.log(formValues);
-    axios.post(`/login`, {
-      ...formValues
-    })
-    .then(response => {
-      localStorage.setItem("user", response.data.user);
-    });
+    axios
+      .post(`/login`, {
+        ...formValues,
+      })
+      .then(response => {
+        if (!response.data.user) {
+          setError("Invalid credentials.");
+          return;
+        }
+        localStorage.setItem("user", response.data.user);
+        navigate("/dashboard-main");
+      });
   };
 
   return (
     <form className="form" onSubmit={onSubmit}>
+      {error && <Alert message={error} onClose={setError} />}
       <p className="form-title">Log in</p>
       {inputFields}
       <input className="form-submit" type="submit" value="Log In" />
