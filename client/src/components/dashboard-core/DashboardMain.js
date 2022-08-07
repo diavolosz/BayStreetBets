@@ -5,6 +5,7 @@ import { faClipboard, faRightFromBracket, faUser } from '@fortawesome/free-solid
 
 import EventStatistic from '../dashboard-content/EventStatistic'
 import TransactionHistory from '../dashboard-content/TransactionHistory'
+import Organize from '../dashboard-content/Organize'
 
 export default function Dashboard() {
 
@@ -115,9 +116,9 @@ export default function Dashboard() {
       </nav>
 
       <article id="portfolio-side-article">
-        <EventStatistic />
+        {/* <EventStatistic /> */}
         {/* <TransactionHistory /> */}
-      
+        <Organize />
       </article>
     </div>
   );
