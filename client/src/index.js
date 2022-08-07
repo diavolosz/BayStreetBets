@@ -6,10 +6,10 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, Route, Routes, Switch } from 'react-router-dom'
 
 // route pages
-import LegalStuff from './components/footer-content/legal-stuff';
-import PrivatePolicy from './components/footer-content/private-policy';
-import AboutUs from './components/footer-content/about-us';
-
+import LegalStuff from './components/footer-content/LegalStuff';
+import PrivatePolicy from './components/footer-content/PrivatePolicy';
+import AboutUs from './components/footer-content/AboutUs';
+import Dashboard from './components/dashboard/DashboardMain';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -23,6 +23,8 @@ root.render(
       <Route path="/legal-stuff" element={<LegalStuff />}></Route>
       <Route path="/private-policy" element={<PrivatePolicy />}></Route>
       <Route path="/about-us" element={<AboutUs />}></Route>
+      <Route path="/dashboard" element={<Dashboard />}></Route>
+
     </Routes>
   </Router>
 );

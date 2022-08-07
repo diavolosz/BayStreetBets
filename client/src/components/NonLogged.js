@@ -1,4 +1,4 @@
-import '../stylesheet/non-logged.scss';
+import '../stylesheet/NonLogged.scss';
 import { Link } from 'react-router-dom'
 
 export default function nonLogged() {
@@ -15,7 +15,7 @@ export default function nonLogged() {
         <span>SIGN UP</span>
         <span>|</span>
         <span>
-          <Link to="/about-us" className="route-link">ABOUT</Link>
+          <Link to="/dashboard" className="route-link">DASHBOARD</Link>
         </span>
       </nav>
     </div>

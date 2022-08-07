@@ -1,7 +1,7 @@
 import './stylesheet/App.scss';
-import NonLogged from './components/non-logged'
-import Details from './components/details';
-import Footer from './components/footer';
+import NonLogged from './components/NonLogged'
+import Details from './components/Details';
+import Footer from './components/Footer';
 
 function App() {
   return (

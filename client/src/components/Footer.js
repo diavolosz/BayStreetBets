@@ -1,5 +1,5 @@
 
-import '../stylesheet/footer.scss';
+import '../stylesheet/Footer.scss';
 import Aos from 'aos';
 import "aos/dist/aos.css"
 import { useEffect } from 'react';
@@ -11,7 +11,7 @@ export default function Footer() {
   }, [])
   
   return (
-    <footer data-aos="fade">
+    <footer>
       <div id="footer-title">BAYSTREETBETS</div>
       <div id="footer-copyright">Copyright &copy; 2022 BayStreetsBets Inc.</div>
       <div id="footer-links">

@@ -1,0 +1,185 @@
+#portfolio-side-nav {
+  height: 100vh;
+  width: 18%;
+  background-color: #242424;
+  color: white;
+  font-family: "Amiri";
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+
+  #company-name {
+    margin: 0;
+    width: 100%;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    padding: 1.8rem 0px;
+    font-size: 2.2rem;
+    font-weight: 600;
+  }
+
+  #top-nav {
+    height: 20%;
+    margin: 1rem 0 1rem 0;
+    width: 100%;
+    font-size: 1.6em;
+
+    ul {
+      height: 100%;
+      width: 100%;
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      margin: 0 13%;
+
+      li {
+        margin-top: 0.4em;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        span {
+          margin-left: 1rem;
+        }
+      }
+    }
+  }
+
+  #user-details {
+    height: 15%;
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+
+    .user-details-block {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+
+      .user-details-section {
+        font-weight: 600;
+        color: #b1b1b1;
+      }
+    }
+  }
+
+  #portfolio {
+    height: 37%;
+    width: 100%;
+    padding: 15px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #3b3b3b;
+
+    #portfolio-header {
+      width: 90%;
+      margin: 0 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      span {
+        font-weight: bold;
+        font-size: 24px;
+      }
+
+      button {
+        font-size: 12px;
+        height: 20px;
+        padding: 0 7px;
+        border-radius: 12px;
+        background-color: #161616;
+        color: white;
+        border: grey 2px solid;
+
+        &:hover {
+          background-color: rgb(58, 58, 58);
+          cursor: pointer;
+        }
+      }
+    }
+
+
+    #portfolio-table-category {
+      width: 100%;
+      margin: 0 auto;
+      padding-top: 5px;
+      border-bottom: 1px solid rgb(255, 255, 255);
+
+      thead {
+        tr {
+          height: 22px;
+          width: 90%;
+          margin: 0 auto;
+          display: flex;
+          justify-content: space-evenly;
+
+          th {
+            width: 80px;
+            font-size: 15px;
+          }
+        }
+      }
+    }
+
+    article {
+      margin-top: 8px;
+      width: 100%;
+      overflow-y: scroll;
+
+      #portfolio-table {
+        height: 50px;
+        width: 100%;
+        text-align: center;
+
+        tr {
+          border-bottom: 1px solid rgb(255, 255, 255);
+          height: 25px;
+          width: 90%;
+          margin: 5px auto;
+          display: flex;
+          justify-content: space-evenly;
+
+          td {
+            width: 80px;
+          }
+        }
+      }
+    }
+  }
+
+  article::-webkit-scrollbar {
+    display: none;
+  }
+
+  #bottom-nav {
+    height: 12%;
+    width: 100%;
+
+
+
+    ul {
+      height: 100%;
+      width: 60%;
+      margin: auto;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-evenly;
+      font-size: 22px;
+
+      li {
+        width: 100%;
+        
+        span {
+          margin-left: 1rem;
+        }
+      }
+    }
+  }
+}
