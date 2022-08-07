@@ -26,7 +26,7 @@ root.render(
       <Route path="/dashboard-main" element={<DashboardMain />}></Route>
 
 
-      <Route exact path="/dashboard" element={<Dashboard />}></Route>
+
     </Routes>
   </Router>
 );
