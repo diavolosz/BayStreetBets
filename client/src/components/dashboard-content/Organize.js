@@ -13,7 +13,7 @@ export default function Organize() {
     },
     {
       name: "description",
-      placeholder: "Description",
+      placeholder: "Short Description",
       value: "",
       type: "text",
       required: true,
@@ -76,8 +76,8 @@ export default function Organize() {
         <img src="img/bull.png" className="bull-bear" />
       </div>
       <form id="organize-input-form">
-          {inputFields}
-        <input className="form-submit" type="submit" value="CONFIRM" />
+        {inputFields}
+        <input id="organize-submit" type="submit" value="CONFIRM" />
       </form>
     </div>
   )

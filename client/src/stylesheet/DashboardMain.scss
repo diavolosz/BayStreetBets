@@ -210,16 +210,18 @@
 
     h1 {
       margin: 1rem 0;
+      color: #242424;
     }
 
     #calender-container {
       display: flex;
       justify-content: space-evenly;
+      height: 30%;
       width: 100%;
       padding: 0 2rem;
 
       img {
-        width: 22%
+        width: 25%;
       }
 
       #calender {
@@ -229,7 +231,7 @@
     }
 
     #organize-input-form {
-      height: 50%;
+      height: 55%;
       width: 70%;
       margin: auto;
       border-radius: 24px;
@@ -243,14 +245,28 @@
       justify-content: space-evenly;
 
       input {
-        
-        width: 70%;
-        border-radius: 17px;
+        width: 80%;
+        height: 3rem;
         border: none;
+        border-radius: 12px;
         box-shadow: 0px 5px 10px 0px rgba(100, 100, 100, 0.5);
-        background-color: rgb(255, 255, 255);
-        padding: 1rem;
+        padding: 0 2rem;
+        font-size: 17px;
+        font-family: 'Amiri';
+        font-weight: 600;
+
       }
+
+      #organize-submit {
+        background-color: #242424;
+        color: white;
+
+        &:hover {
+          background-color: grey;
+          cursor: pointer;
+        }
+      }
+
     }
 
 
