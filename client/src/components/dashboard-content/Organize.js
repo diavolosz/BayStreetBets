@@ -1,4 +1,4 @@
-import "../../stylesheet/DashboardMain.scss"
+import "../../stylesheet/Organize.scss"
 import { useForm } from "../../hooks/useForm";
 
 export default function Organize() {
