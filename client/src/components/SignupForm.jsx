@@ -1,13 +1,8 @@
-import React, { useEffect, useState } from "react";
-import axios from 'axios';
-import { useForm } from '../hooks/useForm';
+import { useForm } from "../hooks/useForm";
+
+import "../stylesheet/SignupForm.scss";
 
 const SignupForm = () => {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-  }, [user]);
-
   const [formValues, parsedFormData, handleInput, errors] = useForm([
     {
       name: "email",
@@ -17,15 +12,29 @@ const SignupForm = () => {
       required: true,
     },
     {
+      name: "username",
+      value: "",
+      placeholder: "Username",
+      type: "text",
+      required: true,
+    },
+    {
       name: "password",
       placeholder: "Password",
       value: "",
       type: "password",
-      required: true
-    }
+      required: true,
+    },
+    {
+      name: "password_confirmation",
+      placeholder: "Re-enter Password",
+      value: "",
+      type: "password",
+      required: true,
+    },
   ]);
 
-  const inputFields = formValues.map((formInput) => {
+  const inputFields = formValues.map(formInput => {
     const { name, placeholder, type, required, value } = formInput;
 
     return (
@@ -43,24 +52,26 @@ const SignupForm = () => {
     );
   });
 
-  const onSubmit = (event) => {
+  const onSubmit = event => {
     event.preventDefault();
-    axios.post(`/login`, {
-      ...formValues
-    })
-    .then(response => {
-      setUser(response.data.user)
-      localStorage.setItem("user", response.data.user);
-    });
+    console.log(formValues);
+    // axios
+    //   .post(`/login`, {
+    //     ...formValues,
+    //   })
+    //   .then(response => {
+    //     setUser(response.data.user);
+    //     localStorage.setItem("user", response.data.user);
+    //   });
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      { inputFields }
-      <input type="submit" value="Log In" />
-      <div style={{color: 'white'}}>{user}</div>
+    <form className="form" onSubmit={onSubmit}>
+      <p className="form-title">Sign up</p>
+      {inputFields}
+      <input className="form-submit" type="submit" value="Sign Up" />
     </form>
-  )
+  );
 };
 
 export default SignupForm;
