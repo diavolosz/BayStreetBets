@@ -1,0 +1,26 @@
+.alert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgb(215, 139, 139);
+  border: 2px solid rgb(143, 46, 46);
+  border-radius: 7px;
+  padding: 0.7em 1.2em;
+  margin-top: 1em;
+  width: 70%;
+  color: rgb(143, 46, 46);
+  font-family: Arial, Helvetica, sans-serif;
+
+  p {
+    color: rgb(143, 46, 46);
+    text-align: center;
+  }
+
+  span {
+    font-size: 1.5em;
+  }
+
+  span:hover {
+    cursor: pointer;
+  }
+}
