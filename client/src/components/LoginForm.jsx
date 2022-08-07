@@ -1,4 +1,5 @@
 import { useForm } from "../hooks/useForm";
+import axios from 'axios';
 import "../stylesheet/LoginForm.scss";
 
 const LoginForm = () => {
@@ -40,13 +41,12 @@ const LoginForm = () => {
   const onSubmit = event => {
     event.preventDefault();
     console.log(formValues);
-    // axios.post(`/login`, {
-    //   ...formValues
-    // })
-    // .then(response => {
-    //   setUser(response.data.user)
-    //   localStorage.setItem("user", response.data.user);
-    // });
+    axios.post(`/login`, {
+      ...formValues
+    })
+    .then(response => {
+      localStorage.setItem("user", response.data.user);
+    });
   };
 
   return (
