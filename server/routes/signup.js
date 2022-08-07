@@ -1,4 +1,6 @@
 const router = require("express").Router();
+const bcrypt = require("bcryptjs");
+
 const {
   validatePassword,
   validatePasswordConfirmation,
@@ -19,8 +21,8 @@ module.exports = db => {
     const isValidPassword = validatePassword(password) || {
       error: "Password must be at least 8 characters long.",
     };
-    const isValidUsername = validateUsername(username) || {
-      error: "Username can only contain alphanumeric characters.",
+    const isValidUsername = validateUsername(username) === true || {
+      error: validateUsername(username),
     };
     const isValidPasswordConfirmation = validatePasswordConfirmation(
       password,
@@ -34,22 +36,23 @@ module.exports = db => {
       isValidPasswordConfirmation,
     ];
 
-    let validated = true;
+    let validated = { error: null };
     validations.forEach(validation => {
       if (validation !== true) {
-        validated = validation.error;
+        validated.error = validation.error;
         return;
       }
     });
 
-    if (validated !== true) {
-      returnres.send(validated);
+    if (validated.error) {
+      return res.json({ ...validated, user: null });
     }
 
+    const hashedPassword = bcrypt.hashSync(password, 10);
     // Insert new user into database
     db.query(
       `INSERT INTO users (email, username, password) VALUES ($1, $2, $3) RETURNING *`,
-      [email, username, password]
+      [email, username, hashedPassword]
     )
       .then(result => {
         if (result.rows.length) {
@@ -66,11 +69,11 @@ module.exports = db => {
 
         switch (constraint) {
           case "users_email_key":
-            return res.send("Email unavailable.");
+            return res.json({ error: "Email unavailable." });
           case "users_username_key":
-            return res.send("Username unavailable.");
+            return res.json({ error: "Username unavailable." });
           default:
-            return res.send(err);
+            return res.json({ error: err });
         }
       });
   });

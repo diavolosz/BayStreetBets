@@ -15,12 +15,14 @@ const LoginForm = () => {
       value: "",
       placeholder: "Email",
       type: "text",
+      required: true,
     },
     {
       name: "password",
       placeholder: "Password",
       value: "",
       type: "password",
+      required: true,
     },
   ]);
 

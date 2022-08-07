@@ -1,15 +1,21 @@
-import { useForm } from "../hooks/useForm";
-import axios from 'axios';
+import { useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 
+import axios from "axios";
+import { useForm } from "../hooks/useForm";
+
+import Alert from "./Alert";
 import "../stylesheet/SignupForm.scss";
 
 const SignupForm = () => {
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
   const [formValues, parsedFormData, handleInput, errors] = useForm([
     {
       name: "email",
       value: "",
       placeholder: "Email",
-      type: "email",
+      type: "text",
       required: true,
     },
     {
@@ -55,18 +61,23 @@ const SignupForm = () => {
 
   const onSubmit = event => {
     event.preventDefault();
-    console.log(formValues);
     axios
       .post(`/signup`, {
         ...formValues,
       })
       .then(response => {
+        if (response.data.error) {
+          setError(response.data.error);
+          return;
+        }
         localStorage.setItem("user", response.data.user);
+        navigate("/dashboard-main");
       });
   };
 
   return (
     <form className="form" onSubmit={onSubmit}>
+      {error && <Alert message={error} onClose={setError} />}
       <p className="form-title">Sign up</p>
       {inputFields}
       <input className="form-submit" type="submit" value="Sign Up" />
