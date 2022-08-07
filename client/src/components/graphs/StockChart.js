@@ -82,7 +82,7 @@ export default function StockChart() {
   const [userData, setUserData] = useState({
     labels: oneMonth.map((month) => month.label),
     datasets: [{
-      label: "Twitter (TWTR)",
+      label: "Twitter (TWTR) $USD",
       data: oneMonth.map((month) => month.close)
     }]
   })
@@ -94,13 +94,12 @@ export default function StockChart() {
     <Line data={userData} options={{
       maintainAspectRatio: false,
       backgroundColor: 'rgb(0, 0, 255)',
-      borderColor: 'rgb(255, 0, 0)',
-      color: 'rgb(0, 255, 0)',
+      borderColor: 'rgb(0, 0, 0)',
+      color: 'rgb(0, 0, 0)',
       borderWidth: 1,
       pointStyle: 'rectRot',
       pointRadius: 5,
-      pointBorderColor: 'rgb(0, 0, 0)',
-      tension: 0.3
+      tension: 0.3,
 
       
 

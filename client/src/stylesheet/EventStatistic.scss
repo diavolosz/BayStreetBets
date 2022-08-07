@@ -10,7 +10,7 @@
     background-color: rgb(255, 255, 255);
 
     display: flex;
-    justify-content: space-around;
+
   }
 
   #portfolio-change-container {
@@ -40,23 +40,41 @@
 }
 
 .stock-chart {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
+
+
+  padding: 2em;
 }
 
 .pie-chart {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  margin: auto;
+  justify-content: center;
 
-  width: 70%;
-  height: 70%;
+
+  width: 100%;
+  height: 100%;
+
+
+  padding: 2em;
+}
+
+.asset-title {
+  display: flex;
+  justify-content: center;
+
+  text-decoration: underline;
+  font-weight: 900;
 }
 
 .portfolio-chart {
   width: 100%;
   height: 100%;
+
+  padding: 2em;
 }
 
 

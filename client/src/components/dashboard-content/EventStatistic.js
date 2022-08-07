@@ -10,6 +10,9 @@ export default function EventStatistic() {
 
       <div id="search-box">
         <div className='stock-chart'>
+          <div className='search'>
+            seach box here
+          </div>
           <StockChart />
         </div>
         <div className='stock-details-container'>
@@ -28,7 +31,7 @@ export default function EventStatistic() {
 
         <div id="protfolio-change-chart">
           <div className='pie-chart'>
-            <h1>Stock Breakdown</h1>
+            <div className='asset-title'>Stock Breakdown</div>
             <AssetChart />
           </div>
         </div>

@@ -34,7 +34,9 @@ export default function AssetChart() {
   })
 
   return (
-    <Pie data={userData} options={{maintainAspectRatio: false}}/>
+    <Pie data={userData} options={{maintainAspectRatio: false,
+
+    }}/>
   )
 
 }
