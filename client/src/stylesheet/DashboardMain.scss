@@ -7,7 +7,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: absolute;
 
   #company-name {
     margin: 0;
@@ -182,4 +181,28 @@
       }
     }
   }
+}
+
+#page-container {
+  display: flex;
+  flex-direction: row;
+}
+
+
+#portfolio-side-article {
+  height: 100vh;
+  width: 82%;
+  background-color: #ffffff;
+  display: flex;
+
+
+
+
+
+
+
+
+
+  
+
 }

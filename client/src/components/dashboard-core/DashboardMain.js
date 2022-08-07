@@ -3,6 +3,9 @@ import '../../stylesheet/DashboardMain.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClipboard, faRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons'
 
+import EventStatistic from '../dashboard-content/EventStatistic'
+import TransactionHistory from '../dashboard-content/TransactionHistory'
+
 export default function Dashboard() {
 
   const dataSet = [
@@ -34,7 +37,7 @@ export default function Dashboard() {
   })
 
   return (
-    <div>
+    <div id="page-container">
       <nav id="portfolio-side-nav">
         <div id="company-name">
           <span>BayStreetBets</span>
@@ -112,18 +115,12 @@ export default function Dashboard() {
       </nav>
 
       <article id="portfolio-side-article">
-
-
-        <div id="search-box">
-
-        </div>
-        <div id="protfolio-change-graph">
-
-        </div>
-        <div id="protfolio-change-chart">
-
-        </div>
+        <EventStatistic />
+        {/* <TransactionHistory /> */}
+      
       </article>
     </div>
   );
 }
+
+
