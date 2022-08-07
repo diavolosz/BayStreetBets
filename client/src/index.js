@@ -9,6 +9,8 @@ import { BrowserRouter as Router, Route, Routes, Switch } from 'react-router-dom
 import LegalStuff from './components/footer-content/legal-stuff';
 import PrivatePolicy from './components/footer-content/private-policy';
 import AboutUs from './components/footer-content/about-us';
+import Login from './components/Login';
+import Signup from './components/Signup';
 
 
 
@@ -23,6 +25,8 @@ root.render(
       <Route path="/legal-stuff" element={<LegalStuff />}></Route>
       <Route path="/private-policy" element={<PrivatePolicy />}></Route>
       <Route path="/about-us" element={<AboutUs />}></Route>
+      <Route path="/login" element={<Login />}></Route>
+      <Route path="/signup" element={<Signup />}></Route>
     </Routes>
   </Router>
 );
