@@ -10,6 +10,9 @@ import LegalStuff from './components/footer-content/LegalStuff';
 import PrivatePolicy from './components/footer-content/PrivatePolicy';
 import AboutUs from './components/footer-content/AboutUs';
 import DashboardMain from './components/dashboard-core/DashboardMain';
+import Login from './components/Login';
+import Signup from './components/Signup';
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -24,9 +27,8 @@ root.render(
       <Route path="/private-policy" element={<PrivatePolicy />}></Route>
       <Route path="/about-us" element={<AboutUs />}></Route>
       <Route path="/dashboard-main" element={<DashboardMain />}></Route>
-
-
-
+      <Route path="/login" element={<Login />}></Route>
+      <Route path="/signup" element={<Signup />}></Route>
     </Routes>
   </Router>
 );

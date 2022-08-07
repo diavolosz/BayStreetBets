@@ -10,9 +10,13 @@ export default function nonLogged() {
       </header>
 
       <nav>
-        <span>LOGIN</span>
+        <span>
+        <Link to="/login" className="route-link">LOGIN</Link>
+        </span>
         <span>|</span>
-        <span>SIGN UP</span>
+        <span>
+        <Link to="/signup" className="route-link">SIGNUP</Link>
+        </span>
         <span>|</span>
         <span>
           <Link to="/dashboard" className="route-link">DASHBOARD</Link>
