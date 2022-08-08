@@ -67,9 +67,9 @@ const eventInfoDisplay = res.map((eventInfo) => {
     <div className="event-item">
       <div className="general-info-box">
         <span><strong>Creator: </strong>{creator}</span>
-        <span><strong>Participant: </strong>{participant}</span>
-        <span><strong>Duration: </strong>{duration}</span>
-        <span><strong>Starting Amount: </strong>{startingAmount}</span>
+        <span><strong>Max Participant: </strong>{participant}</span>
+        <span><strong>Duration: </strong>{duration} Days</span>
+        <span><strong>Starting Amount: $</strong>{startingAmount}</span>
       </div>
       <div className="description-info-box">
         <span><strong>Event Name: </strong>{eventName}</span>
