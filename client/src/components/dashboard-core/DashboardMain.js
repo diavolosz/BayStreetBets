@@ -7,6 +7,7 @@ import EventStatistic from '../dashboard-content/EventStatistic'
 import TransactionHistory from '../dashboard-content/TransactionHistory'
 import ProfileEdit from '../dashboard-content/Profile'
 import Organize from '../dashboard-content/Organize'
+import Browse from '../dashboard-content/Browse'
 
 export default function Dashboard() {
 
@@ -117,11 +118,10 @@ export default function Dashboard() {
       </nav>
 
       <article id="portfolio-side-article">
-        <EventStatistic />
         {/* <TransactionHistory /> */}
         {/* <ProfileEdit /> */}
-
         {/* {<Organize />} */}
+        <Browse />
       </article>
     </div>
   );

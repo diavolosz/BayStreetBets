@@ -19,7 +19,7 @@ export default function nonLogged() {
         </span>
         <span>|</span>
         <span>
-          <Link to="/dashboard" className="route-link">DASHBOARD</Link>
+          <Link to="/dashboard-main" className="route-link">DASHBOARD</Link>
         </span>
       </nav>
     </div>
