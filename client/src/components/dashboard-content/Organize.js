@@ -2,7 +2,7 @@ import "../../stylesheet/Organize.scss"
 import { useForm } from "../../hooks/useForm";
 import OrganizeCalendar from "./organize-content/OrganizeCalendar";
 
-export default function Organize() {
+export default function Organize(prop) {
 
   const [formValues, parsedFormData, handleInput, errors] = useForm([
     {
@@ -76,7 +76,7 @@ export default function Organize() {
         </div>
         <img src="img/bull.png" className="bull-bear" />
       </div>
-      <form id="organize-input-form">
+      <form id="organize-input-form" onSubmit={onSubmit}>
         {inputFields}
         <input id="organize-submit" type="submit" value="CONFIRM" />
       </form>
