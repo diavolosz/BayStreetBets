@@ -61,10 +61,10 @@ const res = [
   },
 ]
 
-const eventInfoDisplay = res.map((eventInfo) => {
+const eventInfoDisplay = res.map((eventInfo, index) => {
   const { creator, participant, eventName, description, duration, startingAmount } = eventInfo
   return (
-    <div className="event-item">
+    <div className="event-item" id={index}>
       <div className="general-info-box">
         <span><strong>Creator: </strong>{creator}</span>
         <span><strong>Max Participant: </strong>{participant}</span>
