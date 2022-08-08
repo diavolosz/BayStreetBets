@@ -100,6 +100,18 @@ export default function StockChart() {
       pointStyle: 'rectRot',
       pointRadius: 5,
       tension: 0.3,
+      plugins: {
+        legend: {
+          labels: {
+            boxWidth: 0,
+            font: {
+              size: 17
+            }
+          }
+        }
+      },
+
+      
 
       
 

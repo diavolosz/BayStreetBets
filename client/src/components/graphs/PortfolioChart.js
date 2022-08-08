@@ -52,7 +52,7 @@ export default function PortfolioChart() {
   const [userData, setUserData] = useState({
     labels: portfolio.map((item) => item.date),
     datasets: [{
-      label: "User Portfolio Change",
+      label: "User Portfolio Change (Total Equity Change $)",
       data: portfolio.map((item) => item.totalEquity)
     }]
   })
@@ -70,6 +70,16 @@ let delayed;
       pointStyle: 'rectRot',
       pointRadius: 5,
       tension: 0.3,
+      plugins: {
+        legend: {
+          labels: {
+            boxWidth: 0,
+            font: {
+              size: 17
+            }
+          }
+        }
+      },
 
 
       animation: {

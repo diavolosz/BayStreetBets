@@ -24,82 +24,64 @@ export default function StockDetails() {
   return (
     <div className='stock-details'>
       <div className='info-block'>
-        <ul>
-          <li>Symbol</li>
-          <li>{quote[0].symbol}</li>
-        </ul>
+        <h5>Symbol</h5>
+        <p>{quote[0].symbol}</p>
       </div>
 
       <div className='info-block'>
-        <ul>
-          <li>Bid Price</li>
-          <li>{quote[0].bidPrice}</li>
-        </ul>
+        <h5>Symbol</h5>
+        <p>{quote[0].symbol}</p>
       </div>
 
       <div className='info-block'>
-        <ul>
-          <li>Big Size</li>
-          <li>{quote[0].bidSize}</li>
-        </ul>
+        <h5>Symbol</h5>
+        <p>{quote[0].symbol}</p>
       </div>
 
       <div className='info-block'>
-        <ul>
-          <li>Ask Price</li>
-          <li>{quote[0].askPrice}</li>
-        </ul>
+        <h5>Symbol</h5>
+        <p>{quote[0].symbol}</p>
       </div>
 
       <div className='info-block'>
-        <ul>
-          <li>Ask Size</li>
-          <li>{quote[0].askSize}</li>
-        </ul>
+        <h5>Symbol</h5>
+        <p>{quote[0].symbol}</p>
       </div>
 
       <div className='info-block'>
-        <ul>
-          <li>Ask Size</li>
-          <li>{quote[0].askSize}</li>
-        </ul>
+        <h5>Symbol</h5>
+        <p>{quote[0].symbol}</p>
       </div>
 
       <div className='info-block'>
-        <ul>
-          <li>Ask Size</li>
-          <li>{quote[0].askSize}</li>
-        </ul>
+        <h5>Symbol</h5>
+        <p>{quote[0].symbol}</p>
       </div>
 
       <div className='info-block'>
-        <ul>
-          <li>Ask Size</li>
-          <li>{quote[0].askSize}</li>
-        </ul>
+        <h5>Symbol</h5>
+        <p>{quote[0].symbol}</p>
       </div>
 
       <div className='info-block'>
-        <ul>
-          <li>Ask Size</li>
-          <li>{quote[0].askSize}</li>
-        </ul>
+        <h5>Symbol</h5>
+        <p>{quote[0].symbol}</p>
       </div>
 
       <div className='info-block'>
-        <ul>
-          <li>Ask Size</li>
-          <li>{quote[0].askSize}</li>
-        </ul>
+        <h5>Symbol</h5>
+        <p>{quote[0].symbol}</p>
       </div>
 
       <div className='info-block'>
-        <ul>
-          <li>Ask Size</li>
-          <li>{quote[0].askSize}</li>
-        </ul>
+        <h5>Symbol</h5>
+        <p>{quote[0].symbol}</p>
       </div>
 
+      <div className='info-block'>
+        <h5>Symbol</h5>
+        <p>{quote[0].symbol}</p>
+      </div>
 
     </div>
   )

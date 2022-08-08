@@ -16,6 +16,9 @@ export default function EventStatistic() {
           <StockChart />
         </div>
         <div className='stock-details-container'>
+          <div className='detail-title'>
+            Core Info and Indicators
+          </div>
           <StockDetails />
         </div>
 
@@ -31,7 +34,7 @@ export default function EventStatistic() {
 
         <div id="protfolio-change-chart">
           <div className='pie-chart'>
-            <div className='asset-title'>Stock Breakdown</div>
+            <div className='asset-title'>Total Asset Breakdown</div>
             <AssetChart />
           </div>
         </div>
