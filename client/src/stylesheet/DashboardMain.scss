@@ -39,6 +39,10 @@
         justify-content: flex-start;
         align-items: center;
 
+        &:hover {
+          cursor: pointer;
+        }
+
         span {
           margin-left: 1rem;
         }
@@ -174,7 +178,10 @@
 
       li {
         width: 100%;
-
+        
+        &:hover {
+          cursor: pointer;
+        }
         span {
           margin-left: 1rem;
         }

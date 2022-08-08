@@ -2,11 +2,13 @@
 import '../../stylesheet/DashboardMain.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClipboard, faRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons'
+import { useState } from 'react'
 
 import EventStatistic from '../dashboard-content/EventStatistic'
 import TransactionHistory from '../dashboard-content/TransactionHistory'
 import ProfileEdit from '../dashboard-content/Profile'
 import Organize from '../dashboard-content/Organize'
+import Browse from '../dashboard-content/Browse'
 
 export default function Dashboard() {
 
@@ -38,6 +40,8 @@ export default function Dashboard() {
     )
   })
 
+  const [component, setComponent] = useState("EventStatistic")
+
   return (
     <div id="page-container">
       <nav id="portfolio-side-nav">
@@ -47,15 +51,15 @@ export default function Dashboard() {
 
         <div id="top-nav">
           <ul>
-            <li>
+            <li onClick={() => setComponent("EventStatistic")}>
               <FontAwesomeIcon icon={faClipboard} />
               <span>Dashboard</span>
             </li>
-            <li>
+            <li onClick={() => setComponent("Browse")}>
               <FontAwesomeIcon icon={faClipboard} />
               <span>Browse</span>
             </li>
-            <li>
+            <li onClick={() => setComponent("Organize")}>
               <FontAwesomeIcon icon={faClipboard} />
               <span>Organize Event</span>
             </li>
@@ -80,7 +84,7 @@ export default function Dashboard() {
         <div id="portfolio">
           <header id="portfolio-header">
             <span>PORTFOLIO</span>
-            <button>Transaction</button>
+            <button onClick={() => setComponent("TransactionHistory")}>Transaction</button>
           </header>
 
           <table id="portfolio-table-category">
@@ -106,22 +110,22 @@ export default function Dashboard() {
           <ul>
             <li>
               <FontAwesomeIcon icon={faUser} />
-              <span>Profile</span>
+              <span onClick={() => setComponent("ProfileEdit")}>Profile</span>
             </li>
             <li>
               <FontAwesomeIcon icon={faRightFromBracket} />
-              <span>Log Out</span>
+              <span onClick={() => console.log("logout")}>Log Out</span>
             </li>
           </ul>
         </div>
       </nav>
 
       <article id="portfolio-side-article">
-        <EventStatistic />
-        {/* <TransactionHistory /> */}
-        {/* <ProfileEdit /> */}
-
-        {/* {<Organize />} */}
+        {component === "EventStatistic" && <EventStatistic />}
+        {component === "TransactionHistory" && <TransactionHistory />}
+        {component === "ProfileEdit" && <ProfileEdit />}
+        {component === "Organize" && <Organize />}
+        {component === "Browse" && <Browse />}
       </article>
     </div>
   );
