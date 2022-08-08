@@ -3,6 +3,7 @@ import '../../stylesheet/DashboardMain.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClipboard, faRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
+import { useNavigate } from 'react-router'
 
 import EventStatistic from '../dashboard-content/EventStatistic'
 import TransactionHistory from '../dashboard-content/TransactionHistory'
@@ -11,6 +12,7 @@ import Organize from '../dashboard-content/Organize'
 import Browse from '../dashboard-content/Browse'
 
 export default function Dashboard() {
+  const navigate = useNavigate();
 
   const dataSet = [
     { symbol: "APPL", price: 166.13, share: 50 },
@@ -40,7 +42,13 @@ export default function Dashboard() {
     )
   })
 
-  const [component, setComponent] = useState("EventStatistic")
+  const [component, setComponent] = useState("EventStatistic");
+
+  const logout = () => {
+    localStorage.clear();
+    navigate('/');
+
+  };
 
   return (
     <div id="page-container">
@@ -114,7 +122,7 @@ export default function Dashboard() {
             </li>
             <li>
               <FontAwesomeIcon icon={faRightFromBracket} />
-              <span onClick={() => console.log("logout")}>Log Out</span>
+              <span onClick={logout}>Log Out</span>
             </li>
           </ul>
         </div>
