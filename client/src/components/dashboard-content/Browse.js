@@ -88,7 +88,7 @@ export default function Browse() {
           <span>MY EVENT</span>
         </div>
         <form id="search-box-search-bar">
-          <input type="text" placeholder="Search..." name="search" />
+          <input type="text" placeholder="Search Event..." name="search" />
           <button type='submit'><FontAwesomeIcon icon={faMagnifyingGlass} /></button>
         </form>
       </div>
