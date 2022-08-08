@@ -9,6 +9,9 @@ const db = require('./configs/db.config');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const dashboardRouter = require('./routes/dashboard');
+const loginRouter = require('./routes/login');
+const signupRouter = require('./routes/signup');
+
 
 const app = express();
 
@@ -20,6 +23,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/dashboard', dashboardRouter(db))
+app.use('/dashboard', dashboardRouter(db));
+app.use('/login', loginRouter(db));
+app.use('/signup', signupRouter(db));
 
 module.exports = app;
