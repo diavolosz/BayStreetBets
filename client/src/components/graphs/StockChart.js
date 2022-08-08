@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Line } from 'react-chartjs-2'
-import {Chart as ChartJS} from 'chart.js/auto'
+import { Chart as ChartJS } from 'chart.js/auto'
 
 
 let quote = [{
@@ -41,20 +41,70 @@ let oneMonth = [{ "close": 38.21, "high": 38.45, "low": 37.7374, "open": 38.21, 
 { "close": 41, "high": 41.39, "low": 40.89, "open": 41, "priceDate": "2022-08-03", "symbol": "TWTR", "volume": 9348811, "id": "HISTORICAL_PRICES", "key": "TWTR", "subkey": "", "date": "2022-08-03", "updated": 1659574835000, "changeOverTime": 0.07301753467678616, "marketChangeOverTime": 0.07301753467678616, "uOpen": 41, "uClose": 41, "uHigh": 41.39, "uLow": 40.89, "uVolume": 9348811, "fOpen": 41, "fClose": 41, "fHigh": 41.39, "fLow": 40.89, "fVolume": 9348811, "label": "Aug 3, 22", "change": 0.020000000000003126, "changePercent": 0.0005 },
 { "close": 41.06, "high": 41.23, "low": 40.55, "open": 41, "priceDate": "2022-08-04", "symbol": "TWTR", "volume": 6169363, "id": "HISTORICAL_PRICES", "key": "TWTR", "subkey": "", "date": "2022-08-04", "updated": 1659661240000, "changeOverTime": 0.07458780423972786, "marketChangeOverTime": 0.07458780423972786, "uOpen": 41, "uClose": 41.06, "uHigh": 41.23, "uLow": 40.55, "uVolume": 6169363, "fOpen": 41, "fClose": 41.06, "fHigh": 41.23, "fLow": 40.55, "fVolume": 6169363, "label": "Aug 4, 22", "change": 0.060000000000002274, "changePercent": 0.0015 }]
 
+//animation block of code
+const totalDuration = 5000;
+const delayBetweenPoints = totalDuration / oneMonth.length;
+const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : ctx.chart.getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
+const animation = {
+  x: {
+    type: 'number',
+    easing: 'linear',
+    duration: delayBetweenPoints,
+    from: NaN, // the point is initially skipped
+    delay(ctx) {
+      if (ctx.type !== 'data' || ctx.xStarted) {
+        return 0;
+      }
+      ctx.xStarted = true;
+      return ctx.index * delayBetweenPoints;
+    }
+  },
+  y: {
+    type: 'number',
+    easing: 'linear',
+    duration: delayBetweenPoints,
+    from: previousY,
+    delay(ctx) {
+      if (ctx.type !== 'data' || ctx.yStarted) {
+        return 0;
+      }
+      ctx.yStarted = true;
+      return ctx.index * delayBetweenPoints;
+    }
+  }
+};
+
+
+
 
 export default function StockChart() {
 
   const [userData, setUserData] = useState({
     labels: oneMonth.map((month) => month.label),
     datasets: [{
-      label: "stock price",
+      label: "Twitter (TWTR) $USD",
       data: oneMonth.map((month) => month.close)
     }]
   })
 
+  let delayed;
+
   return (
 
-    <Line data={userData} />
+    <Line data={userData} options={{
+      maintainAspectRatio: false,
+      backgroundColor: 'rgb(0, 0, 255)',
+      borderColor: 'rgb(0, 0, 0)',
+      color: 'rgb(0, 0, 0)',
+      borderWidth: 1,
+      pointStyle: 'rectRot',
+      pointRadius: 5,
+      tension: 0.3,
+
+      
+
+      
+    }} />
 
   )
 

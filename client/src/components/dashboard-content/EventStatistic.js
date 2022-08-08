@@ -1,24 +1,42 @@
 import '../../stylesheet/EventStatistic.scss'
+import StockChart from '../graphs/StockChart'
+import AssetChart from '../graphs/AssetChart'
+import PortfolioChart from '../graphs/PortfolioChart'
+import StockDetails from '../graphs/StockDetails'
 
-export default function EventStatistic () {
+export default function EventStatistic() {
   return (
     <div id="portfolio-inner-container">
-          
-    <div id="search-box">
-      enter search bar and graph here
-    </div>
 
-    <div id="portfolio-change-container">
+      <div id="search-box">
+        <div className='stock-chart'>
+          <div className='search'>
+            seach box here
+          </div>
+          <StockChart />
+        </div>
+        <div className='stock-details-container'>
+          <StockDetails />
+        </div>
 
-      <div id="protfolio-change-graph">
-      enter portfolio change graph here
       </div>
 
-      <div id="protfolio-change-chart">
-      enter pie chart here
-      </div>
+      <div id="portfolio-change-container">
 
+        <div id="protfolio-change-graph">
+          <div className='portfolio-chart'>
+            <PortfolioChart />
+          </div>
+        </div>
+
+        <div id="protfolio-change-chart">
+          <div className='pie-chart'>
+            <div className='asset-title'>Stock Breakdown</div>
+            <AssetChart />
+          </div>
+        </div>
+
+      </div>
     </div>
-  </div>
   )
 }
