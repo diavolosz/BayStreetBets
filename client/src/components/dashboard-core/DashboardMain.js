@@ -117,11 +117,11 @@ export default function Dashboard() {
       </nav>
 
       <article id="portfolio-side-article">
-        {/* <EventStatistic /> */}
+        <EventStatistic />
         {/* <TransactionHistory /> */}
         {/* <ProfileEdit /> */}
 
-        <Organize />
+        {/* {<Organize />} */}
       </article>
     </div>
   );
