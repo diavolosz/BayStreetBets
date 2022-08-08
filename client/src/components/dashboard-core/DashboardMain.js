@@ -118,7 +118,7 @@ export default function Dashboard() {
       <article id="portfolio-side-article">
         {/* <EventStatistic /> */}
         {/* <TransactionHistory /> */}
-        {/* <ProfileEdit /> */}
+        <ProfileEdit />
 
       </article>
     </div>
