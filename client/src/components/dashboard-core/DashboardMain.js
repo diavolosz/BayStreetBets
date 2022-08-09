@@ -3,7 +3,7 @@ import '../../stylesheet/DashboardMain.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClipboard, faRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
-import { useNavigate } from 'react-router'
+import { useNavigate, Navigate } from 'react-router'
 
 import EventStatistic from '../dashboard-content/EventStatistic'
 import TransactionHistory from '../dashboard-content/TransactionHistory'
@@ -13,6 +13,7 @@ import Browse from '../dashboard-content/Browse'
 
 export default function Dashboard(prop) {
   const navigate = useNavigate();
+
 
   const dataSet = [
     { symbol: "APPL", price: 166.13, share: 50 },
@@ -46,6 +47,14 @@ export default function Dashboard(prop) {
 
   const logout = () => {
     localStorage.clear();
+
+    prop.setState({
+      user: null,
+      transactions: [],
+      competitions: [],
+      competitions_created: {},
+      competitions_enrolled: {},
+    })
     navigate('/');
   };
 

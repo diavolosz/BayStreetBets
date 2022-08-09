@@ -69,7 +69,7 @@ module.exports = db => {
           const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
 
 
-          console.log (accessToken)
+          // console.log (accessToken)
           return res.json({accessToken});
         }
       }

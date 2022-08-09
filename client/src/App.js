@@ -35,8 +35,8 @@ function App() {
       axios.get("/api/login", {
         headers: {'Authorization': `Bearer ${userFromLocalStorage}`}})
     ]).then ((user) => {
-      console.log (user)
-      console.log (user[0].data)
+      // console.log (user)
+      // console.log (user[0].data)
 
 
     
@@ -79,7 +79,7 @@ function App() {
   }, []);
 
   const pageRender = state.user ?
-    <Dashboard competitions={state.competitions} />
+    <Dashboard competitions={state.competitions} state={state} setState={setState}/>
     :
     <HomePage />
 
