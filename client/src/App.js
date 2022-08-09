@@ -16,6 +16,8 @@ function App() {
     competitions_enrolled: {},
   });
 
+
+
   const userFromLocalStorage = localStorage.getItem("user");
   const navigate = useNavigate();
 
@@ -28,22 +30,56 @@ function App() {
 
 
   useEffect(() => {
+
+    Promise.all([
+      axios.get("/api/login", {
+        headers: {'Authorization': `Bearer ${userFromLocalStorage}`}})
+    ]).then ((user) => {
+      console.log (user)
+      console.log (user[0].data)
+
+
+    
+
+
+
     if (userFromLocalStorage) {
       Promise.all([
         axios.get("/api/competitions")
       ]).then((competitions) => {
         setState(prev => ({
           ...prev,
-          user: parseInt(userFromLocalStorage),
+          user: user[0].data.user,
           competitions: competitions[0].data
         }));
       });
-      
+
     }
+
+  }).catch ((e) => {
+    console.log (e)
+  })
+
+
+    // if (userFromLocalStorage) {
+    //   Promise.all([
+    //     axios.get("/api/competitions")
+    //   ]).then((competitions) => {
+    //     setState(prev => ({
+    //       ...prev,
+    //       user: parseInt(userFromLocalStorage),
+    //       competitions: competitions[0].data
+    //     }));
+    //   });
+
+    // }
+
+
+
   }, []);
 
-  const pageRender = userFromLocalStorage ?
-    <Dashboard competitions={state.competitions}/>
+  const pageRender = state.user ?
+    <Dashboard competitions={state.competitions} />
     :
     <HomePage />
 
@@ -52,6 +88,17 @@ function App() {
       {pageRender}
     </div>
   );
+
+  //   const pageRender = userFromLocalStorage ?
+  //   <Dashboard competitions={state.competitions} />
+  //   :
+  //   <HomePage />
+
+  // return (
+  //   <div className="App">
+  //     {pageRender}
+  //   </div>
+  // );
 }
 
 export default App;
