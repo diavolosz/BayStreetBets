@@ -10,23 +10,6 @@ export default function Browse(props) {
 
   const eventInfoDisplay = (data, deleteOption = false) => {
     return (
-      // data.map((data, index) => {
-      //   const { user_id, name, description, starting_amount } = data
-      //   return (
-      //     <div className="event-item" key={index}>
-      //       <div className="general-info-box">
-      //         <span><strong>Creator: </strong>{user_id}</span>
-      //         {/* <span><strong>Max Participant: </strong>{participant}</span> */}
-      //         {/* <span><strong>Duration: </strong>{duration} Days</span> */}
-      //         <span><strong>Starting Amount: </strong>{starting_amount}</span>
-      //       </div>
-      //       <div className="description-info-box">
-      //         <span><strong>Event Name: </strong>{name}</span>
-      //         <span><strong>Description: </strong>{description}</span>
-      //       </div>
-      //     </div>
-      //   )
-      // })
       data.map((each, index) => {
         const { user_id, name, description, starting_amount } = each
         return (
