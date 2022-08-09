@@ -47,7 +47,7 @@ const LoginForm = () => {
   const onSubmit = event => {
     event.preventDefault();
     axios
-      .post(`/login`, {
+      .post(`/api/login`, {
         ...formValues,
       })
       .then(response => {

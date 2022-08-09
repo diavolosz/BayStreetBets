@@ -62,7 +62,7 @@ const SignupForm = () => {
   const onSubmit = event => {
     event.preventDefault();
     axios
-      .post(`/signup`, {
+      .post(`/api/signup`, {
         ...formValues,
       })
       .then(response => {
