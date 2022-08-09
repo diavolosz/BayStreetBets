@@ -3,18 +3,14 @@ import { useState } from 'react';
 // import 'react-calendar/dist/Calendar.css';
 import '../../../stylesheet/OrganizeCalendar.scss' ;
 
-export default function OrganizeCalendar() {
-  const [value, onChange] = useState();
-  console.log(value)
-
+export default function OrganizeCalendar(props) {
   return (
     <div id="calendar-outer-container">
       <Calendar
-        onChange={onChange}
-        value={value}
+        onChange={props.onChange}
+        value={props.value}
         selectRange={true}
       />
     </div>
   );
-
 }

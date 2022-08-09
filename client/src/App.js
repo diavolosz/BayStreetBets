@@ -20,14 +20,6 @@ function App() {
   console.log(userFromLocalStorage)
   const navigate = useNavigate();
 
-  // const getAllCompetitions = function () {
-  //   axios.get('/api/competitions').then((res) => {
-  //     console.log(res);
-  //   })
-  // }
-
-
-
   useEffect(() => {
     if (userFromLocalStorage) {
       Promise.all([
@@ -53,6 +45,7 @@ function App() {
       competitions={state.competitions} 
       user_competitions_created={state.user_competitions_created}
       user_competitions_enrolled={state.user_competitions_enrolled}
+      user={state.user}
     />
     :
     <HomePage />

@@ -131,12 +131,13 @@ export default function Dashboard(props) {
         {component === "EventStatistic" && <EventStatistic />}
         {component === "TransactionHistory" && <TransactionHistory />}
         {component === "ProfileEdit" && <ProfileEdit />}
-        {component === "Organize" && <Organize />}
+        {component === "Organize" && <Organize user={props.user}/>}
         {component === "Browse" && <Browse
           competitions={props.competitions}
           user_competitions_created={props.user_competitions_created}
           user_competitions_enrolled={props.user_competitions_enrolled}
         />}
+
       </article>
     </div>
   );
