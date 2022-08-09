@@ -1,9 +1,14 @@
-import "../../stylesheet/Organize.scss"
+import { useState, useEffect } from "react";
+import axios from 'axios';
 import { useForm } from "../../hooks/useForm";
 import OrganizeCalendar from "./organize-content/OrganizeCalendar";
 
-export default function Organize(prop) {
+import "../../stylesheet/Organize.scss"
 
+
+export default function Organize(props) {
+
+  const [calender, setCalender] = useState(null);
   const [formValues, parsedFormData, handleInput, errors] = useForm([
     {
       name: "name",
@@ -55,14 +60,11 @@ export default function Organize(prop) {
 
   const onSubmit = event => {
     event.preventDefault();
-    console.log(formValues);
-    // axios.post(`/login`, {
-    //   ...formValues
-    // })
-    // .then(response => {
-    //   setUser(response.data.user)
-    //   localStorage.setItem("user", response.data.user);
-    // });
+    const submissionValues = { ...formValues, "4": calender, user: props.user };
+    axios.post(`/api/competitions`, submissionValues)
+    .then(response => {
+      
+    });
   };
 
 
@@ -72,7 +74,7 @@ export default function Organize(prop) {
       <div id="calender-container">
         <img src="img/bear.png" className="bull-bear" />
         <div id="calender">
-          <OrganizeCalendar />
+          <OrganizeCalendar onChange={setCalender} value={calender}/>
         </div>
         <img src="img/bull.png" className="bull-bear" />
       </div>
