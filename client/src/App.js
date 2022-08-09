@@ -35,7 +35,7 @@ function App() {
         axios.get(`/api/user/${userFromLocalStorage}/competitions`)
       ]).then((competitions) => {
         // console.log(competitions[1].data.competitionsCreated)
-        // console.log(competitions[1].data.competitionsEnrolled)
+        // console.log(competitions[1].data)
 
         setState(prev => ({
           ...prev,
