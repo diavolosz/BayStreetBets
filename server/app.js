@@ -11,6 +11,8 @@ const usersRouter = require('./routes/users');
 const dashboardRouter = require('./routes/dashboard');
 const loginRouter = require('./routes/login');
 const signupRouter = require('./routes/signup');
+const competitionsRouter = require('./routes/competitions');
+const userRouter = require("./routes/user");
 
 
 const app = express();
@@ -24,7 +26,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter(db));
 app.use('/dashboard', dashboardRouter(db));
-app.use('/login', loginRouter(db));
-app.use('/signup', signupRouter(db));
+app.use('/api/login', loginRouter(db));
+app.use('/api/signup', signupRouter(db));
+app.use('/api/competitions', competitionsRouter(db));
+app.use('/api/user', userRouter(db));
+
 
 module.exports = app;
