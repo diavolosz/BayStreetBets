@@ -1,7 +1,7 @@
 
 import '../../stylesheet/DashboardMain.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faClipboard, faRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faClipboard, faPersonCirclePlus, faRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 import { useNavigate, Navigate } from 'react-router'
 
@@ -13,7 +13,6 @@ import Browse from '../dashboard-content/Browse'
 
 export default function Dashboard(props) {
   const navigate = useNavigate();
-
 
   const dataSet = [
     { symbol: "APPL", price: 166.13, share: 50 },
@@ -48,7 +47,7 @@ export default function Dashboard(props) {
   const logout = () => {
     localStorage.clear();
 
-    prop.setState({
+    faPersonCirclePlus.setState({
       user: null,
       transactions: [],
       competitions: [],
@@ -139,10 +138,10 @@ export default function Dashboard(props) {
       <article id="portfolio-side-article">
         {component === "EventStatistic" && <EventStatistic />}
         {component === "TransactionHistory" && <TransactionHistory 
-        state={prop.state}
-        setState={prop.setState}
-        competitions_enrolled={prop.competitions_enrolled}
-        current_competition={prop.current_competition}
+        state={props.state}
+        setState={props.setState}
+        competitions_enrolled={props.competitions_enrolled}
+        current_competition={props.current_competition}
         />}
         {component === "ProfileEdit" && <ProfileEdit />}
         {component === "Organize" && <Organize user={props.user}/>}
