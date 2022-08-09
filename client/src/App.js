@@ -14,6 +14,8 @@ function App() {
     competitions: [],
     competitions_created: {},
     competitions_enrolled: {},
+    current_competition: {},
+    transactions: []
   });
 
 
@@ -31,26 +33,36 @@ function App() {
 
   useEffect(() => {
 
-    Promise.all([
-      axios.get("/api/login", {
-        headers: {'Authorization': `Bearer ${userFromLocalStorage}`}})
-    ]).then ((user) => {
-      // console.log (user)
-      // console.log (user[0].data)
 
 
     
 
+    Promise.all([
+      axios.get("/api/login", {
+        headers: {'Authorization': `Bearer ${userFromLocalStorage}`}})
+    ]).then ((userEmailID) => {
+      //console.log ("emailID[0].data", userEmailID[0].data)
 
+      // for now (user[0].data.user) gives email and ID in user variable
+      // console.log (user[0].data)
 
     if (userFromLocalStorage) {
+      // calls for all comps, user transactions, user transactions
       Promise.all([
-        axios.get("/api/competitions")
-      ]).then((competitions) => {
+        axios.get("/api/competitions"),
+        axios.post("/api/competitions/user_competitions", {
+          data: { user: userEmailID[0].data, }
+        }),
+        // axios.post("/api/transactions", {
+        //   data: { user: userEmailID[0].data, }
+        // }),
+      ]).then((comps_userComps) => {
         setState(prev => ({
           ...prev,
-          user: user[0].data.user,
-          competitions: competitions[0].data
+          user: userEmailID[0].data,
+          competitions: comps_userComps[0].data,
+          competitions_enrolled: comps_userComps[1].data,
+          current_competition: { id: comps_userComps[1].data[0].id, name: comps_userComps[1].data[0].name }
         }));
       });
 
@@ -74,12 +86,18 @@ function App() {
 
     // }
 
-
+  
 
   }, []);
 
-  const pageRender = state.user ?
-    <Dashboard competitions={state.competitions} state={state} setState={setState}/>
+  const pageRender = state.user?
+    <Dashboard 
+    state={state} 
+    setState={setState}
+    competitions={state.competitions}
+    competitions_enrolled={state.competitions_enrolled}
+    current_competition={state.current_competition}
+    />
     :
     <HomePage />
 

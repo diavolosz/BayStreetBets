@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS transactions CASCADE;
 DROP TYPE IF EXISTS buy_or_sell CASCADE;
 
 -- CREATE ENUM for buy/sell
-CREATE TYPE buy_or_sell AS ENUM ('buy', 'sell');
+CREATE TYPE buy_or_sell AS ENUM ('Buy', 'Sell');
 
 -- CREATE transactions
 CREATE TABLE transactions (

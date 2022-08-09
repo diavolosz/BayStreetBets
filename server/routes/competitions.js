@@ -9,5 +9,15 @@ module.exports = db => {
 
   }); 
 
+  router.post("/user_competitions", (req, res) => {
+    const userID = req.body.data.user.id
+
+    db.query(`SELECT * FROM competitions WHERE user_id = $1;`, [userID]).then(result => {
+      
+      return res.json(result.rows);
+    });
+
+  }); 
+
   return router;
 };

@@ -138,7 +138,12 @@ export default function Dashboard(prop) {
 
       <article id="portfolio-side-article">
         {component === "EventStatistic" && <EventStatistic />}
-        {component === "TransactionHistory" && <TransactionHistory />}
+        {component === "TransactionHistory" && <TransactionHistory 
+        state={prop.state}
+        setState={prop.setState}
+        competitions_enrolled={prop.competitions_enrolled}
+        current_competition={prop.current_competition}
+        />}
         {component === "ProfileEdit" && <ProfileEdit />}
         {component === "Organize" && <Organize />}
         {component === "Browse" && <Browse competitions={prop.competitions}/>}

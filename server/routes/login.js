@@ -26,6 +26,7 @@ function authenticateToken (req, res, next) {
 module.exports = db => {
   router.get("/", authenticateToken, (req, res) => {
 
+
     res.json(req.user)
   });
 
@@ -58,13 +59,18 @@ module.exports = db => {
     const password = req.body["1"].value;
 
     db.query(`SELECT * FROM users WHERE email = $1;`, [email]).then(result => {
+
+
+      // console.log (result.rows)
+
+
       if (result.rows.length) {
         if (bcrypt.compareSync(password, result.rows[0].password)) {
           // const accessToken = jwt.sign(
           //   result.rows[0], process.env.ACCESS_TOKEN_SECRET
           //);
 
-          const user = { user: email };
+          const user = { email: email, id: result.rows[0].id };
 
           const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
 
