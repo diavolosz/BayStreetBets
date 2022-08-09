@@ -3,11 +3,11 @@ const router = require("express").Router();
 module.exports = db => {
   router.get("/", (req, res) => {
     db.query(`SELECT * FROM competitions;`).then(result => {
-      
+
       return res.json(result.rows);
     });
 
-  }); 
+  });
 
   router.post("/", (req, res) => {
     const name = req.body["0"].value;
@@ -23,17 +23,25 @@ module.exports = db => {
     }
 
     return db.query(`INSERT INTO competitions(name, description, starting_amount, start_date, end_date, created_date, user_id) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *;`, [name, description, starting_amount, start_date, end_date, new Date(), user_id])
-    .then(result => {
-      db.query(`INSERT INTO user_competitions(user_balance, user_id, competition_id) VALUES($1, $2, $3) RETURNING *;`, [starting_amount, user_id, result.rows[0]["id"]])
-    .then(() => {
-        return res.sendStatus(201);
-    })
-    .catch((err) => {
-      return res.send(err);
-    });
-    });
+      .then(result => {
+        db.query(`INSERT INTO user_competitions(user_balance, user_id, competition_id) VALUES($1, $2, $3) RETURNING *;`, [starting_amount, user_id, result.rows[0]["id"]])
+          .then(() => {
+            return res.sendStatus(201);
+          })
+          .catch((err) => {
+            return res.send(err);
+          });
+      });
+  });
 
-  }); 
+  router.post("/user_competitions", (req, res) => {
+    const userID = req.body.data.user.id
+
+    db.query(`SELECT * FROM competitions WHERE user_id = $1;`, [userID])
+    .then(result => {
+      return res.json(result.rows);
+    });
+  });
 
   router.delete("/", (req, res) => {
     // const {user_id, competition_id } = req.options.data;

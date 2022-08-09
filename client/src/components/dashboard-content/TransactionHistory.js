@@ -1,134 +1,64 @@
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+
 import "../../stylesheet/TransactionHistory.scss"
 
-export default function TransactionHistory() {
+
+export default function TransactionHistory(prop) {
+
+  //console.log(prop)
+
+  useEffect(() => {
+    Promise.all([
+      axios.post("/api/transactions", {
+        data: {
+          user: prop.state.user,
+          competition: prop.current_competition
+        }
+      })
+    ]).then((transactions) => {
+    //console.log (transactions)
+      prop.setState(prev => ({
+        ...prev,
+        transactions: transactions[0].data
+      }));
+    })
+
+
+  }, [])
+
+  let listedTransactions = prop.state.transactions.map((transaction) => {
+
+    let total = transaction.number_of_shares * Number (transaction.price.replace('$', ''))
+
+    return (
+      <tbody>
+        <tr>
+          <td>{transaction.symbol}</td>
+          <td>{transaction.buy_sell}</td>
+          <td>{transaction.number_of_shares}</td>
+          <td>{transaction.price}</td>
+          <td>{`$${total}`}</td>
+        </tr>
+      </tbody>
+    )
+  })
+
+
   return (
     <div id="transaction-history-container">
-      <h1>Transaction History</h1>
+      <h1>Transaction History: {prop.current_competition.name}</h1>
       <table>
         <thead>
           <tr>
-            <th>title1</th>
-            <th>title2</th>
-            <th>title3</th>
+            <th>Symbol</th>
+            <th>Buy/Sell</th>
+            <th>Shares</th>
+            <th>Price per Share</th>
+            <th>Total Price</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>item</td>
-            <td>item</td>
-            <td>item</td>
-          </tr>
-          <tr>
-            <td>item</td>
-            <td>item</td>
-            <td>item</td>
-          </tr>
-          <tr>
-            <td>item</td>
-            <td>item</td>
-            <td>item</td>
-          </tr>
-          <tr>
-            <td>item</td>
-            <td>item</td>
-            <td>item</td>
-          </tr>
-          <tr>
-            <td>item</td>
-            <td>item</td>
-            <td>item</td>
-          </tr>
-          <tr>
-            <td>item</td>
-            <td>item</td>
-            <td>item</td>
-          </tr>
-          <tr>
-            <td>item</td>
-            <td>item</td>
-            <td>item</td>
-          </tr>
-          <tr>
-            <td>item</td>
-            <td>item</td>
-            <td>item</td>
-          </tr>
-          <tr>
-            <td>item</td>
-            <td>item</td>
-            <td>item</td>
-          </tr>
-          <tr>
-            <td>item</td>
-            <td>item</td>
-            <td>item</td>
-          </tr>
-          <tr>
-            <td>item</td>
-            <td>item</td>
-            <td>item</td>
-          </tr>
-          <tr>
-            <td>item</td>
-            <td>item</td>
-            <td>item</td>
-          </tr>
-          <tr>
-            <td>item</td>
-            <td>item</td>
-            <td>item</td>
-          </tr>
-          <tr>
-            <td>item</td>
-            <td>item</td>
-            <td>item</td>
-          </tr>
-          <tr>
-            <td>item</td>
-            <td>item</td>
-            <td>item</td>
-          </tr>
-          <tr>
-            <td>item</td>
-            <td>item</td>
-            <td>item</td>
-          </tr>
-          <tr>
-            <td>item</td>
-            <td>item</td>
-            <td>item</td>
-          </tr>
-          <tr>
-            <td>item</td>
-            <td>item</td>
-            <td>item</td>
-          </tr>
-          <tr>
-            <td>item</td>
-            <td>item</td>
-            <td>item</td>
-          </tr>
-          <tr>
-            <td>item</td>
-            <td>item</td>
-            <td>item</td>
-          </tr>
-          <tr>
-            <td>item</td>
-            <td>item</td>
-            <td>item</td>
-          </tr>
-          <tr>
-            <td>item</td>
-            <td>item</td>
-            <td>item</td>
-          </tr>
-          <tr>
-            <td>item</td>
-            <td>item</td>
-            <td>item</td>
-          </tr>
-        </tbody>
+        {listedTransactions}
       </table>
     </div>
   )
