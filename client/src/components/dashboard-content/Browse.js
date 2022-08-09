@@ -14,6 +14,7 @@ export default function Browse(props) {
         const { user_id, name, description, starting_amount } = each
         return (
           <BrowseListItem 
+            key={index}
             user_id={user_id}
             name={name}
             description={description}

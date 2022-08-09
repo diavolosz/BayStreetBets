@@ -1,7 +1,7 @@
 
 import '../../stylesheet/DashboardMain.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faClipboard, faRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faClipboard, faPersonCirclePlus, faRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 import { useNavigate, Navigate } from 'react-router'
 
@@ -13,7 +13,6 @@ import Browse from '../dashboard-content/Browse'
 
 export default function Dashboard(props) {
   const navigate = useNavigate();
-
 
   const dataSet = [
     { symbol: "APPL", price: 166.13, share: 50 },

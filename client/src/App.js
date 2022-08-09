@@ -23,7 +23,7 @@ function App() {
 
 
   const userFromLocalStorage = localStorage.getItem("user");
-  console.log(userFromLocalStorage)
+  // console.log(userFromLocalStorage)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -45,36 +45,36 @@ function App() {
       // calls for all comps, user transactions, user transactions
       Promise.all([
         axios.get("/api/competitions"),
-      //   axios.get(`/api/user/${userFromLocalStorage}/competitions`)
-      // ]).then((competitions) => {
-      //   // console.log(competitions[1].data.competitionsCreated)
-      //   // console.log(competitions[1].data)
-
-      //   setState(prev => ({
-      //     ...prev,
-      //     user: parseInt(userFromLocalStorage),
-      //     competitions: competitions[0].data,
-      //     user_competitions_created: competitions[1].data.competitionsCreated,
-      //     user_competitions_enrolled: competitions[1].data.competitionsEnrolled
-      //   }));
-      // });
-
-      
+        axios.get(`/api/user/${userEmailID[0].data.id}/competitions`),
         axios.post("/api/competitions/user_competitions", {
           data: { user: userEmailID[0].data, }
-        }),
-        // axios.post("/api/transactions", {
-        //   data: { user: userEmailID[0].data, }
-        // }),
+        })
       ]).then((comps_userComps) => {
         setState(prev => ({
           ...prev,
           user: userEmailID[0].data,
           competitions: comps_userComps[0].data,
-          competitions_enrolled: comps_userComps[1].data,
-          current_competition: { id: comps_userComps[1].data[0].id, name: comps_userComps[1].data[0].name }
+          user_competitions_created: comps_userComps[1].data.competitionsCreated,
+          user_competitions_enrolled: comps_userComps[1].data.competitionsEnrolled,
+          competitions_enrolled: comps_userComps[2].data,
+          current_competition: { id: comps_userComps[2].data[0].id, name: comps_userComps[2].data[0].name }
         }));
-      });
+      })
+
+      
+       
+        // axios.post("/api/transactions", {
+        //   data: { user: userEmailID[0].data, }
+        // }),
+      // ]).then((comps_userComps) => {
+      //   setState(prev => ({
+      //     ...prev,
+      //     user: userEmailID[0].data,
+      //     competitions: comps_userComps[0].data,
+      //     competitions_enrolled: comps_userComps[1].data,
+      //     current_competition: { id: comps_userComps[1].data[0].id, name: comps_userComps[1].data[0].name }
+      //   }));
+      // });
 
     }
 
@@ -114,6 +114,9 @@ function App() {
     competitions={state.competitions}
     competitions_enrolled={state.competitions_enrolled}
     current_competition={state.current_competition}
+    user_competitions_created={state.user_competitions_created}
+    user_competitions_enrolled={state.user_competitions_enrolled}
+
     />
     :
     <HomePage />
