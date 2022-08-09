@@ -56,7 +56,7 @@ const LoginForm = () => {
           return;
         }
         localStorage.setItem("user", response.data.user);
-        navigate("/dashboard-main");
+        navigate("/");
       });
   };
 

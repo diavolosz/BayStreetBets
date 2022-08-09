@@ -47,7 +47,6 @@ export default function Dashboard() {
   const logout = () => {
     localStorage.clear();
     navigate('/');
-
   };
 
   return (

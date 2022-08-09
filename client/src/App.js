@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
+import { Navigate, useNavigate } from "react-router-dom";
 import './stylesheet/App.scss';
-import NonLogged from './components/NonLogged'
-import Details from './components/Details';
-import Footer from './components/Footer';
+
+import HomePage from './components/HomePage';
+import Dashboard from './components/dashboard-core/DashboardMain';
 
 function App() {
 
@@ -13,8 +14,10 @@ function App() {
     competitions_enrolled: {},
   });
 
+  const userFromLocalStorage = localStorage.getItem("user");
+  const navigate = useNavigate();
+
   useEffect(() => {
-    const userFromLocalStorage = localStorage.getItem("user");
     if (userFromLocalStorage) {
       setState(prev => ({
         ...prev,
@@ -23,15 +26,11 @@ function App() {
     }
   }, []);
 
+  const pageRender = userFromLocalStorage? <Dashboard /> : <HomePage />
+
   return (
     <div className="App">
-      <div className="background-container">
-        <img src="img/background.jpg" className="background-image" />
-        <NonLogged />
-        <Details />
-
-        <Footer />
-      </div>
+      {pageRender} 
     </div>
   );
 }
