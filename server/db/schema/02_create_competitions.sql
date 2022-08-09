@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS competitions CASCADE;
 CREATE TABLE competitions (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
+  description TEXT NOT NULL,
   starting_amount MONEY NOT NULL,
   start_date TIMESTAMP WITH TIME ZONE NOT NULL,
   end_date TIMESTAMP WITH TIME ZONE NOT NULL,
