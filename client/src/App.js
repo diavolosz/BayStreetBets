@@ -19,14 +19,6 @@ function App() {
   const userFromLocalStorage = localStorage.getItem("user");
   const navigate = useNavigate();
 
-  // const getAllCompetitions = function () {
-  //   axios.get('/api/competitions').then((res) => {
-  //     console.log(res);
-  //   })
-  // }
-
-
-
   useEffect(() => {
     if (userFromLocalStorage) {
       Promise.all([
@@ -43,7 +35,7 @@ function App() {
   }, []);
 
   const pageRender = userFromLocalStorage ?
-    <Dashboard competitions={state.competitions}/>
+    <Dashboard competitions={state.competitions} user={state.user}/>
     :
     <HomePage />
 
