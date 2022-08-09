@@ -12,11 +12,12 @@ function App() {
     user: null,
     transactions: [],
     competitions: [],
-    competitions_created: {},
-    competitions_enrolled: {},
+    user_competitions_created: [],
+    user_competitions_enrolled: [],
   });
 
   const userFromLocalStorage = localStorage.getItem("user");
+  console.log(userFromLocalStorage)
   const navigate = useNavigate();
 
   // const getAllCompetitions = function () {
@@ -30,20 +31,29 @@ function App() {
   useEffect(() => {
     if (userFromLocalStorage) {
       Promise.all([
-        axios.get("/api/competitions")
+        axios.get("/api/competitions"),
+        axios.get(`/api/user/${userFromLocalStorage}/competitions`)
       ]).then((competitions) => {
+        // console.log(competitions[1].data.competitionsCreated)
+        // console.log(competitions[1].data.competitionsEnrolled)
+
         setState(prev => ({
           ...prev,
           user: parseInt(userFromLocalStorage),
-          competitions: competitions[0].data
+          competitions: competitions[0].data,
+          user_competitions_created: competitions[1].data.competitionsCreated,
+          user_competitions_enrolled: competitions[1].data.competitionsEnrolled
         }));
       });
-      
     }
   }, []);
 
   const pageRender = userFromLocalStorage ?
-    <Dashboard competitions={state.competitions}/>
+    <Dashboard 
+      competitions={state.competitions} 
+      user_competitions_created={state.user_competitions_created}
+      user_competitions_enrolled={state.user_competitions_enrolled}
+    />
     :
     <HomePage />
 

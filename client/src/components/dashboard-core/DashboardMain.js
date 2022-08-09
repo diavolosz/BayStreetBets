@@ -11,7 +11,7 @@ import ProfileEdit from '../dashboard-content/Profile'
 import Organize from '../dashboard-content/Organize'
 import Browse from '../dashboard-content/Browse'
 
-export default function Dashboard(prop) {
+export default function Dashboard(props) {
   const navigate = useNavigate();
 
   const dataSet = [
@@ -132,7 +132,11 @@ export default function Dashboard(prop) {
         {component === "TransactionHistory" && <TransactionHistory />}
         {component === "ProfileEdit" && <ProfileEdit />}
         {component === "Organize" && <Organize />}
-        {component === "Browse" && <Browse competitions={prop.competitions}/>}
+        {component === "Browse" && <Browse
+          competitions={props.competitions}
+          user_competitions_created={props.user_competitions_created}
+          user_competitions_enrolled={props.user_competitions_enrolled}
+        />}
       </article>
     </div>
   );
