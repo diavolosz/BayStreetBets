@@ -51,10 +51,10 @@ const LoginForm = () => {
         ...formValues,
       })
       .then(response => {
-        // if (!response.data.user) {
-        //   setError("Invalid credentials.");
-        //   return;
-        // }
+        if (!response.data.accessToken) {
+          setError("Invalid credentials.");
+          return;
+        }
         // console.log ('response', response)
         localStorage.setItem("user", response.data.accessToken);
         navigate("/");
