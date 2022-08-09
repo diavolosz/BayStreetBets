@@ -35,5 +35,20 @@ module.exports = db => {
 
   }); 
 
+  router.delete("/", (req, res) => {
+    // const {user_id, competition_id } = req.options.data;
+    // // Check if user is logged in
+
+    // // Delete competition from competitions and user_competitions
+    // return db.query(`DELETE FROM competitions WHERE id = $1 AND user_id = $2;`, [competition_id, user_id])
+    // .then(result => {
+    //   db.query(`DELETE FROM user_competitions WHERE competition_id = $1;`, [competition_id])
+    // .then(() => {
+    //   return res.sendStatus(200);
+    // })
+    // .catch(() => res.sendStatus(403));
+    // });
+  });
+
   return router;
 };
