@@ -15,11 +15,11 @@ export default function nonLogged() {
         </span>
         <span>|</span>
         <span>
-        <Link to="/signup" className="route-link">SIGNUP</Link>
+        <Link to="/signup" className="route-link">SIGN UP</Link>
         </span>
         <span>|</span>
         <span>
-          <Link to="/dashboard-main" className="route-link">DASHBOARD</Link>
+          <Link to="/" className="route-link">ABOUT</Link>
         </span>
       </nav>
     </div>
