@@ -10,7 +10,7 @@ module.exports = db => {
 
 
     db.query(
-      `SELECT * FROM transactions WHERE user_id = $1 AND competition_id = $2;`, [userID, competitionID]).then(result => {
+      `SELECT buy_sell, symbol, price::money::numeric::int, number_of_shares, transaction_date, user_id, competition_id FROM transactions WHERE user_id = $1 AND competition_id = $2;`, [userID, competitionID]).then(result => {
 
       return res.json(result.rows);
     })

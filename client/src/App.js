@@ -16,9 +16,9 @@ function App() {
     user_competitions_enrolled: [],
 
     competitions_created: {},
+    
     competitions_enrolled: [],
     current_competition: {},
-
     transactions: []
   });
 
@@ -75,7 +75,7 @@ function App() {
               current_competition: {
                 id: comps_userComps[2].data[0].id, name: comps_userComps[2].data[0].name
               },
-              transactions: transactions[0].data
+              transactions: transactions[0].data    //specific to user and to competition
             }));
           })
 
@@ -147,10 +147,12 @@ function App() {
       setState={setState}
 
       competitions={state.competitions}
-      competitions_enrolled={state.competitions_enrolled}
-      current_competition={state.current_competition}
       user_competitions_created={state.user_competitions_created}
       user_competitions_enrolled={state.user_competitions_enrolled}
+      
+      competitions_enrolled={state.competitions_enrolled}
+      current_competition={state.current_competition}
+      transactions={state.transactions}
 
     />
     :

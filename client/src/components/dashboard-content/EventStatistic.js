@@ -6,7 +6,7 @@ import StockDetails from '../graphs/StockDetails'
 
 import { useForm } from "../../hooks/useForm";
 
-export default function EventStatistic() {
+export default function EventStatistic(props) {
 
   const search = function (event) {
     event.preventDefault();
@@ -47,7 +47,15 @@ export default function EventStatistic() {
         <div id="protfolio-change-chart">
           <div className='pie-chart'>
             <div className='asset-title'>Total Asset Breakdown</div>
-            <AssetChart />
+            <AssetChart 
+            state={props.state}
+            setState={props.setState}
+    
+            competitions_enrolled={props.competitions_enrolled}
+            current_competition={props.current_competition}
+            
+            transactions={props.transactions}
+            />
           </div>
         </div>
 
