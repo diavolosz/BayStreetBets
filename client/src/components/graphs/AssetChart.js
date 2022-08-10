@@ -43,7 +43,7 @@ export default function AssetChart(props) {
     }
   })
 
-  console.log ("before removal of stock and shares", stockAndShares)
+  console.log("before removal of stock and shares", stockAndShares)
 
   let keys = Object.keys(stockAndShares)
 
@@ -53,29 +53,57 @@ export default function AssetChart(props) {
     }
   }
 
-  console.log ("after removal of stock and shares", stockAndShares)
+  console.log("after removal of stock and shares", stockAndShares)
 
   let finalAssets = []
   let totalAmount = 0;
   keys = Object.keys(stockAndShares)
 
+
+
+  // keys.map((key) => {
+  //   let stockAmount = 0;
+  //   props.transactions.map((transaction) => {
+  //     if (key === transaction.symbol) {
+  //       totalAmount += transaction.price * transaction.number_of_shares
+  //       stockAmount += transaction.price * transaction.number_of_shares
+  //     }
+  //   })
+
+
+  //   finalAssets.push(
+  //     {
+  //       stock: key,
+  //       amount: stockAmount,
+  //       percentage: (Math.floor((stockAmount / totalAmount) * 100))
+  //     }
+  //   )
+  // })
+
   keys.map((key) => {
-    let stockAmount = 0;
     props.transactions.map((transaction) => {
       if (key === transaction.symbol) {
         totalAmount += transaction.price * transaction.number_of_shares
+      }
+    })
+  })
+
+  keys.map((key) => {
+    let stockAmount = 0
+    props.transactions.map((transaction) => {
+      if (key === transaction.symbol) {
         stockAmount += transaction.price * transaction.number_of_shares
       }
     })
-
 
     finalAssets.push(
       {
         stock: key,
         amount: stockAmount,
-        percentage: (Math.floor((stockAmount / totalAmount) * 100))
+        percentage: (Math.ceil((stockAmount / totalAmount) * 100))
       }
     )
+
   })
 
 
@@ -100,6 +128,7 @@ export default function AssetChart(props) {
       backgroundColor: colours
     }]
   })
+  // USE EFFECT NEEDS TO BE PUT, ADD IN FUNCTIONS, CHANGE WHEN CURRENT COMPETITION CHANGES
 
   return (
     <Pie data={pieData} options={{
