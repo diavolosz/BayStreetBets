@@ -159,11 +159,13 @@ export default function Dashboard(props) {
           current_competition={props.current_competition}
         />}
         {component === "ProfileEdit" && <ProfileEdit />}
-        {component === "Organize" && <Organize user={props.user} />}
+        {component === "Organize" && <Organize user={props.user} setState={props.setState} state={props.state} setComponent={setComponent}/>}
         {component === "Browse" && <Browse
           competitions={props.competitions}
           user_competitions_created={props.user_competitions_created}
           user_competitions_enrolled={props.user_competitions_enrolled}
+          setState={props.setState}
+          state={props.state}
         />}
 
       </article>
