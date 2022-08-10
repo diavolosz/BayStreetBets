@@ -54,7 +54,7 @@ function App() {
 
         ]).then((comps_userComps) => {
 
-          console.log(comps_userComps[2].data)
+          // variable for axios requests when user is not in any competitions
 
           let user_comp_info = null
 
@@ -83,7 +83,7 @@ function App() {
             })
           ]).then((transactions_userBalance) => {
 
-            // console.log(transactions_userBalance[0].data)
+            // variable to set current_competition to if there are no competitions user is in
 
             let current_comp_info = null
 
@@ -106,10 +106,6 @@ function App() {
               user_balance: transactions_userBalance[1].data
             }));
           })
-
-
-
-
 
         })
 
