@@ -8,20 +8,61 @@ import BrowseListItem from './browse-content/BrowseListItem'
 
 export default function Browse(props) {
 
-  const eventInfoDisplay = (data, deleteOption = false, allEventDisplay = false) => {
+  const eventCreatedDisplay = (data, deleteOption = false) => {
     return (
       data.map((each, index) => {
         const { id, user_id, name, description, starting_amount } = each
         return (
           <BrowseListItem 
-            key={id}
+            key={index}
             id={id}
             user_id={user_id}
             name={name}
             description={description}
             starting_amount={starting_amount}
-            allEventDisplay={allEventDisplay}
             deleteOption={deleteOption}
+            setState={props.setState}
+            state={props.state}
+          />
+        )
+      })
+    )
+  }
+
+  const eventEnrolledDisplay = (data, deleteOption = false) => {
+    const filteredData = (data).filter((each) => {props.user_competitions_created.includes(each)})
+    return (
+      filteredData.map((each, index) => {
+        const { id, user_id, name, description, starting_amount } = each
+        return (
+          <BrowseListItem 
+            key={index}
+            id={id}
+            user_id={user_id}
+            name={name}
+            description={description}
+            starting_amount={starting_amount}
+            deleteOption={deleteOption}
+            setState={props.setState}
+            state={props.state}
+          />
+        )
+      })
+    )
+  }
+
+  const eventInfoDisplay = (data) => {
+    return (
+      data.map((each, index) => {
+        const { id, user_id, name, description, starting_amount } = each
+        return (
+          <BrowseListItem 
+            key={index}
+            id={id}
+            user_id={user_id}
+            name={name}
+            description={description}
+            starting_amount={starting_amount}
             setState={props.setState}
             state={props.state}
           />
@@ -48,9 +89,9 @@ export default function Browse(props) {
         {displayEvent === "browseEvent" && eventInfoDisplay(props.competitions, null, true)}
 
         {displayEvent === "myEvent" && <h3>Created Events</h3>}
-        {displayEvent === "myEvent" && eventInfoDisplay(props.user_competitions_created, true)}
-        {displayEvent === "myEvent" && <h3>Joined Events</h3>}
-        {displayEvent === "myEvent" && eventInfoDisplay(props.user_competitions_enrolled)}
+        {displayEvent === "myEvent" && eventCreatedDisplay(props.user_competitions_created, true)}
+        {displayEvent === "myEvent" && <h3>Enrolled Events</h3>}
+        {displayEvent === "myEvent" && eventEnrolledDisplay(props.user_competitions_enrolled)}
 
       </div>
     </div>
