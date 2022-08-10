@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 module.exports = db => {
-  router.post("/portfolio_pie", (req, res) => {
+  router.post("/pie", (req, res) => {
 
     const userID = req.body.data.user.id
 
@@ -17,6 +17,11 @@ module.exports = db => {
     .catch(e => {
       console.log (e)
     });
+
+  });
+
+  router.post("/portfolio", (req, res) => {
+
 
   });
 
