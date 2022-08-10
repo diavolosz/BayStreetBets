@@ -58,10 +58,6 @@ const LoginForm = () => {
         // console.log ('response', response)
         localStorage.setItem("user", response.data.accessToken);
         navigate("/");
-
-        // console.log (response)
-
-
       });
   };
 

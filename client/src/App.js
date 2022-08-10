@@ -57,7 +57,7 @@ function App() {
           user_competitions_created: comps_userComps[1].data.competitionsCreated,
           user_competitions_enrolled: comps_userComps[1].data.competitionsEnrolled,
           competitions_enrolled: comps_userComps[2].data,
-          current_competition: { id: comps_userComps[2].data[0].id, name: comps_userComps[2].data[0].name }
+          current_competition: { id: null, name: null }
         }));
       })
 

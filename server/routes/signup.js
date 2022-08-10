@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const {
   validatePassword,
@@ -59,12 +60,12 @@ module.exports = db => {
     )
       .then(result => {
         if (result.rows.length) {
-          // const accessToken = jwt.sign(
-          //   result.rows[0], process.env.ACCESS_TOKEN_SECRET
-          //   );
+          const accessToken = jwt.sign(
+            result.rows[0], process.env.ACCESS_TOKEN_SECRET
+            );
 
           // Send JSON response with newly registered user information
-          return res.json({ user: result.rows[0].id });
+          return res.json({ user: accessToken });
         }
         return res.json({ error: "Operation failed." });
       })

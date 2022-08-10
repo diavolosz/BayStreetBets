@@ -27,12 +27,12 @@ export default function TransactionHistory(prop) {
 
   }, [])
 
-  let listedTransactions = prop.state.transactions.map((transaction) => {
+  let listedTransactions = prop.state.transactions.map((transaction, index) => {
 
     let total = transaction.number_of_shares * Number (transaction.price.replace('$', ''))
 
     return (
-      <tbody>
+      <tbody key={index}>
         <tr>
           <td>{transaction.symbol}</td>
           <td>{transaction.buy_sell}</td>

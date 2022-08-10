@@ -4,6 +4,8 @@ import AssetChart from '../graphs/AssetChart'
 import PortfolioChart from '../graphs/PortfolioChart'
 import StockDetails from '../graphs/StockDetails'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { useForm } from "../../hooks/useForm";
 
 export default function EventStatistic() {
@@ -20,12 +22,13 @@ export default function EventStatistic() {
       <div id="search-box">
         <div className='stock-chart'>
 
-            <form className="stock-search-box" onSubmit={search}>
-              <input type="text" placeholder="Stock Symbol" name="symbol" />
-              <button type='submit'>Search</button>
-            </form>
-
-          <StockChart />
+          <form className="stock-search-box" onSubmit={search}>
+            <input type="text" placeholder="Search Stock ..." name="symbol" />
+            <button type='submit'><FontAwesomeIcon className="search-icon" icon={faMagnifyingGlass} /></button>
+          </form>
+          <div id="stock-chart-container">
+            <StockChart />
+          </div>
         </div>
         <div className='stock-details-container'>
           <div className='detail-title'>
@@ -40,6 +43,7 @@ export default function EventStatistic() {
 
         <div id="protfolio-change-graph">
           <div className='portfolio-chart'>
+            <span>User Portfolio Change (Total Equity Change $)</span>
             <PortfolioChart />
           </div>
         </div>
