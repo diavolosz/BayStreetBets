@@ -56,7 +56,6 @@ export default function PortfolioChart() {
       data: portfolio.map((item) => item.totalEquity)
     }]
   })
-  // User Portfolio Change (Total Equity Change $)
 let delayed;
 
   return (
