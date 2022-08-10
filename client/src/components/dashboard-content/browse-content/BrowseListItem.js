@@ -1,5 +1,5 @@
 import axios from "axios"
-import { removeFromUserCompetitionCreated } from '../../../helpers/selectors';
+import { removeFromUserCompetitionCreated, removeFromCompetitions } from '../../../helpers/selectors';
 
 export default function BrowseListItem(props) {
 
@@ -19,10 +19,12 @@ export default function BrowseListItem(props) {
     )
     .then((response) => {
       const updatedCompetitionsCreated = removeFromUserCompetitionCreated(props.state, props.id);
+      const updatedCompetitions = removeFromCompetitions(props.state, props.id);
       if (response.status === 200) {
         props.setState(prev => ({
           ...prev,
-          user_competitions_created: updatedCompetitionsCreated
+          user_competitions_created: updatedCompetitionsCreated,
+          competitions: updatedCompetitions
         }));
       }
     });
