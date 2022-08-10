@@ -59,21 +59,45 @@ const createFinalAssets = function (transactions, stocksToAdd) {
     })
   })
 
-  keys.map((key) => {
+  keys.map((key, index, array) => {
     let stockAmount = 0
-    transactions.map((transaction) => {
-      if (key === transaction.symbol) {
-        stockAmount += transaction.price * transaction.number_of_shares
-      }
-    })
 
-    finalAssets.push(
-      {
-        stock: key,
-        amount: stockAmount,
-        percentage: (Math.ceil((stockAmount / totalAmount) * 100))
-      }
-    )
+    if (index + 1 !== array.length) {
+      transactions.map((transaction) => {
+        if (key === transaction.symbol) {
+          stockAmount += transaction.price * transaction.number_of_shares
+        }
+      })
+
+      finalAssets.push(
+        {
+          stock: key,
+          amount: stockAmount,
+          percentage: (Math.ceil((stockAmount / totalAmount) * 100))
+        }
+      )
+      
+    } else {
+      transactions.map((transaction) => {
+        if (key === transaction.symbol) {
+          stockAmount += transaction.price * transaction.number_of_shares
+        }
+      })
+
+      let percentSoFar = 0;
+
+      finalAssets.map ((asset) => {
+        percentSoFar += asset.percentage
+      })
+
+      finalAssets.push(
+        {
+          stock: key,
+          amount: stockAmount,
+          percentage: (100 - percentSoFar)
+        }
+      )
+    }
   })
 
   return finalAssets
