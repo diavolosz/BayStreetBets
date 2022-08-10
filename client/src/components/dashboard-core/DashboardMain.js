@@ -63,7 +63,7 @@ export default function Dashboard(props) {
   //   setToggle(!toggle)
   // }
 
-  const [graph, setGraph] = useState("graph 1")
+  // const [graph, setGraph] = useState("graph 1")
 
   return (
     <div id="page-container">
@@ -81,8 +81,8 @@ export default function Dashboard(props) {
               <Dropdown
                 title="Dashboard"
                 items={props.user_competitions_enrolled}
-                setGraph={setGraph}
-                graph={graph}
+                setState={props.setState}
+                state={props.state}
               />
             </li>
             <li onClick={() => setComponent("Browse")}>
