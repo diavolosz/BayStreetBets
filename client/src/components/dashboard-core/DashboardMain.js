@@ -47,7 +47,7 @@ export default function Dashboard(props) {
   const logout = () => {
     localStorage.clear();
 
-    faPersonCirclePlus.setState({
+    props.setState({
       user: null,
       transactions: [],
       competitions: [],
