@@ -11,6 +11,19 @@ export const removeFromUserCompetitionCreated = (state, competitionId) => {
   return newCompetitionsCreated;
 };
 
+export const removeFromCompetitions = (state, competitionId) => {
+  let newCompetitions = [];
+
+  state.competitions.forEach(competitionObj => {
+    if (competitionObj.id !== competitionId) {
+      newCompetitions.push({ ...competitionObj });
+    }
+    
+  });
+
+  return newCompetitions;
+};
+
 export const addToUserCompetitionCreated = (state, competitionObj) => {
   let newCompetitionsCreated = [];
 
@@ -21,4 +34,16 @@ export const addToUserCompetitionCreated = (state, competitionObj) => {
   newCompetitionsCreated.push(competitionObj);
 
   return newCompetitionsCreated;
+};
+
+export const addToCompetitions = (state, competitionObj) => {
+  let newCompetitions = [];
+
+  state.competitions.forEach(competitionObj => {
+    newCompetitions.push({ ...competitionObj });
+  });
+
+  newCompetitions.push(competitionObj);
+
+  return newCompetitions;
 };
