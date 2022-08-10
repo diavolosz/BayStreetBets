@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useForm } from "../../hooks/useForm";
 import OrganizeCalendar from "./organize-content/OrganizeCalendar";
 
-import { addToUserCompetitionCreated } from "../../helpers/selectors";
+import { addToUserCompetitionCreated, addToCompetitions } from "../../helpers/selectors";
 
 import "../../stylesheet/Organize.scss"
 
@@ -66,11 +66,14 @@ export default function Organize(props) {
     axios.post(`/api/competitions`, submissionValues)
     .then(response => {
       const newCompetition = response.data.rows[0];
-      const updatedCompetitionsCreated = addToUserCompetitionCreated(props.state, newCompetition);  
+      const updatedCompetitionsCreated = addToUserCompetitionCreated(props.state, newCompetition); 
+      const updatedCompetitions = addToCompetitions(props.state, newCompetition); 
       props.setState(prev => ({
         ...prev,
-        user_competitions_created: updatedCompetitionsCreated
+        user_competitions_created: updatedCompetitionsCreated,
+        competitions: updatedCompetitions
       }));
+      props.setComponent("Browse");
     });
   };
 
