@@ -15,7 +15,9 @@ export default function BrowseListItem(props) {
       <div className="description-info-box">
         <span><strong>Event Name: </strong>{props.name}</span>
         <span><strong>Description: </strong>{props.description}</span>
-        {props.deleteOption === true && <button>CANCEL EVENT</button>}
+        {props.deleteOption === true && props.allEventDisplay === false && <button>CANCEL EVENT</button>}        
+        {props.deleteOption === false && props.allEventDisplay === false && <button>LEAVE EVENT</button>}
+
       </div>
     </div>
   )

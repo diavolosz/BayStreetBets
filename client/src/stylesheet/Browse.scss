@@ -93,6 +93,9 @@ input:focus{
     overflow-y: scroll;
     padding: 1rem 0 1rem 0;
 
+    h3 {
+      margin-left: 2rem;
+    }
     .event-item {
       width: 90%;
       height: 130px;

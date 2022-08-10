@@ -10,6 +10,7 @@ import TransactionHistory from '../dashboard-content/TransactionHistory'
 import ProfileEdit from '../dashboard-content/Profile'
 import Organize from '../dashboard-content/Organize'
 import Browse from '../dashboard-content/Browse'
+import Dropdown from '../dashboard-content/Dropdown'
 
 export default function Dashboard(props) {
   const navigate = useNavigate();
@@ -47,7 +48,7 @@ export default function Dashboard(props) {
   const logout = () => {
     localStorage.clear();
 
-    faPersonCirclePlus.setState({
+    props.setState({
       user: null,
       transactions: [],
       competitions: [],
@@ -56,6 +57,13 @@ export default function Dashboard(props) {
     })
     navigate('/');
   };
+
+  // const [toggle, setToggle] = useState(false)
+  // const toggleClick = () => {
+  //   setToggle(!toggle)
+  // }
+
+  const [graph, setGraph] = useState("graph 1")
 
   return (
     <div id="page-container">
@@ -66,9 +74,16 @@ export default function Dashboard(props) {
 
         <div id="top-nav">
           <ul>
-            <li onClick={() => setComponent("EventStatistic")}>
+            <li id="side-nav-dashboard" onClick={() => {
+              setComponent("EventStatistic")
+            }}>
               <FontAwesomeIcon icon={faClipboard} />
-              <span>Dashboard</span>
+              <Dropdown
+                title="Dashboard"
+                items={props.user_competitions_enrolled}
+                setGraph={setGraph}
+                graph={graph}
+              />
             </li>
             <li onClick={() => setComponent("Browse")}>
               <FontAwesomeIcon icon={faClipboard} />
@@ -137,14 +152,14 @@ export default function Dashboard(props) {
 
       <article id="portfolio-side-article">
         {component === "EventStatistic" && <EventStatistic />}
-        {component === "TransactionHistory" && <TransactionHistory 
-        state={props.state}
-        setState={props.setState}
-        competitions_enrolled={props.competitions_enrolled}
-        current_competition={props.current_competition}
+        {component === "TransactionHistory" && <TransactionHistory
+          state={props.state}
+          setState={props.setState}
+          competitions_enrolled={props.competitions_enrolled}
+          current_competition={props.current_competition}
         />}
         {component === "ProfileEdit" && <ProfileEdit />}
-        {component === "Organize" && <Organize user={props.user}/>}
+        {component === "Organize" && <Organize user={props.user} />}
         {component === "Browse" && <Browse
           competitions={props.competitions}
           user_competitions_created={props.user_competitions_created}
