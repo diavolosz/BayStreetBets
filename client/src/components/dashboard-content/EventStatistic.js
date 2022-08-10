@@ -44,7 +44,16 @@ export default function EventStatistic(props) {
         <div id="protfolio-change-graph">
           <div className='portfolio-chart'>
             <span>User Portfolio Change (Total Equity Change $)</span>
-            <PortfolioChart />
+            <PortfolioChart 
+            state={props.state}
+            setState={props.setState}
+    
+            competitions_enrolled={props.competitions_enrolled}
+            current_competition={props.current_competition}
+            
+            transactions={props.transactions}
+            user_balance={props.user_balance}
+            />
           </div>
         </div>
 

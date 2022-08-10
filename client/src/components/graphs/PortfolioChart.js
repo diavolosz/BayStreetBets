@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { Line } from 'react-chartjs-2'
 import { Chart as ChartJS } from 'chart.js/auto'
 
+// import helpers
+
 let portfolio = [
   { date: "Jul 6, 22", totalEquity: 10000 },
   { date: "Jul 7, 22", totalEquity: 5000 },
@@ -47,7 +49,22 @@ const animation = {
 
 
 
-export default function PortfolioChart() {
+export default function PortfolioChart(props) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   const [userData, setUserData] = useState({
     labels: portfolio.map((item) => item.date),
@@ -56,6 +73,8 @@ export default function PortfolioChart() {
       data: portfolio.map((item) => item.totalEquity)
     }]
   })
+
+
 let delayed;
 
   return (
@@ -79,7 +98,6 @@ let delayed;
         }
       },
 
-
       animation: {
         onComplete: () => {
           delayed = true;
@@ -101,13 +119,6 @@ let delayed;
         }
       }
     
-    
-
-
-
-
     }} />
-
   )
-
 }

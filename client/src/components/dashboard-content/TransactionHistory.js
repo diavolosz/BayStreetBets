@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-
 import "../../stylesheet/TransactionHistory.scss"
+
+import TransactionHistoryItem from './TransactionHistoryItem';
 
 
 export default function TransactionHistory(props) {
+  const [transactionData, setTransactionData] = useState({
+    transactions: props.transactions
+  })
 
-  //console.log(prop)
 
   useEffect(() => {
     Promise.all([
@@ -16,32 +19,43 @@ export default function TransactionHistory(props) {
           competition: props.current_competition
         }
       })
-    ]).then((transactions) => {
-      //console.log (transactions)
+    ]).then((newTransactions) => {
+
       props.setState(prev => ({
         ...prev,
-        transactions: transactions[0].data
+        transactions: newTransactions[0].data
       }));
+
+      props.setState(prev => ({
+        ...prev,
+        transactions: newTransactions[0].data
+      }))
+
+
+      setTransactionData(prev => ({
+        ...prev,
+        transactionData: newTransactions[0].data
+      }))
+
+
+      // let listed = newTransactions[0].data.map((transaction) => {
+      //   return (
+      //     <tbody>
+      //       <tr>
+      //         <td>{transaction.symbol}</td>
+      //         <td>{transaction.buy_sell}</td>
+      //         <td>{Math.abs(transaction.number_of_shares)}</td>
+      //         <td>{`$${transaction.price}`}</td>
+      //         <td>{`$${Math.abs(transaction.number_of_shares * transaction.price)}`}</td>
+      //       </tr>
+      //     </tbody>
+      //   )
+      // })
     })
 
 
-  }, [props.state.current_competition])
 
-
-  let listedTransactions = props.state.transactions.map((transaction) => {
-    return (
-      <tbody>
-        <tr>
-          <td>{transaction.symbol}</td>
-          <td>{transaction.buy_sell}</td>
-          <td>{Math.abs(transaction.number_of_shares)}</td>
-          <td>{`$${transaction.price}`}</td>
-          <td>{`$${Math.abs(transaction.number_of_shares * transaction.price)}`}</td>
-        </tr>
-      </tbody>
-    )
-  })
-
+  }, [props.current_competition])
 
   return (
     <div id="transaction-history-container">
@@ -56,7 +70,9 @@ export default function TransactionHistory(props) {
             <th>Total Price</th>
           </tr>
         </thead>
-        {listedTransactions}
+        <TransactionHistoryItem 
+        key={transactionData} 
+        transactions={transactionData}/>
       </table>
     </div>
   )
