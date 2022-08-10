@@ -5,12 +5,72 @@
 
   #search-box {
     height: 50%;
+    width: 100%;
     border-radius: 24px;
     box-shadow: 0px 5px 10px 0px rgba(100, 100, 100, 0.5);
     background-color: rgb(255, 255, 255);
-
     display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 
+
+    .stock-chart {
+      width: 60%;
+
+      
+    }
+
+    #stock-chart-container {
+      width: 100%;
+      height: 100%;
+      padding: 0 1em 2em 1em;
+    }
+
+    .stock-details-container {
+      position: relative;
+      width: 40%;
+      background-color: #ffffff;
+      border-radius: 0 24px 24px 0;
+      border-left: 5px rgba(128, 128, 128, 0.445) solid;
+
+      .detail-title {
+        background-color: rgb(34, 34, 34);
+        color: white;
+        border-radius: 0 24px 0 0;
+        text-align: center;
+        padding: 0.5em;
+        font-size: 20px;
+        text-decoration: underline;
+      }
+
+      .stock-details {
+        background-color: #ffffff;
+        height: 80%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;   
+        min-width: 400px;
+        max-width: 800px;
+
+        .info-block {
+          color: rgb(0, 0, 0);
+          margin: 1rem 2rem;
+
+          h5 {
+            font-weight: 900;
+            margin-bottom: 0px;
+            font-size: 1em;
+            text-decoration: underline;
+          }
+
+          p {
+            margin-top: 0px;
+            margin-bottom: 0px;
+            font-size: 1em;
+          }
+        }
+      }
+    }
   }
 
   #portfolio-change-container {
@@ -25,6 +85,26 @@
       background-color: rgb(255, 255, 255);
       box-shadow: 0px 7px 10px 0px rgba(100, 100, 100, 0.5);
 
+      .portfolio-chart {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+
+        span {
+          width: 100%;
+          background-color: rgb(34, 34, 34);;
+          border-radius: 24px 24px 0 0;
+          text-align: center;
+          color: white;
+          font-size: 18px;
+          padding: 8px 0;
+        }
+
+        canvas {
+          padding: 0 1em 2.5rem 1em;
+        }
+      }
     }
 
     #protfolio-change-chart {
@@ -32,108 +112,35 @@
       border-radius: 24px;
       background-color: rgb(255, 255, 255);
       box-shadow: 0px 7px 10px 0px rgba(100, 100, 100, 0.5);
+ 
 
+      .pie-chart {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        height: 100%;
+        padding-bottom: 2em;
+        
 
+        .asset-title {
+          background-color: rgb(34, 34, 34);
+          color: white;
+          text-align: center;
+          font-size: 19px;
+          padding: 8px 0 8px 0;
+          border-radius: 24px 24px 0 0;
+        }
 
+        canvas {
+          padding-bottom: 10px;
+        }
+      }
     }
   }
 }
 
-.stock-chart {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
 
 
 
 
-  padding: 2em;
-}
 
-.stock-details-container {
-  background-color: #3da5d9;
-
-  border-radius: 24px;
-
-  
-}
-
-.detail-title {
-  display: flex;
-  justify-content: center;
-
-  padding: 0.5em;
-
-  border-bottom: 3px solid black;
-  font-size: 25px;
-  font-weight: 900;
-
-}
-
-.info-block {
-  margin: 5px;
-  background-color: #73bfb8;
-
-  padding: 0.1em 0.2em 0.1em 0.2em;
-
-  // affected the number of boxes in rows/columns
-  width: 100px;
-
-  display: flex;
-  flex-direction: column;
-  border-radius: 10px;
-
-
-  h5 {
-    font-weight: 900;
-    margin-bottom: 0px;
-    font-size: 1em;
-
-    text-decoration: underline;
-
-  }
-
-  p {
-    margin-top: 0px;
-    margin-bottom: 0px;
-
-    font-size: 1em;
-  }
-
-}
-
-.info-block:hover {
-  background-color: #83dcd3
-}
-
-
-
-
-.pie-chart {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-
-  width: 100%;
-  height: 100%;
-
-
-  padding: 2em;
-}
-
-.asset-title {
-  display: flex;
-  justify-content: center;
-
-  text-decoration: underline;
-  font-weight: 900;
-}
-
-.portfolio-chart {
-  width: 100%;
-  height: 100%;
-
-  padding: 2em;
-}

@@ -52,15 +52,14 @@ export default function PortfolioChart() {
   const [userData, setUserData] = useState({
     labels: portfolio.map((item) => item.date),
     datasets: [{
-      label: "User Portfolio Change (Total Equity Change $)",
+      label: " ",
       data: portfolio.map((item) => item.totalEquity)
     }]
   })
-
+  // User Portfolio Change (Total Equity Change $)
 let delayed;
 
   return (
-
     <Line data={userData} options={{
       maintainAspectRatio: false,
       backgroundColor: 'rgb(0, 0, 255)',

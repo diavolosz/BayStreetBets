@@ -20,12 +20,13 @@ export default function EventStatistic() {
       <div id="search-box">
         <div className='stock-chart'>
 
-            <form className="stock-search-box" onSubmit={search}>
-              <input type="text" placeholder="Stock Symbol" name="symbol" />
-              <button type='submit'>Search</button>
-            </form>
-
-          <StockChart />
+          <form className="stock-search-box" onSubmit={search}>
+            <input type="text" placeholder="Stock Symbol" name="symbol" />
+            <button type='submit'>Search</button>
+          </form>
+          <div id="stock-chart-container">
+            <StockChart />
+          </div>
         </div>
         <div className='stock-details-container'>
           <div className='detail-title'>
@@ -40,6 +41,7 @@ export default function EventStatistic() {
 
         <div id="protfolio-change-graph">
           <div className='portfolio-chart'>
+            <span>User Portfolio Change (Total Equity Change $)</span>
             <PortfolioChart />
           </div>
         </div>
