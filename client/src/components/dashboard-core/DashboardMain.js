@@ -10,6 +10,7 @@ import TransactionHistory from '../dashboard-content/TransactionHistory'
 import ProfileEdit from '../dashboard-content/Profile'
 import Organize from '../dashboard-content/Organize'
 import Browse from '../dashboard-content/Browse'
+import Dropdown from '../dashboard-content/Dropdown'
 
 export default function Dashboard(props) {
   const navigate = useNavigate();
@@ -62,6 +63,13 @@ export default function Dashboard(props) {
     navigate('/');
   };
 
+  // const [toggle, setToggle] = useState(false)
+  // const toggleClick = () => {
+  //   setToggle(!toggle)
+  // }
+
+  // const [graph, setGraph] = useState("graph 1")
+
   return (
     <div id="page-container">
       <nav id="portfolio-side-nav">
@@ -71,9 +79,16 @@ export default function Dashboard(props) {
 
         <div id="top-nav">
           <ul>
-            <li onClick={() => setComponent("EventStatistic")}>
+            <li id="side-nav-dashboard" onClick={() => {
+              setComponent("EventStatistic")
+            }}>
               <FontAwesomeIcon icon={faClipboard} />
-              <span>Dashboard</span>
+              <Dropdown
+                title="Dashboard"
+                items={props.user_competitions_enrolled}
+                setState={props.setState}
+                state={props.state}
+              />
             </li>
             <li onClick={() => setComponent("Browse")}>
               <FontAwesomeIcon icon={faClipboard} />
@@ -158,11 +173,13 @@ export default function Dashboard(props) {
         current_competition={props.current_competition}
         />}
         {component === "ProfileEdit" && <ProfileEdit />}
-        {component === "Organize" && <Organize user={props.user}/>}
+        {component === "Organize" && <Organize user={props.user} setState={props.setState} state={props.state} setComponent={setComponent}/>}
         {component === "Browse" && <Browse
           competitions={props.competitions}
           user_competitions_created={props.user_competitions_created}
           user_competitions_enrolled={props.user_competitions_enrolled}
+          setState={props.setState}
+          state={props.state}
         />}
 
       </article>

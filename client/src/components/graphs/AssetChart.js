@@ -17,6 +17,8 @@ const randomColour = function () {
   return "rgb(" + r + "," + g + "," + b + ")";
 };
 
+
+
 // gets the stocks and totals in portfolio
 const findStocksInPortfolio = function (transactions) {
   let stockAndShares = {};

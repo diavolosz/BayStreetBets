@@ -27,6 +27,7 @@ export default function TransactionHistory(props) {
 
   }, [props.state.current_competition])
 
+
   let listedTransactions = props.state.transactions.map((transaction) => {
     return (
       <tbody>

@@ -119,7 +119,7 @@ function App() {
 
       competitions_enrolled={state.competitions_enrolled}
       current_competition={state.current_competition}
-      transactions={state.transactions_userBalance}
+      transactions={state.transactions}
 
     />
     :

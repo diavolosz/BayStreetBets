@@ -8,18 +8,22 @@ import BrowseListItem from './browse-content/BrowseListItem'
 
 export default function Browse(props) {
 
-  const eventInfoDisplay = (data, deleteOption = false) => {
+  const eventInfoDisplay = (data, deleteOption = false, allEventDisplay = false) => {
     return (
       data.map((each, index) => {
-        const { user_id, name, description, starting_amount } = each
+        const { id, user_id, name, description, starting_amount } = each
         return (
           <BrowseListItem 
-            key={index}
+            key={id}
+            id={id}
             user_id={user_id}
             name={name}
             description={description}
             starting_amount={starting_amount}
+            allEventDisplay={allEventDisplay}
             deleteOption={deleteOption}
+            setState={props.setState}
+            state={props.state}
           />
         )
       })
@@ -41,9 +45,11 @@ export default function Browse(props) {
         </form>
       </div>
       <div id="event-display-container">
-        {displayEvent === "browseEvent" && eventInfoDisplay(props.competitions)}
+        {displayEvent === "browseEvent" && eventInfoDisplay(props.competitions, null, true)}
 
+        {displayEvent === "myEvent" && <h3>Created Events</h3>}
         {displayEvent === "myEvent" && eventInfoDisplay(props.user_competitions_created, true)}
+        {displayEvent === "myEvent" && <h3>Joined Events</h3>}
         {displayEvent === "myEvent" && eventInfoDisplay(props.user_competitions_enrolled)}
 
       </div>
