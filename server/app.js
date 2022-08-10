@@ -14,6 +14,7 @@ const signupRouter = require('./routes/signup');
 const competitionsRouter = require('./routes/competitions');
 const userRouter = require("./routes/user");
 const transactionsRouter = require("./routes/transactions");
+const chartsRouter = require ("./routes/charts");
 
 
 const app = express();
@@ -32,6 +33,7 @@ app.use('/api/signup', signupRouter(db));
 app.use('/api/competitions', competitionsRouter(db));
 app.use('/api/user', userRouter(db));
 app.use('/api/transactions', transactionsRouter(db));
+app.use('/api/charts', chartsRouter(db));
 
 
 module.exports = app;

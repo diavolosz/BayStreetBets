@@ -53,6 +53,8 @@ export default function Dashboard(props) {
       competitions: [],
       competitions_created: {},
       competitions_enrolled: {},
+      user_competitions_created: [],
+      user_competitions_enrolled: []
     })
     navigate('/');
   };
@@ -137,6 +139,7 @@ export default function Dashboard(props) {
 
       <article id="portfolio-side-article">
         {component === "EventStatistic" && <EventStatistic />}
+        
         {component === "TransactionHistory" && <TransactionHistory 
         state={props.state}
         setState={props.setState}

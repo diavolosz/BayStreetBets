@@ -4,7 +4,7 @@ import axios from 'axios';
 import "../../stylesheet/TransactionHistory.scss"
 
 
-export default function TransactionHistory(prop) {
+export default function TransactionHistory(props) {
 
   //console.log(prop)
 
@@ -12,33 +12,30 @@ export default function TransactionHistory(prop) {
     Promise.all([
       axios.post("/api/transactions", {
         data: {
-          user: prop.state.user,
-          competition: prop.current_competition
+          user: props.state.user,
+          competition: props.current_competition
         }
       })
     ]).then((transactions) => {
-    //console.log (transactions)
-      prop.setState(prev => ({
+      //console.log (transactions)
+      props.setState(prev => ({
         ...prev,
         transactions: transactions[0].data
       }));
     })
 
 
-  }, [])
+  }, [props.state.current_competition])
 
-  let listedTransactions = prop.state.transactions.map((transaction) => {
-
-    let total = transaction.number_of_shares * Number (transaction.price.replace('$', ''))
-
+  let listedTransactions = props.state.transactions.map((transaction) => {
     return (
       <tbody>
         <tr>
           <td>{transaction.symbol}</td>
           <td>{transaction.buy_sell}</td>
-          <td>{transaction.number_of_shares}</td>
-          <td>{transaction.price}</td>
-          <td>{`$${total}`}</td>
+          <td>{Math.abs(transaction.number_of_shares)}</td>
+          <td>{`$${transaction.price}`}</td>
+          <td>{`$${Math.abs(transaction.number_of_shares * transaction.price)}`}</td>
         </tr>
       </tbody>
     )
@@ -47,7 +44,7 @@ export default function TransactionHistory(prop) {
 
   return (
     <div id="transaction-history-container">
-      <h1>Transaction History: {prop.current_competition.name}</h1>
+      <h1>Transaction History: {props.current_competition.name}</h1>
       <table>
         <thead>
           <tr>
