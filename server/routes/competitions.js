@@ -81,5 +81,18 @@ module.exports = db => {
     
   });
 
+  // router.post("/:id", (req, res) => {
+  //   const userJwt = req.headers.user;
+  //   const { competitionId, creatorId } = req.body;
+
+  //   // Check if user is logged in
+  //   jwt.verify(userJwt, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+  //     if (err) {
+  //       return res.sendStatus(401);
+  //     }
+  //   });
+
+  // });
+
   return router;
 };
