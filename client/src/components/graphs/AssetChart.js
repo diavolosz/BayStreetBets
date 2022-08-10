@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Pie } from 'react-chartjs-2'
 import { Chart as ChartJS } from 'chart.js/auto'
 
@@ -17,25 +17,11 @@ const randomColour = function () {
   return "rgb(" + r + "," + g + "," + b + ")";
 };
 
-
-
-export default function AssetChart(props) {
-  console.log(props.transactions)
-
-  // let totalAmount = 0;
-  // props.transactions.map((transaction) => {
-  //   totalAmount += (transaction.number_of_shares * transaction.price)
-  // })
-
-  // let stockList = []
-  // props.transactions.map((transaction) => {
-  //   if (!stockList.includes(transaction.symbol)) {
-  //     stockList.push(transaction.symbol)
-  //   }
-  // })
-
+// gets the stocks and totals in portfolio
+const findStocksInPortfolio = function (transactions) {
   let stockAndShares = {};
-  props.transactions.map((transaction) => {
+
+  transactions.map((transaction) => {
     if (!stockAndShares[transaction.symbol]) {
       stockAndShares[transaction.symbol] = transaction.number_of_shares
     } else {
@@ -43,45 +29,30 @@ export default function AssetChart(props) {
     }
   })
 
-  console.log("before removal of stock and shares", stockAndShares)
+  return stockAndShares
+}
 
-  let keys = Object.keys(stockAndShares)
+// gets the stocks in portfolio that are not 0
+const removeZeroStocks = function (stockObject) {
+  let keys = Object.keys(stockObject)
 
   for (let key of keys) {
-    if (stockAndShares[key] === 0) {
-      delete stockAndShares[key]
+    if (stockObject[key] === 0) {
+      delete stockObject[key]
     }
   }
 
-  console.log("after removal of stock and shares", stockAndShares)
+  return stockObject
+}
 
+// creates total amount of stock money, finds stock percent and moeny amount, creates final array to generate graph data
+const createFinalAssets = function (transactions, stocksToAdd) {
   let finalAssets = []
   let totalAmount = 0;
-  keys = Object.keys(stockAndShares)
-
-
-
-  // keys.map((key) => {
-  //   let stockAmount = 0;
-  //   props.transactions.map((transaction) => {
-  //     if (key === transaction.symbol) {
-  //       totalAmount += transaction.price * transaction.number_of_shares
-  //       stockAmount += transaction.price * transaction.number_of_shares
-  //     }
-  //   })
-
-
-  //   finalAssets.push(
-  //     {
-  //       stock: key,
-  //       amount: stockAmount,
-  //       percentage: (Math.floor((stockAmount / totalAmount) * 100))
-  //     }
-  //   )
-  // })
+  let keys = Object.keys(stocksToAdd)
 
   keys.map((key) => {
-    props.transactions.map((transaction) => {
+    transactions.map((transaction) => {
       if (key === transaction.symbol) {
         totalAmount += transaction.price * transaction.number_of_shares
       }
@@ -90,7 +61,7 @@ export default function AssetChart(props) {
 
   keys.map((key) => {
     let stockAmount = 0
-    props.transactions.map((transaction) => {
+    transactions.map((transaction) => {
       if (key === transaction.symbol) {
         stockAmount += transaction.price * transaction.number_of_shares
       }
@@ -103,32 +74,126 @@ export default function AssetChart(props) {
         percentage: (Math.ceil((stockAmount / totalAmount) * 100))
       }
     )
-
   })
 
+  return finalAssets
+}
 
-  console.log("final assets", finalAssets)
+
+export default function AssetChart(props) {
+
+  const [pieData, setpieData] = useState({ labels: [], datasets: [] })
+
+  //   // function 1
+  //   let stockAndShares = {};
+  //   props.transactions.map((transaction) => {
+  //     if (!stockAndShares[transaction.symbol]) {
+  //       stockAndShares[transaction.symbol] = transaction.number_of_shares
+  //     } else {
+  //       stockAndShares[transaction.symbol] = stockAndShares[transaction.symbol] + transaction.number_of_shares
+  //     }
+  //   })
+
+  //   console.log("function 1 output { AAPL: 10, TWTR: 5 }")
+  // // function 1
+
+  // // function 2
+  //   let keys = Object.keys(stockAndShares)
+
+  //   for (let key of keys) {
+  //     if (stockAndShares[key] === 0) {
+  //       delete stockAndShares[key]
+  //     }
+  //   }
+
+  //   console.log("function 2 output { AAPL: 10, TWTR: 5 }")
+  // // function 2
+
+
+  // //  function 3
+  //   let finalAssets = []
+  //   let totalAmount = 0;
+  //   keys = Object.keys(stockAndShares)
 
 
 
-  const colours = [];
+  //   keys.map((key) => {
+  //     props.transactions.map((transaction) => {
+  //       if (key === transaction.symbol) {
+  //         totalAmount += transaction.price * transaction.number_of_shares
+  //       }
+  //     })
+  //   })
 
-  // for (let length of assets) {
-  //   colours.push(randomColour())
-  // }
+  //   keys.map((key) => {
+  //     let stockAmount = 0
+  //     props.transactions.map((transaction) => {
+  //       if (key === transaction.symbol) {
+  //         stockAmount += transaction.price * transaction.number_of_shares
+  //       }
+  //     })
 
-  for (let length of finalAssets) {
-    colours.push(randomColour())
-  }
+  //     finalAssets.push(
+  //       {
+  //         stock: key,
+  //         amount: stockAmount,
+  //         percentage: (Math.ceil((stockAmount / totalAmount) * 100))
+  //       }
+  //     )
 
-  const [pieData, setpieData] = useState({
-    labels: finalAssets.map((asset) => `${asset.stock} (${asset.percentage})`),
-    datasets: [{
-      data: finalAssets.map((asset) => asset.amount),
-      backgroundColor: colours
-    }]
-  })
-  // USE EFFECT NEEDS TO BE PUT, ADD IN FUNCTIONS, CHANGE WHEN CURRENT COMPETITION CHANGES
+  //   })
+
+  //   // function 3
+
+  useEffect(() => {
+    let stocksAndShares = findStocksInPortfolio(props.transactions)
+    let portfolioStocks = removeZeroStocks(stocksAndShares)
+    let finalAssets = createFinalAssets(props.transactions, portfolioStocks)
+
+    const colours = [];
+
+    for (let length of finalAssets) {
+      colours.push(randomColour())
+    }
+
+    setpieData({
+      labels: finalAssets.map((asset) => `${asset.stock} (${asset.percentage})`),
+      datasets: [{
+        data: finalAssets.map((asset) => asset.amount),
+        backgroundColor: colours
+      }]
+    })
+
+
+  }, [props.current_competition])
+
+
+
+  // console.log ("stocks and shares", stocksAndShares)
+
+
+
+  // console.log ("portfolio stocks", portfolioStocks)
+
+
+
+  // console.log("final assets", finalAssets)
+
+  // const [pieData, setpieData] = useState({
+  //   labels: finalAssets.map((asset) => `${asset.stock} (${asset.percentage})`),
+  //   datasets: [{
+  //     data: finalAssets.map((asset) => asset.amount),
+  //     backgroundColor: colours
+  //   }]
+  // })
+
+  // setpieData({
+  //   labels: finalAssets.map((asset) => `${asset.stock} (${asset.percentage})`),
+  //   datasets: [{
+  //     data: finalAssets.map((asset) => asset.amount),
+  //     backgroundColor: colours
+  //   }]
+  // })
 
   return (
     <Pie data={pieData} options={{
