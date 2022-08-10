@@ -54,30 +54,44 @@ function App() {
 
         ]).then((comps_userComps) => {
 
+          console.log(comps_userComps[2].data)
+
+          let user_comp_info = null
+
+          if (comps_userComps[2].data.length) {
+            user_comp_info = {
+              id: comps_userComps[2].data[0].id, name: comps_userComps[2].data[0].name
+            }
+          }
+
+          // let user_comp_info = !comps_userComps[2].data ? {
+          //   id: comps_userComps[2].data[0].id, name: comps_userComps[2].data[0].name
+          // } : null
+
           Promise.all([
             axios.post("/api/charts/pie", {
               data: {
                 user: userEmailID[0].data,
-                user_competitions: {
-                  id: comps_userComps[2].data[0].id, name: comps_userComps[2].data[0].name
-                }
+                user_competitions: user_comp_info
               }
             }),
             axios.post("/api/charts/portfolio", {
               data: {
                 user: userEmailID[0].data,
-                user_competitions: {
-                  id: comps_userComps[2].data[0].id, name: comps_userComps[2].data[0].name
-                }
+                user_competitions: user_comp_info
               }
             })
           ]).then((transactions_userBalance) => {
 
             // console.log(transactions_userBalance[0].data)
 
-            let current_comp_info = comps_userComps[2].data.length ? {
-              id: comps_userComps[2].data[0].id, name: comps_userComps[2].data[0].name
-            } : null
+            let current_comp_info = null
+
+            if (comps_userComps[2].data.length) {
+              current_comp_info = {
+                id: comps_userComps[2].data[0].id, name: comps_userComps[2].data[0].name
+              }
+            }
 
             setState(prev => ({
               ...prev,
