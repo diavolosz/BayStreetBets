@@ -3,9 +3,9 @@ const router = require("express").Router();
 module.exports = db => {
   router.post("/pie", (req, res) => {
 
+
     const userID = req.body.data.user.id
 
-    console.log(req.body.data)
     const competitionID = req.body.data.user_competitions.id
 
 
@@ -21,6 +21,8 @@ module.exports = db => {
   });
 
   router.post("/portfolio", (req, res) => {
+
+
     const userID = req.body.data.user.id
     const competitionID = req.body.data.user_competitions.id
 

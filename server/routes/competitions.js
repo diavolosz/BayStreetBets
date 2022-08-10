@@ -47,6 +47,8 @@ module.exports = db => {
 
     db.query(`SELECT * FROM competitions WHERE user_id = $1;`, [userID])
     .then(result => {
+
+      console.log (typeof result.rows)
       return res.json(result.rows);
     });
   });
