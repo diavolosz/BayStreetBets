@@ -63,17 +63,17 @@ function App() {
                 }
               }
             }),
-            // axios.post("/api/charts/portfolio", {
-            //   data: {
-            //     user: userEmailID[0].data,
-            //     user_competitions: {
-            //       id: comps_userComps[2].data[0].id, name: comps_userComps[2].data[0].name
-            //     }
-            //   }
-            // })
-          ]).then((transactions) => {
+            axios.post("/api/charts/portfolio", {
+              data: {
+                user: userEmailID[0].data,
+                user_competitions: {
+                  id: comps_userComps[2].data[0].id, name: comps_userComps[2].data[0].name
+                }
+              }
+            })
+          ]).then((transactions_userBalance) => {
 
-            // console.log(transactions[0].data)
+            // console.log(transactions_userBalance[0].data)
 
             let current_comp_info = comps_userComps[2].data.length ? {
               id: comps_userComps[2].data[0].id, name: comps_userComps[2].data[0].name
@@ -88,14 +88,15 @@ function App() {
               competitions_enrolled: comps_userComps[2].data,
 
               current_competition: current_comp_info,
-              transactions: transactions[0].data    //specific to user and to competition
+              transactions: transactions_userBalance[0].data,    //specific to user and to competition
+              user_balance: transactions_userBalance[1].data
             }));
           })
 
 
 
 
-          
+
         })
 
       })
@@ -118,7 +119,7 @@ function App() {
 
       competitions_enrolled={state.competitions_enrolled}
       current_competition={state.current_competition}
-      transactions={state.transactions}
+      transactions={state.transactions_userBalance}
 
     />
     :
