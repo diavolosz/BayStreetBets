@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useForm } from "../../hooks/useForm";
 import OrganizeCalendar from "./organize-content/OrganizeCalendar";
 
+import { addToUserCompetitionCreated } from "../../helpers/selectors";
+
 import "../../stylesheet/Organize.scss"
 
 
@@ -60,10 +62,15 @@ export default function Organize(props) {
 
   const onSubmit = event => {
     event.preventDefault();
-    const submissionValues = { ...formValues, "4": calender, user: props.user };
+    const submissionValues = { ...formValues, "4": calender, user: localStorage.getItem("user") };
     axios.post(`/api/competitions`, submissionValues)
     .then(response => {
-      
+      const newCompetition = response.data.rows[0];
+      const updatedCompetitionsCreated = addToUserCompetitionCreated(props.state, newCompetition);  
+      props.setState(prev => ({
+        ...prev,
+        user_competitions_created: updatedCompetitionsCreated
+      }));
     });
   };
 
