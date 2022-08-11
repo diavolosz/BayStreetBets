@@ -2,7 +2,6 @@ const router = require("express").Router();
 
 module.exports = db => {
   router.post("/pie", (req, res) => {
-    console.log(req.destroyed.data)
 
     if (!req.body.data.user_competitions) {
       return res.json(null);

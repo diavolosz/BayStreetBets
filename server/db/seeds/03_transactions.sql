@@ -25,12 +25,12 @@ INSERT INTO transactions (buy_sell, symbol, price, number_of_shares, transaction
 INSERT INTO transactions (buy_sell, symbol, price, number_of_shares, transaction_date, user_id, competition_id) VALUES ('Buy', 'GOOGL', 130.00, 8, '2022-09-13 00:00:00-05', 1, 6);
 INSERT INTO transactions (buy_sell, symbol, price, number_of_shares, transaction_date, user_id, competition_id) VALUES ('Buy', 'GOOGL', 140.00, 5, '2022-09-14 00:00:00-05', 1, 6);
 
-INSERT INTO transactions (buy_sell, symbol, price, number_of_shares, transaction_date, user_id, competition_id) VALUES ('Buy', 'LCID', 100.00, 10, '2022-09-12 00:00:00-05', 2, 6);
-INSERT INTO transactions (buy_sell, symbol, price, number_of_shares, transaction_date, user_id, competition_id) VALUES ('Sell', 'LCID', 130.00, -10, '2022-09-14 00:00:00-05', 2, 6);
-INSERT INTO transactions (buy_sell, symbol, price, number_of_shares, transaction_date, user_id, competition_id) VALUES ('Buy', 'PTON', 140.00, 5, '2022-09-15 00:00:00-05', 2, 6);
-INSERT INTO transactions (buy_sell, symbol, price, number_of_shares, transaction_date, user_id, competition_id) VALUES ('Buy', 'PTON', 140.00, 8, '2022-09-15 00:00:00-05', 2, 6);
+INSERT INTO transactions (buy_sell, symbol, price, number_of_shares, transaction_date, user_id, competition_id) VALUES ('Buy', 'LCID', 100.00, 10, '2022-09-12 00:00:00-05', 2, 7);
+INSERT INTO transactions (buy_sell, symbol, price, number_of_shares, transaction_date, user_id, competition_id) VALUES ('Sell', 'LCID', 130.00, -10, '2022-09-14 00:00:00-05', 2, 7);
+INSERT INTO transactions (buy_sell, symbol, price, number_of_shares, transaction_date, user_id, competition_id) VALUES ('Buy', 'PTON', 140.00, 5, '2022-09-15 00:00:00-05', 2, 7);
+INSERT INTO transactions (buy_sell, symbol, price, number_of_shares, transaction_date, user_id, competition_id) VALUES ('Buy', 'PTON', 140.00, 8, '2022-09-15 00:00:00-05', 2, 7);
 
-INSERT INTO transactions (buy_sell, symbol, price, number_of_shares, transaction_date, user_id, competition_id) VALUES ('Buy', 'META', 180.00, 10, '2022-09-12 00:00:00-05', 3, 6);
-INSERT INTO transactions (buy_sell, symbol, price, number_of_shares, transaction_date, user_id, competition_id) VALUES ('Sell', 'META', 170.00, -5, '2022-09-14 00:00:00-05', 3, 6);
-INSERT INTO transactions (buy_sell, symbol, price, number_of_shares, transaction_date, user_id, competition_id) VALUES ('Sell', 'META', 140.00, -2, '2022-09-16 00:00:00-05', 3, 6);
-INSERT INTO transactions (buy_sell, symbol, price, number_of_shares, transaction_date, user_id, competition_id) VALUES ('Buy', 'GME', 40.00, 50, '2022-09-16 00:00:00-05', 3, 6);
+INSERT INTO transactions (buy_sell, symbol, price, number_of_shares, transaction_date, user_id, competition_id) VALUES ('Buy', 'META', 180.00, 10, '2022-09-12 00:00:00-05', 3, 8);
+INSERT INTO transactions (buy_sell, symbol, price, number_of_shares, transaction_date, user_id, competition_id) VALUES ('Sell', 'META', 170.00, -5, '2022-09-14 00:00:00-05', 3, 8);
+INSERT INTO transactions (buy_sell, symbol, price, number_of_shares, transaction_date, user_id, competition_id) VALUES ('Sell', 'META', 140.00, -2, '2022-09-16 00:00:00-05', 3, 8);
+INSERT INTO transactions (buy_sell, symbol, price, number_of_shares, transaction_date, user_id, competition_id) VALUES ('Buy', 'GME', 40.00, 50, '2022-09-16 00:00:00-05', 3, 8);
