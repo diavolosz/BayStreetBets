@@ -38,30 +38,6 @@ export default function StockDetails(props) {
 
   return (
     <div className='stock-details'>
-      <div className='info-block'>
-        <h5>Symbol</h5>
-        <p>{quote[0].symbol}</p>
-      </div>
-
-      <div className='info-block'>
-        <h5>Symbol</h5>
-        <p>{quote[0].symbol}</p>
-      </div>
-
-      <div className='info-block'>
-        <h5>Symbol</h5>
-        <p>{quote[0].symbol}</p>
-      </div>
-
-      <div className='info-block'>
-        <h5>Symbol</h5>
-        <p>{quote[0].symbol}</p>
-      </div>
-
-      <div className='info-block'>
-        <h5>Symbol</h5>
-        <p>{quote[0].symbol}</p>
-      </div>
 
       <StockDetailsItem details={itemDetails.details} />
 
