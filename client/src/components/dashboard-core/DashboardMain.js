@@ -164,6 +164,7 @@ export default function Dashboard(props) {
         current_competition={props.current_competition}
         
         transactions={props.transactions}
+        user_balance={props.user_balance}
         />}
 
         {component === "TransactionHistory" && <TransactionHistory 
@@ -171,6 +172,7 @@ export default function Dashboard(props) {
         setState={props.setState}
         competitions_enrolled={props.competitions_enrolled}
         current_competition={props.current_competition}
+        transactions={props.transactions}
         />}
         {component === "ProfileEdit" && <ProfileEdit />}
         {component === "Organize" && <Organize user={props.user} setState={props.setState} state={props.state} setComponent={setComponent}/>}
