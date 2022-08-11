@@ -45,7 +45,7 @@ module.exports = db => {
   router.post("/user_competitions", (req, res) => {
     const userID = req.body.data.user.id
 
-    db.query(`SELECT * FROM competitions WHERE user_id = $1;`, [userID])
+    db.query(`SELECT id, name, starting_amount::money::numeric::int FROM competitions WHERE user_id = $1;`, [userID])
     .then(result => {
 
       console.log (typeof result.rows)

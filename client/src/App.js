@@ -89,7 +89,7 @@ function App() {
 
             if (comps_userComps[2].data.length) {
               current_comp_info = {
-                id: comps_userComps[2].data[0].id, name: comps_userComps[2].data[0].name
+                id: comps_userComps[2].data[0].id, name: comps_userComps[2].data[0].name, starting_amount: comps_userComps[2].data[0].starting_amount
               }
             }
 
