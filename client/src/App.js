@@ -54,7 +54,7 @@ function App() {
 
         ]).then((comps_userComps) => {
 
-          console.log(comps_userComps[2].data)
+          // console.log(comps_userComps[2].data)
 
           let user_comp_info = null
 

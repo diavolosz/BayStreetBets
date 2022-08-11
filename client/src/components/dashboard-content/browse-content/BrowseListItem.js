@@ -20,6 +20,7 @@ export default function BrowseListItem(props) {
       .then((response) => {
         const updatedCompetitionsCreated = removeFromUserCompetitionCreated(props.state, props.id);
         const updatedCompetitions = removeFromCompetitions(props.state, props.id);
+        console.log(props.state.user_competitions_created)
         if (response.status === 200) {
           props.setState(prev => ({
             ...prev,
@@ -46,6 +47,9 @@ export default function BrowseListItem(props) {
         }
         {props.deleteOption === false
           && <button>LEAVE EVENT</button>
+        }
+        {props.deleteOption === null
+          && <button id="join-event">JOIN EVENT</button>
         }
       </div>
     </div>
