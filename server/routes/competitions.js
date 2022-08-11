@@ -8,6 +8,17 @@ module.exports = db => {
     });
   });
 
+  router.post("/search", (req, res) => {
+    console.log(req.body)
+    const search_item = req.body.search
+
+    return db.query(`SELECT * FROM competitions WHERE name LIKE '%${search_item}%' OR description LIKE '%${search_item}%' LIMIT 5;`)
+    .then((result) => {
+      res.json(result)
+    })
+  })
+
+
   router.post("/", (req, res) => {
     const name = req.body["0"].value;
     const description = req.body["1"].value;
@@ -55,12 +66,13 @@ module.exports = db => {
   router.post("/user_competitions", (req, res) => {
     const userID = req.body.data.user.id;
 
-    db.query(`SELECT * FROM competitions WHERE user_id = $1;`, [userID]).then(
-      result => {
-        console.log(typeof result.rows);
-        return res.json(result.rows);
-      }
-    );
+    db.query(`SELECT id, name, starting_amount::money::numeric::int FROM competitions WHERE user_id = $1;`, [userID])
+    .then(result => {
+
+      console.log (typeof result.rows)
+      return res.json(result.rows);
+    });
+
   });
 
   router.delete("/", (req, res) => {

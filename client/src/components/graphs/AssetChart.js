@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Pie } from 'react-chartjs-2'
 import { Chart as ChartJS } from 'chart.js/auto'
+import axios from 'axios';
 
 let assets = [
   { stock: 'AAPL', amount: 159.60, percentage: '8%' },
@@ -114,34 +115,74 @@ export default function AssetChart(props) {
 
     if (props.transactions !== null) {
 
+      axios.post("/api/charts/pie", {
+        data: {
+          user: props.state.user,
+          user_competitions: props.state.current_competition
+        }
+      }).then(newTransactions => {
 
-      let stocksAndShares = findStocksInPortfolio(props.transactions)
-      let portfolioStocks = removeZeroStocks(stocksAndShares)
-      let finalAssets = createFinalAssets(props.transactions, portfolioStocks)
+        //console.log(newTransactions.data)
 
-      const colours = [];
 
-      for (let length of finalAssets) {
-        colours.push(randomColour())
-      }
+        let stocksAndShares = findStocksInPortfolio(newTransactions.data)
+        let portfolioStocks = removeZeroStocks(stocksAndShares)
+        let finalAssets = createFinalAssets(props.transactions, portfolioStocks)
 
-      setpieData({
-        labels: finalAssets.map((asset) => `${asset.stock} (${asset.percentage})`),
-        datasets: [{
+        const colours = [];
+
+        for (let length of finalAssets) {
+          colours.push(randomColour())
+        }
+
+        let labelList = finalAssets.map((asset) => `${asset.stock} (${asset.percentage})`)
+
+        //console.log(labelList)
+
+        let datasetList = [{
           data: finalAssets.map((asset) => asset.amount),
           backgroundColor: colours
         }]
+
+        props.setState(prev => ({
+          ...prev,
+          transactions: newTransactions.data
+        }))
+
+        setpieData(prev => ({
+          ...prev,
+          labels: labelList,
+          datasets: datasetList
+        }))
+
       })
+
+     
+
+
     }
+
 
   }, [props.current_competition])
 
 
   return (
-    <Pie data={pieData} options={{
-      maintainAspectRatio: false,
+    <Pie
+      data={pieData}
+      options={{
+        maintainAspectRatio: false,
+        elements: {
+          arc: {
+            borderWidth: 0
+          }
+        }
 
-    }} />
+      }} 
+      
+      
+      
+      
+      />
   )
 
 }

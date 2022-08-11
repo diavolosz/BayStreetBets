@@ -160,44 +160,45 @@ export default function Dashboard(props) {
           </ul>
         </div>
       </nav>
-
       <article id="portfolio-side-article">
-        {component === "EventStatistic" && (
-          <EventStatistic
-            state={props.state}
-            setState={props.setState}
-            competitions_enrolled={props.competitions_enrolled}
-            current_competition={props.current_competition}
-            transactions={props.transactions}
-          />
-        )}
 
-        {component === "TransactionHistory" && (
-          <TransactionHistory
-            state={props.state}
-            setState={props.setState}
-            competitions_enrolled={props.competitions_enrolled}
-            current_competition={props.current_competition}
-          />
-        )}
-        {component === "ProfileEdit" && <ProfileEdit />}
-        {component === "Organize" && (
-          <Organize
-            user={props.user}
-            setState={props.setState}
-            state={props.state}
-            setComponent={setComponent}
-          />
-        )}
-        {component === "Browse" && (
-          <Browse
-            competitions={props.competitions}
-            user_competitions_created={props.user_competitions_created}
-            user_competitions_enrolled={props.user_competitions_enrolled}
-            setState={props.setState}
-            state={props.state}
-          />
-        )}
+        {component === "EventStatistic" && <EventStatistic
+          state={props.state}
+          setState={props.setState}
+          competitions_enrolled={props.competitions_enrolled}
+          current_competition={props.current_competition}
+          transactions={props.transactions}
+          user_balance={props.user_balance}
+        />}
+
+        {component === "TransactionHistory" && <TransactionHistory
+          state={props.state}
+          setState={props.setState}
+          competitions_enrolled={props.competitions_enrolled}
+          current_competition={props.current_competition}
+          transactions={props.transactions}
+        />}
+
+        {component === "ProfileEdit" && <ProfileEdit
+          user_profile={props.user_profile}
+          setState={props.setState}
+          setComponent={setComponent}
+        />}
+
+        {component === "Organize" && <Organize
+          user={props.user}
+          setState={props.setState}
+          state={props.state}
+          setComponent={setComponent}
+        />}
+
+        {component === "Browse" && <Browse
+          competitions={props.competitions}
+          user_competitions_created={props.user_competitions_created}
+          user_competitions_enrolled={props.user_competitions_enrolled}
+          setState={props.setState}
+          state={props.state}
+        />}
       </article>
     </div>
   );

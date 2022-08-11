@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const bcrypt = require("bcryptjs");
 
 module.exports = db => {
   router.get("/", (req, res) => {});
@@ -28,6 +29,26 @@ module.exports = db => {
         res.json(competitions);
       });
   });
+
+  router.post("/:id/profile", (req, res) => {
+    const updated_username = req.body["0"].value
+    const updated_email = req.body["1"].value
+    const updated_password = req.body["2"].value
+    const hashed_password = bcrypt.hashSync(updated_password, 10);
+  
+
+    const { id } = req.params;
+    return db.query(`UPDATE users SET username = $1, email = $2, password = $3 WHERE users.id = ${id} RETURNING *;`,[updated_username, updated_email, hashed_password])
+    .then((result) => {
+      const user = result.rows[0]
+      delete user.password
+      console.log(user)
+      return res.json(user);
+    })
+    .catch((err) => {
+      return res.send(err)
+    })
+  })
 
   return router;
 };

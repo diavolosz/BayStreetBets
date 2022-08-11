@@ -1,19 +1,21 @@
 import { useForm } from "../../hooks/useForm";
 import "../../stylesheet/Profile.scss";
+import axios from "axios";
 
-const ProfileEdit = () => {
+const ProfileEdit = (props) => {
+  // console.log(props)
   const [formValues, parsedFormData, handleInput, errors] = useForm([
     {
       name: "username",
-      value: "",
-      placeholder: "Username",
+      placeholder: `${props.user_profile.username}`,
+      value: `${props.user_profile.username}`,
       type: "username",
       required: true,
     },
     {
       name: "email",
-      placeholder: "Email",
-      value: "",
+      placeholder: `${props.user_profile.email}`,
+      value: `${props.user_profile.email}`,
       type: "email",
       required: true,
     },
@@ -53,14 +55,13 @@ const ProfileEdit = () => {
 
   const onSubmit = event => {
     event.preventDefault();
-    console.log(formValues);
-    // axios.post(`/login`, {
-    //   ...formValues
-    // })
-    // .then(response => {
-    //   setUser(response.data.user)
-    //   localStorage.setItem("user", response.data.user);
-    // });
+    axios.post(`/api/user/${props.user_profile.id}/profile`, {
+      ...formValues
+    })
+      .then((res) => {
+        props.setState(prev => ({...prev, user_profile: res.data}))
+        props.setComponent("EventStatistic")
+      })
   };
 
   return (

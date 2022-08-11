@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Line } from 'react-chartjs-2'
 import { Chart as ChartJS } from 'chart.js/auto'
 
+// import helpers?
 let portfolio = [
   { date: "Jul 6, 22", totalEquity: 10000 },
   { date: "Jul 7, 22", totalEquity: 5000 },
@@ -42,24 +43,134 @@ const animation = {
   }
 };
 
+// takes transaction_date to format like "July 2, 22"
+const convertDate = function (dateString) {
+  let year = dateString.slice(2, 4)
+  let month = dateString.slice(5, 7)
 
+  if (month === '01') {
+    month = 'Jan'
+  } else if (month === '02') {
+    month = 'Feb'
+  } else if (month === '03') {
+    month = 'Mar'
+  } else if (month === '04') {
+    month = 'Apr'
+  } else if (month === '05') {
+    month = 'May'
+  } else if (month === '06') {
+    month = 'June'
+  } else if (month === '07') {
+    month = 'July'
+  } else if (month === '08') {
+    month = 'Aug'
+  } else if (month === '09') {
+    month = 'Sep'
+  } else if (month === '010') {
+    month = 'Oct'
+  } else if (month === '11') {
+    month = 'Nov'
+  } else if (month === '12') {
+    month = 'Dec'
+  }
 
+  let day = dateString.slice(8, 10)
 
+  let date = `${month} ${day}, ${year}`
 
+  return date
+}
 
-export default function PortfolioChart() {
+const getListOfDays = function (transactions) {
+  let listOfDays = []
 
-  const [userData, setUserData] = useState({
-    labels: portfolio.map((item) => item.date),
-    datasets: [{
-      label: " ",
-      data: portfolio.map((item) => item.totalEquity)
-    }]
+  transactions.map((transaction) => {
+    if (!listOfDays.includes(transaction.transaction_date)) {
+      listOfDays.push(transaction.transaction_date)
+    }
   })
-let delayed;
+
+  return listOfDays
+}
+
+const createFinalPortfolio = function (listOfDays, transactions, current_competition) {
+  let finalPortfolio = [];
+  let totalBuyAmount = 0;
+
+  listOfDays.map((day) => {
+
+
+    transactions.map((transaction, index, item) => {
+      if (day === transaction.transaction_date) {
+        totalBuyAmount += transaction.number_of_shares * transaction.price
+      }
+
+      if (index + 1 === item.length) {
+        finalPortfolio.push({
+          date: convertDate(day),
+          totalEquity: current_competition.starting_amount - totalBuyAmount
+        })
+      }
+    })
+  })
+
+  return finalPortfolio
+}
+
+
+
+export default function PortfolioChart(props) {
+  const [equityData, setEquityData] = useState({
+    labels: [], datasets: []
+  })
+
+  useEffect(() => {
+
+    let dayList = getListOfDays(props.transactions)
+
+    let finalPortfolio = createFinalPortfolio(dayList, props.transactions, props.current_competition)
+
+
+    let labelList = finalPortfolio.map((day) => {
+      return day.date
+    })
+
+    // console.log(labelList)
+
+    let dataList = finalPortfolio.map((day) => {
+      return day.totalEquity
+    })
+
+    //console.log (dataList)
+
+    setEquityData(prev => ({
+      ...prev,
+      labels: labelList,
+      datasets: [{
+        label: "",
+        data: dataList
+      }]
+    }))
+
+  }, [props.current_competition])
+
+
+
+
+
+  // const [userData, setUserData] = useState({
+  //   labels: portfolio.map((item) => item.date),
+  //   datasets: [{
+  //     label: "",
+  //     data: portfolio.map((item) => item.totalEquity)
+  //   }]
+  // })
+
+
+  let delayed;
 
   return (
-    <Line data={userData} options={{
+    <Line data={equityData} options={{
       maintainAspectRatio: false,
       backgroundColor: 'rgb(0, 0, 255)',
       borderColor: 'rgb(0, 0, 0)',
@@ -100,14 +211,7 @@ let delayed;
           stacked: true
         }
       }
-    
-    
-
-
-
 
     }} />
-
   )
-
 }

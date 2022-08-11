@@ -51,7 +51,7 @@ function App() {
           axios.post("/api/competitions/user_competitions", {
             data: { user: userEmailID[0].data, }
           }),
-
+          axios.get(`/api/user/${userEmailID[0].data.id}`)
         ]).then((comps_userComps) => {
 
 
@@ -89,13 +89,15 @@ function App() {
 
             if (comps_userComps[2].data.length) {
               current_comp_info = {
-                id: comps_userComps[2].data[0].id, name: comps_userComps[2].data[0].name
+                id: comps_userComps[2].data[0].id, name: comps_userComps[2].data[0].name, starting_amount: comps_userComps[2].data[0].starting_amount
               }
             }
+
 
             setState(prev => ({
               ...prev,
               user: userEmailID[0].data,
+              user_profile:comps_userComps[3].data,
               competitions: comps_userComps[0].data,
               user_competitions_created: comps_userComps[1].data.competitionsCreated,
               user_competitions_enrolled: comps_userComps[1].data.competitionsEnrolled,
@@ -103,7 +105,7 @@ function App() {
 
               current_competition: current_comp_info,
               transactions: transactions_userBalance[0].data,    //specific to user and to competition
-              user_balance: transactions_userBalance[1].data
+              user_balance: transactions_userBalance[1].data[0]
             }));
           })
 
@@ -130,10 +132,14 @@ function App() {
       competitions_enrolled={state.competitions_enrolled}
       current_competition={state.current_competition}
       transactions={state.transactions}
+      user_balance={state.user_balance}
 
+      user_profile={state.user_profile}
     />
     :
     <HomePage />
+
+  // console.log(state.user_profile)
 
   return (
     <div className="App">
