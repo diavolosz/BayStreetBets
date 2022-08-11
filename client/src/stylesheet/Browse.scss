@@ -154,6 +154,15 @@ input:focus {
             cursor: pointer;
           }
         }
+        
+        #join-event {
+          background-color: rgba(23, 133, 29, 0.404);
+          &:hover {
+            background-color: rgb(126, 255, 133);
+
+          }
+
+        }
       }
     }
 

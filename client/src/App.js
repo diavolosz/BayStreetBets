@@ -54,8 +54,8 @@ function App() {
 
         ]).then((comps_userComps) => {
 
-          // variable for axios requests when user is not in any competitions
 
+          // variable for axios requests when user is not in any competitions
           let user_comp_info = null
 
           if (comps_userComps[2].data.length) {

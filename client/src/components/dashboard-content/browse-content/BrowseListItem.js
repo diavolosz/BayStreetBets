@@ -3,11 +3,11 @@ import { removeFromUserCompetitionCreated, removeFromCompetitions } from '../../
 
 export default function BrowseListItem(props) {
 
-// const { index, user_id, name, description, starting_amount, created } = props
+  // const { index, user_id, name, description, starting_amount, created } = props
 
   const deleteCompetition = () => {
     axios.delete("/api/competitions",
-      { 
+      {
         headers: {
           user: localStorage.getItem("user")
         },
@@ -17,17 +17,18 @@ export default function BrowseListItem(props) {
         }
       }
     )
-    .then((response) => {
-      const updatedCompetitionsCreated = removeFromUserCompetitionCreated(props.state, props.id);
-      const updatedCompetitions = removeFromCompetitions(props.state, props.id);
-      if (response.status === 200) {
-        props.setState(prev => ({
-          ...prev,
-          user_competitions_created: updatedCompetitionsCreated,
-          competitions: updatedCompetitions
-        }));
-      }
-    });
+      .then((response) => {
+        const updatedCompetitionsCreated = removeFromUserCompetitionCreated(props.state, props.id);
+        const updatedCompetitions = removeFromCompetitions(props.state, props.id);
+        console.log(props.state.user_competitions_created)
+        if (response.status === 200) {
+          props.setState(prev => ({
+            ...prev,
+            user_competitions_created: updatedCompetitionsCreated,
+            competitions: updatedCompetitions
+          }));
+        }
+      });
   }
 
   return (
@@ -41,8 +42,15 @@ export default function BrowseListItem(props) {
       <div className="description-info-box">
         <span><strong>Event Name: </strong>{props.name}</span>
         <span><strong>Description: </strong>{props.description}</span>
-        {props.deleteOption === true && props.allEventDisplay === false && <button onClick={deleteCompetition}>CANCEL EVENT</button>}        
-        {props.deleteOption === false && props.allEventDisplay === false && <button>LEAVE EVENT</button>}
+        {props.deleteOption === true
+          && <button onClick={deleteCompetition}>CANCEL EVENT</button>
+        }
+        {props.deleteOption === false
+          && <button>LEAVE EVENT</button>
+        }
+        {props.deleteOption === null
+          && <button id="join-event">JOIN EVENT</button>
+        }
       </div>
     </div>
   )
