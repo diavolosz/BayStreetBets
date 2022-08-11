@@ -22,12 +22,19 @@ export default function EventStatistic(props) {
     event.preventDefault();
     console.log(event.target[0].value)
 
+    // Promise.all ([
+    //   axios.get(`https://cloud.iexapis.com/stable/stock/${event.target[0].value}/quote?token=${process.env.REACT_APP_CLOUD_TOKEN}`)
+    //   axios.get(`https://cloud.iexapis.com/stable/stock/${event.target[0].value}/quote?token=${process.env.REACT_APP_CLOUD_TOKEN}`)
+    // ])
+
     axios.get(`https://cloud.iexapis.com/stable/stock/${event.target[0].value}/quote?token=${process.env.REACT_APP_CLOUD_TOKEN}`)
+
     .then((response) => {
       setStockSearch(prev => ({
         ...prev,
         details: response.data
       }))
+
       console.log(response.data)
 
     })
@@ -48,7 +55,9 @@ export default function EventStatistic(props) {
             <button type='submit'><FontAwesomeIcon className="search-icon" icon={faMagnifyingGlass} /></button>
           </form>
           <div id="stock-chart-container">
-            <StockChart />
+            <StockChart 
+            
+            />
           </div>
         </div>
         <div className='stock-details-container'>

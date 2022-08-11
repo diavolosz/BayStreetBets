@@ -2,6 +2,11 @@ const router = require("express").Router();
 
 module.exports = db => {
   router.post("/", (req, res) => {
+
+    if (!req.body.data.competition) {
+      return res.json(null);
+    }
+
     console.log("req.body.data will give user", req.body.data)
     const userID = req.body.data.user.id
 

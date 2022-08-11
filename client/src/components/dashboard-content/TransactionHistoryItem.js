@@ -5,21 +5,31 @@ export default function TransactionHistoryItem(props) {
 
   //console.log (transactions.transactions)
 
-  let listed = transactions.transactions.map((transaction) => {
-    return (
-      <tbody>
-        <tr>
-          <td>{transaction.symbol}</td>
-          <td>{transaction.buy_sell}</td>
-          <td>{Math.abs(transaction.number_of_shares)}</td>
-          <td>{`$${transaction.price}`}</td>
-          <td>{`$${Math.abs(transaction.number_of_shares * transaction.price)}`}</td>
-        </tr>
-      </tbody>
-    )
-  })
+  let listed;
+
+  listed = transactions.transactions ?
+
+    transactions.transactions.map((transaction) => {
+      return (
+        <tbody>
+          <tr>
+            <td>{transaction.symbol}</td>
+            <td>{transaction.buy_sell}</td>
+            <td>{Math.abs(transaction.number_of_shares)}</td>
+            <td>{`$${transaction.price}`}</td>
+            <td>{`$${Math.abs(transaction.number_of_shares * transaction.price)}`}</td>
+          </tr>
+        </tbody>
+      )
+    })
+
+    :
+
+    null
 
   return (
+
     listed
+    
   )
 }

@@ -99,6 +99,8 @@ function App() {
               current_comp_info = transactions_userBalance[1].data[0]
             }
 
+            
+
 
             setState(prev => ({
               ...prev,

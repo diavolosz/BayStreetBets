@@ -59,7 +59,7 @@ export default function TransactionHistory(props) {
 
   return (
     <div id="transaction-history-container">
-      <h1>Transaction History: {props.current_competition.name}</h1>
+      <h1>Transaction History: {props.current_competition ? props.current_competition.name : 'NO COMPETITION'}</h1>
       <table>
         <thead>
           <tr>
