@@ -121,17 +121,23 @@ module.exports = db => {
 
     // Check if user is logged in
     jwt.verify(userJwt, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-      if (err || user.id !== creatorId) {
+      if (err || user.id === creatorId) {
         return res.sendStatus(403);
       }
 
       // Insert entry in user_competitions
-      db.query(
-        `INSERT INTO user_competitions(user_balance, user_id, competition_id) VALUES($1, $2, $3)`,
-        [startingBalance, user.id, competitionId]
-      )
+      return db
+        .query(
+          `INSERT INTO user_competitions(user_balance, user_id, competition_id) VALUES($1, $2, $3)`,
+          [startingBalance, user.id, competitionId]
+        )
         .then(() => {
-          return res.sendStatus(200);
+          return db.query("SELECT * FROM competitions WHERE id = $1", [
+            competitionId,
+          ]);
+        })
+        .then(results => {
+          return res.json(results.rows[0]);
         })
         .catch(() => res.sendStatus(404));
     });

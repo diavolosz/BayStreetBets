@@ -1,16 +1,20 @@
+import "../../stylesheet/DashboardMain.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faClipboard,
+  faPersonCirclePlus,
+  faRightFromBracket,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
+import { useNavigate, Navigate } from "react-router";
 
-import '../../stylesheet/DashboardMain.scss'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faClipboard, faPersonCirclePlus, faRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons'
-import { useState } from 'react'
-import { useNavigate, Navigate } from 'react-router'
-
-import EventStatistic from '../dashboard-content/EventStatistic'
-import TransactionHistory from '../dashboard-content/TransactionHistory'
-import ProfileEdit from '../dashboard-content/Profile'
-import Organize from '../dashboard-content/Organize'
-import Browse from '../dashboard-content/Browse'
-import Dropdown from '../dashboard-content/Dropdown'
+import EventStatistic from "../dashboard-content/EventStatistic";
+import TransactionHistory from "../dashboard-content/TransactionHistory";
+import ProfileEdit from "../dashboard-content/Profile";
+import Organize from "../dashboard-content/Organize";
+import Browse from "../dashboard-content/Browse";
+import Dropdown from "../dashboard-content/Dropdown";
 
 export default function Dashboard(props) {
   const navigate = useNavigate();
@@ -30,8 +34,7 @@ export default function Dashboard(props) {
     { symbol: "APPL", price: 166.13, share: 50 },
     { symbol: "APPL", price: 166.13, share: 50 },
     { symbol: "APPL", price: 166.13, share: 50 },
-
-  ]
+  ];
 
   const portfolioData = dataSet.map((each, index) => {
     return (
@@ -40,8 +43,8 @@ export default function Dashboard(props) {
         <td>${each.price}</td>
         <td>{each.share}</td>
       </tr>
-    )
-  })
+    );
+  });
 
   const [component, setComponent] = useState("EventStatistic");
 
@@ -55,12 +58,12 @@ export default function Dashboard(props) {
 
       user_competitions_created: [],
       user_competitions_enrolled: [],
-      
+
       transactions: [],
       competitions_enrolled: [],
-      current_competition: {}
-    })
-    navigate('/');
+      current_competition: {},
+    });
+    navigate("/");
   };
 
   // const [toggle, setToggle] = useState(false)
@@ -79,9 +82,12 @@ export default function Dashboard(props) {
 
         <div id="top-nav">
           <ul>
-            <li id="side-nav-dashboard" onClick={() => {
-              setComponent("EventStatistic")
-            }}>
+            <li
+              id="side-nav-dashboard"
+              onClick={() => {
+                setComponent("EventStatistic");
+              }}
+            >
               <FontAwesomeIcon icon={faClipboard} />
               <Dropdown
                 title="Dashboard"
@@ -119,7 +125,9 @@ export default function Dashboard(props) {
         <div id="portfolio">
           <header id="portfolio-header">
             <span>PORTFOLIO</span>
-            <button onClick={() => setComponent("TransactionHistory")}>Transaction</button>
+            <button onClick={() => setComponent("TransactionHistory")}>
+              Transaction
+            </button>
           </header>
 
           <table id="portfolio-table-category">
@@ -134,9 +142,7 @@ export default function Dashboard(props) {
 
           <article>
             <table id="portfolio-table">
-              <tbody>
-                {portfolioData}
-              </tbody>
+              <tbody>{portfolioData}</tbody>
             </table>
           </article>
         </div>
@@ -156,35 +162,43 @@ export default function Dashboard(props) {
       </nav>
 
       <article id="portfolio-side-article">
-        {component === "EventStatistic" && <EventStatistic 
-        state={props.state}
-        setState={props.setState}
+        {component === "EventStatistic" && (
+          <EventStatistic
+            state={props.state}
+            setState={props.setState}
+            competitions_enrolled={props.competitions_enrolled}
+            current_competition={props.current_competition}
+            transactions={props.transactions}
+          />
+        )}
 
-        competitions_enrolled={props.competitions_enrolled}
-        current_competition={props.current_competition}
-        
-        transactions={props.transactions}
-        />}
-
-        {component === "TransactionHistory" && <TransactionHistory 
-        state={props.state}
-        setState={props.setState}
-        competitions_enrolled={props.competitions_enrolled}
-        current_competition={props.current_competition}
-        />}
+        {component === "TransactionHistory" && (
+          <TransactionHistory
+            state={props.state}
+            setState={props.setState}
+            competitions_enrolled={props.competitions_enrolled}
+            current_competition={props.current_competition}
+          />
+        )}
         {component === "ProfileEdit" && <ProfileEdit />}
-        {component === "Organize" && <Organize user={props.user} setState={props.setState} state={props.state} setComponent={setComponent}/>}
-        {component === "Browse" && <Browse
-          competitions={props.competitions}
-          user_competitions_created={props.user_competitions_created}
-          user_competitions_enrolled={props.user_competitions_enrolled}
-          setState={props.setState}
-          state={props.state}
-        />}
-
+        {component === "Organize" && (
+          <Organize
+            user={props.user}
+            setState={props.setState}
+            state={props.state}
+            setComponent={setComponent}
+          />
+        )}
+        {component === "Browse" && (
+          <Browse
+            competitions={props.competitions}
+            user_competitions_created={props.user_competitions_created}
+            user_competitions_enrolled={props.user_competitions_enrolled}
+            setState={props.setState}
+            state={props.state}
+          />
+        )}
       </article>
     </div>
   );
 }
-
-
