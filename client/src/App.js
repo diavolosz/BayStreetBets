@@ -51,7 +51,7 @@ function App() {
           axios.post("/api/competitions/user_competitions", {
             data: { user: userEmailID[0].data, }
           }),
-
+          axios.get(`/api/user/${userEmailID[0].data.id}`)
         ]).then((comps_userComps) => {
 
 
@@ -96,6 +96,7 @@ function App() {
             setState(prev => ({
               ...prev,
               user: userEmailID[0].data,
+              user_profile:comps_userComps[3].data,
               competitions: comps_userComps[0].data,
               user_competitions_created: comps_userComps[1].data.competitionsCreated,
               user_competitions_enrolled: comps_userComps[1].data.competitionsEnrolled,
@@ -131,9 +132,12 @@ function App() {
       current_competition={state.current_competition}
       transactions={state.transactions}
 
+      user_profile={state.user_profile}
     />
     :
     <HomePage />
+
+  // console.log(state.user_profile)
 
   return (
     <div className="App">

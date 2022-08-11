@@ -1,19 +1,20 @@
 import { useForm } from "../../hooks/useForm";
 import "../../stylesheet/Profile.scss";
 
-const ProfileEdit = () => {
+const ProfileEdit = (props) => {
+  console.log(props)
   const [formValues, parsedFormData, handleInput, errors] = useForm([
     {
       name: "username",
-      value: "",
-      placeholder: "Username",
+      placeholder: `${props.user_profile.username}`,
+      value: `${props.user_profile.username}`,
       type: "username",
       required: true,
     },
     {
       name: "email",
-      placeholder: "Email",
-      value: "",
+      placeholder: `${props.user_profile.email}`,
+      value: `${props.user_profile.email}`,
       type: "email",
       required: true,
     },

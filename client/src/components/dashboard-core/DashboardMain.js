@@ -159,10 +159,8 @@ export default function Dashboard(props) {
         {component === "EventStatistic" && <EventStatistic 
         state={props.state}
         setState={props.setState}
-
         competitions_enrolled={props.competitions_enrolled}
         current_competition={props.current_competition}
-        
         transactions={props.transactions}
         />}
 
@@ -172,8 +170,13 @@ export default function Dashboard(props) {
         competitions_enrolled={props.competitions_enrolled}
         current_competition={props.current_competition}
         />}
-        {component === "ProfileEdit" && <ProfileEdit />}
+
+        {component === "ProfileEdit" && <ProfileEdit 
+        user_profile={props.user_profile}
+        />}
+
         {component === "Organize" && <Organize user={props.user} setState={props.setState} state={props.state} setComponent={setComponent}/>}
+
         {component === "Browse" && <Browse
           competitions={props.competitions}
           user_competitions_created={props.user_competitions_created}
