@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Line } from 'react-chartjs-2'
 import { Chart as ChartJS } from 'chart.js/auto'
+import axios from 'axios';
 
 // import helpers?
 let portfolio = [
@@ -126,31 +127,37 @@ export default function PortfolioChart(props) {
 
   useEffect(() => {
 
-    let dayList = getListOfDays(props.transactions)
+    // axios.post("/api/transactions")
 
-    let finalPortfolio = createFinalPortfolio(dayList, props.transactions, props.current_competition)
+    if (props.transactions !== null) {
 
+      let dayList = getListOfDays(props.transactions)
+  
+      let finalPortfolio = createFinalPortfolio(dayList, props.transactions, props.current_competition)
+  
+  
+      let labelList = finalPortfolio.map((day) => {
+        return day.date
+      })
+  
+      // console.log(labelList)
+  
+      let dataList = finalPortfolio.map((day) => {
+        return day.totalEquity
+      })
+  
+      //console.log (dataList)
+  
+      setEquityData(prev => ({
+        ...prev,
+        labels: labelList,
+        datasets: [{
+          label: "",
+          data: dataList
+        }]
+      }))
+    }
 
-    let labelList = finalPortfolio.map((day) => {
-      return day.date
-    })
-
-    // console.log(labelList)
-
-    let dataList = finalPortfolio.map((day) => {
-      return day.totalEquity
-    })
-
-    //console.log (dataList)
-
-    setEquityData(prev => ({
-      ...prev,
-      labels: labelList,
-      datasets: [{
-        label: "",
-        data: dataList
-      }]
-    }))
 
   }, [props.current_competition])
 

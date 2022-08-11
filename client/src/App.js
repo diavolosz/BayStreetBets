@@ -93,6 +93,12 @@ function App() {
               }
             }
 
+            let user_balance_info = null
+
+            if (transactions_userBalance[1].data) {
+              current_comp_info = transactions_userBalance[1].data[0]
+            }
+
 
             setState(prev => ({
               ...prev,
@@ -105,7 +111,7 @@ function App() {
 
               current_competition: current_comp_info,
               transactions: transactions_userBalance[0].data,    //specific to user and to competition
-              user_balance: transactions_userBalance[1].data[0]
+              user_balance: user_balance_info
             }));
           })
 
