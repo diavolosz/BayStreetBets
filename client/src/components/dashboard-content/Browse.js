@@ -4,6 +4,7 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 
 import BrowseListItem from './browse-content/BrowseListItem'
+import axios from 'axios'
 
 
 export default function Browse(props) {
@@ -31,7 +32,6 @@ export default function Browse(props) {
         outputArray.push(each)
       }
     }
-    console.log(outputArray)
     return outputArray
   }
 
@@ -59,6 +59,23 @@ export default function Browse(props) {
 
   const [displayEvent, setDisplayEvent] = useState("browseEvent");
 
+
+  const [search, setSearch] = useState("")
+  const [displaySearch, setDisplaySearch] = useState({})
+
+  const handleSubmitEvent = (event) => {
+    event.preventDefault()
+    console.log(search)
+
+    axios.post('/api/competitions/search', { search })
+    .then((res) => {
+      console.log(res.data.rows)
+      setDisplaySearch(res.data.rows)
+      setDisplayEvent("searchEvent")
+    })
+
+  }
+
   return (
     <div id="browse-inner-container">
       <div id="search-box-container">
@@ -66,8 +83,14 @@ export default function Browse(props) {
           <span onClick={() => setDisplayEvent("browseEvent")}>BROWSE EVENT</span>
           <span onClick={() => setDisplayEvent("myEvent")}>MY EVENT</span>
         </div>
-        <form id="search-box-search-bar">
-          <input type="text" placeholder="Search Event..." name="search" />
+        <form id="search-box-search-bar" onSubmit={handleSubmitEvent}>
+          <input
+            type="text"
+            placeholder="Search Event..."
+            name="search"
+            onChange={event => setSearch(event.target.value)}
+            value={search}
+          />
           <button type='submit'><FontAwesomeIcon icon={faMagnifyingGlass} /></button>
         </form>
       </div>
@@ -78,6 +101,8 @@ export default function Browse(props) {
         {displayEvent === "myEvent" && eventInfoDisplay(props.user_competitions_created, true)}
         {displayEvent === "myEvent" && <h3>Joined Events</h3>}
         {displayEvent === "myEvent" && eventInfoDisplay(props.user_competitions_enrolled)}
+
+        {displayEvent === "searchEvent" && eventInfoDisplay(eventFilterByIdHelper(displaySearch, props.user_competitions_enrolled, props.user_competitions_enrolled), null)}
 
       </div>
     </div>

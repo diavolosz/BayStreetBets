@@ -29,5 +29,19 @@ module.exports = db => {
       });
   });
 
+  router.post("/:id/profile", (req, res) => {
+    const updated_username = req.body["0"].value
+    const updated_email = req.body["1"].value
+
+    const { id } = req.params;
+    return db.query(`UPDATE users SET username = $1, email = $2 WHERE users.id = ${id};`,[updated_username, updated_email])
+    .then(() => {
+      return res.json(result);
+    })
+    .catch((err) => {
+      return res.send(err)
+    })
+  })
+
   return router;
 };

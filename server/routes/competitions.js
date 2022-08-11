@@ -10,6 +10,17 @@ module.exports = db => {
 
   });
 
+  router.post("/search", (req, res) => {
+    console.log(req.body)
+    const search_item = req.body.search
+
+    return db.query(`SELECT * FROM competitions WHERE name LIKE '%${search_item}%' OR description LIKE '%${search_item}%' LIMIT 5;`)
+    .then((result) => {
+      res.json(result)
+    })
+  })
+
+
   router.post("/", (req, res) => {
     const name = req.body["0"].value;
     const description = req.body["1"].value;

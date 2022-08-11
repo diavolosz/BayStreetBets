@@ -1,8 +1,9 @@
 import { useForm } from "../../hooks/useForm";
 import "../../stylesheet/Profile.scss";
+import axios from "axios";
 
 const ProfileEdit = (props) => {
-  console.log(props)
+  // console.log(props)
   const [formValues, parsedFormData, handleInput, errors] = useForm([
     {
       name: "username",
@@ -54,14 +55,15 @@ const ProfileEdit = (props) => {
 
   const onSubmit = event => {
     event.preventDefault();
-    console.log(formValues);
-    // axios.post(`/login`, {
-    //   ...formValues
-    // })
-    // .then(response => {
-    //   setUser(response.data.user)
-    //   localStorage.setItem("user", response.data.user);
-    // });
+    // console.log(formValues);
+    axios.post(`/api/user/${props.user_profile.id}/profile`, {
+      ...formValues
+    })
+    .then(() => {
+        console.log(formValues)
+
+      props.setComponent("EventStatistic")
+    })
   };
 
   return (

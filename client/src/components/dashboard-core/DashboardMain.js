@@ -55,7 +55,7 @@ export default function Dashboard(props) {
 
       user_competitions_created: [],
       user_competitions_enrolled: [],
-      
+
       transactions: [],
       competitions_enrolled: [],
       current_competition: {}
@@ -156,26 +156,32 @@ export default function Dashboard(props) {
       </nav>
 
       <article id="portfolio-side-article">
-        {component === "EventStatistic" && <EventStatistic 
-        state={props.state}
-        setState={props.setState}
-        competitions_enrolled={props.competitions_enrolled}
-        current_competition={props.current_competition}
-        transactions={props.transactions}
+        {component === "EventStatistic" && <EventStatistic
+          state={props.state}
+          setState={props.setState}
+          competitions_enrolled={props.competitions_enrolled}
+          current_competition={props.current_competition}
+          transactions={props.transactions}
         />}
 
-        {component === "TransactionHistory" && <TransactionHistory 
-        state={props.state}
-        setState={props.setState}
-        competitions_enrolled={props.competitions_enrolled}
-        current_competition={props.current_competition}
+        {component === "TransactionHistory" && <TransactionHistory
+          state={props.state}
+          setState={props.setState}
+          competitions_enrolled={props.competitions_enrolled}
+          current_competition={props.current_competition}
         />}
 
-        {component === "ProfileEdit" && <ProfileEdit 
-        user_profile={props.user_profile}
+        {component === "ProfileEdit" && <ProfileEdit
+          user_profile={props.user_profile}
+          setComponent={setComponent}
         />}
 
-        {component === "Organize" && <Organize user={props.user} setState={props.setState} state={props.state} setComponent={setComponent}/>}
+        {component === "Organize" && <Organize
+          user={props.user}
+          setState={props.setState}
+          state={props.state}
+          setComponent={setComponent}
+        />}
 
         {component === "Browse" && <Browse
           competitions={props.competitions}
