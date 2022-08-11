@@ -15,27 +15,29 @@ import axios from 'axios'
 
 export default function EventStatistic(props) {
   const [stockSearch, setStockSearch] = useState ({
-    details: null
+    details: null, 
+    historical: null
   })
 
   const search = function (event) {
     event.preventDefault();
-    console.log(event.target[0].value)
+    //console.log(event.target[0].value)
 
-    // Promise.all ([
-    //   axios.get(`https://cloud.iexapis.com/stable/stock/${event.target[0].value}/quote?token=${process.env.REACT_APP_CLOUD_TOKEN}`)
-    //   axios.get(`https://cloud.iexapis.com/stable/stock/${event.target[0].value}/quote?token=${process.env.REACT_APP_CLOUD_TOKEN}`)
-    // ])
+    Promise.all ([
+      axios.get(`https://cloud.iexapis.com/stable/stock/${event.target[0].value}/quote?token=${process.env.REACT_APP_CLOUD_TOKEN}`),
+      axios.get(`https://cloud.iexapis.com/stable/stock/${event.target[0].value}/chart/5d?token=${process.env.REACT_APP_CLOUD_TOKEN}`)
+    ])
 
-    axios.get(`https://cloud.iexapis.com/stable/stock/${event.target[0].value}/quote?token=${process.env.REACT_APP_CLOUD_TOKEN}`)
+    // axios.get(`https://cloud.iexapis.com/stable/stock/${event.target[0].value}/quote?token=${process.env.REACT_APP_CLOUD_TOKEN}`)
 
     .then((response) => {
       setStockSearch(prev => ({
         ...prev,
-        details: response.data
+        details: response[0].data,
+        historical: response[1].data
       }))
 
-      console.log(response.data)
+      console.log(response)
 
     })
     .catch(e => {
@@ -56,7 +58,9 @@ export default function EventStatistic(props) {
           </form>
           <div id="stock-chart-container">
             <StockChart 
-            
+            stockSearch={stockSearch}
+            setStockSearch={setStockSearch}
+            companyName={stockSearch.details ? stockSearch.details.companyName : null}
             />
           </div>
         </div>
