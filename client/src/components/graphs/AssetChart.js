@@ -167,6 +167,11 @@ export default function AssetChart(props) {
   return (
     <Pie data={pieData} options={{
       maintainAspectRatio: false,
+      elements: {
+        arc: {
+          borderWidth: 0
+        }
+      }
 
     }} />
   )

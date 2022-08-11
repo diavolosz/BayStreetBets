@@ -7,12 +7,33 @@ import StockDetails from '../graphs/StockDetails'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { useForm } from "../../hooks/useForm";
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+
+
+
 
 export default function EventStatistic(props) {
+  const [stockSearch, setStockSearch] = useState ({
+    details: null
+  })
 
   const search = function (event) {
     event.preventDefault();
     console.log(event.target[0].value)
+
+    axios.get(`https://cloud.iexapis.com/stable/stock/${event.target[0].value}/quote?token=${process.env.REACT_APP_CLOUD_TOKEN}`)
+    .then((response) => {
+      setStockSearch(prev => ({
+        ...prev,
+        details: response.data
+      }))
+      console.log(response.data)
+
+    })
+    .catch(e => {
+      console.log (e)
+    })
   }
 
 
@@ -34,7 +55,10 @@ export default function EventStatistic(props) {
           <div className='detail-title'>
             Core Info and Indicators
           </div>
-          <StockDetails />
+          <StockDetails 
+          stockSearch={stockSearch}
+          setStockSearch={setStockSearch}
+          />
         </div>
 
       </div>

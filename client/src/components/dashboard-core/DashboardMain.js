@@ -164,6 +164,7 @@ export default function Dashboard(props) {
         current_competition={props.current_competition}
         
         transactions={props.transactions}
+        user_balance={props.user_balance}
         />}
 
         {component === "TransactionHistory" && <TransactionHistory 

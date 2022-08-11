@@ -44,38 +44,63 @@ const animation = {
   }
 };
 
+// '2012-2-12'
+const convertDate = function (dateString) {
+  let year = dateString.slice(2, 4)
+  let month = dateString.slice(5, 7)
 
+  if (month === '01') {
+    month = 'Jan'
+  } else if (month === '02') {
+    month = 'Feb'
+  } else if (month === '03') {
+    month = 'Mar'
+  } else if (month === '04') {
+    month = 'Apr'
+  } else if (month === '05') {
+    month = 'May'
+  } else if (month === '06') {
+    month = 'June'
+  } else if (month === '07') {
+    month = 'July'
+  } else if (month === '08') {
+    month = 'Aug'
+  } else if (month === '09') {
+    month = 'Sep'
+  } else if (month === '010') {
+    month = 'Oct'
+  } else if (month === '11') {
+    month = 'Nov'
+  } else if (month === '12') {
+    month = 'Dec'
+  }
 
+  let day = dateString.slice(8, 10)
+
+  let date = `${month} ${day}, ${year}`
+
+  return date
+}
 
 
 
 export default function PortfolioChart(props) {
-
-
-
-
-
-
-
-
-
-
-
-
-
+  const [equityData, setEquityData] = useState({
+    labels: [], data: []
+  })
 
 
 
   const [userData, setUserData] = useState({
     labels: portfolio.map((item) => item.date),
     datasets: [{
-      label: " ",
+      label: " sss",
       data: portfolio.map((item) => item.totalEquity)
     }]
   })
 
 
-let delayed;
+  let delayed;
 
   return (
     <Line data={userData} options={{
@@ -98,6 +123,7 @@ let delayed;
         }
       },
 
+
       animation: {
         onComplete: () => {
           delayed = true;
@@ -118,7 +144,7 @@ let delayed;
           stacked: true
         }
       }
-    
+
     }} />
   )
 }

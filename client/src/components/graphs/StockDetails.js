@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Line } from 'react-chartjs-2'
 import { Chart as ChartJS } from 'chart.js/auto'
 
 import '../../stylesheet/StockDetails.scss'
+
+import StockDetailsItem from './StockDetailsItem'
 
 let quote = [{
   "symbol": "AAPL",
@@ -19,7 +21,20 @@ let quote = [{
   "volume": 973609
 }];
 
-export default function StockDetails() {
+export default function StockDetails(props) {
+  const [itemDetails, setItemDetails] = useState ({
+    details: 'empty'
+  })
+
+  useEffect (() => {
+    
+    setItemDetails ({
+      details: props.stockSearch.details
+    })
+
+
+
+  },[props.stockSearch])
 
   return (
     <div className='stock-details'>
@@ -48,40 +63,7 @@ export default function StockDetails() {
         <p>{quote[0].symbol}</p>
       </div>
 
-      <div className='info-block'>
-        <h5>Symbol</h5>
-        <p>{quote[0].symbol}</p>
-      </div>
-
-      <div className='info-block'>
-        <h5>Symbol</h5>
-        <p>{quote[0].symbol}</p>
-      </div>
-
-      <div className='info-block'>
-        <h5>Symbol</h5>
-        <p>{quote[0].symbol}</p>
-      </div>
-
-      <div className='info-block'>
-        <h5>Symbol</h5>
-        <p>{quote[0].symbol}</p>
-      </div>
-
-      <div className='info-block'>
-        <h5>Symbol</h5>
-        <p>{quote[0].symbol}</p>
-      </div>
-
-      <div className='info-block'>
-        <h5>Symbol</h5>
-        <p>{quote[0].symbol}</p>
-      </div>
-
-      <div className='info-block'>
-        <h5>Symbol</h5>
-        <p>{quote[0].symbol}</p>
-      </div>
+      <StockDetailsItem details={itemDetails.details} />
 
     </div>
   )
