@@ -173,6 +173,7 @@ export default function Dashboard(props) {
 
         {component === "ProfileEdit" && <ProfileEdit
           user_profile={props.user_profile}
+          setState={props.setState}
           setComponent={setComponent}
         />}
 

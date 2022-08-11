@@ -55,15 +55,13 @@ const ProfileEdit = (props) => {
 
   const onSubmit = event => {
     event.preventDefault();
-    // console.log(formValues);
     axios.post(`/api/user/${props.user_profile.id}/profile`, {
       ...formValues
     })
-    .then(() => {
-        console.log(formValues)
-
-      props.setComponent("EventStatistic")
-    })
+      .then((res) => {
+        props.setState(prev => ({...prev, user_profile: res.data}))
+        props.setComponent("EventStatistic")
+      })
   };
 
   return (
