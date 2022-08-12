@@ -82,3 +82,13 @@ export const getAllCompetitions = (state) => {
 
   return competitions
 }
+
+const deriveCashFromTransactions = (transactions, startingBalance) => {
+  return transactions.reduce((total, value) => {
+    if (value.buy_sell === "Buy") {
+      return total - (value.price * value.number_of_shares);
+    }
+    return total + (value.price * value.number_of_shares);
+  }, startingBalance);
+}
+
