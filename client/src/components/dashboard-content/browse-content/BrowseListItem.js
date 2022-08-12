@@ -29,7 +29,7 @@ export default function BrowseListItem(props) {
           props.state,
           props.id
         );
-        console.log(props.state.user_competitions_created);
+        //console.log(props.state.user_competitions_created);
         if (response.status === 200) {
           props.setState(prev => ({
             ...prev,

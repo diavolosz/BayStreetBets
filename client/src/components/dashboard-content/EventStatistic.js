@@ -22,6 +22,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function EventStatistic(props) {
+
   const [stockSearch, setStockSearch] = useState({
     details: null,
     historical: null,
@@ -46,7 +47,7 @@ export default function EventStatistic(props) {
           historical: response[1].data,
         }));
 
-        console.log(response);
+        //console.log(response);
       })
       .catch(e => {
         console.log(e);
@@ -66,9 +67,19 @@ export default function EventStatistic(props) {
       props.current_competition.id
     );
 
-    const castedStartingAmount = Number(
-      props.current_competition.starting_amount.replace(/[^0-9.-]+/g, "")
-    );
+    //console.log (props.current_competition.starting_amount)
+
+    let castedStartingAmount;
+
+    if (typeof props.current_competition.starting_amount === 'string') {
+       castedStartingAmount = Number(
+        props.current_competition.starting_amount.replace(/[^0-9.-]+/g, "")
+      );
+    } else {
+       castedStartingAmount = props.current_competition.starting_amount
+    }
+
+    
     const cash = deriveCashFromTransactions(
       transactionsForCompetition,
       castedStartingAmount
@@ -108,9 +119,11 @@ export default function EventStatistic(props) {
         }
       });
   };
+
+
   const handleSell = event => {
     event.preventDefault();
-    console.log(props.state);
+    //console.log(props.state);
     const transactionsForCompetition = getTransactionsForCompetition(
       props.state,
       props.current_competition.id
