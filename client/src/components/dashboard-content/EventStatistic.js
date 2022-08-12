@@ -50,31 +50,31 @@ export default function EventStatistic(props) {
   const [buy, setBuy] = useState(0)
   const [sell, setSell] = useState(0)
   const [displayAlert, setDisplayAlert] = useState("")
-  const user_profile = props.user_profile
-  const competition_id = props.current_competition
+  // const user_profile = props.user_profile
+  // const competition_id = props.current_competition
   
-  const handleBuy = (event) => {
-    event.preventDefault();
-    axios.post("/api/transactions/buy", { stockSearch, buy, user_profile, competition_id })
-      .then((res) => {
-        res.data.price = parseInt((res.data.price).replace(/[^0-9.-]+/g,""))
-        props.transactions.push(res.data)
-        props.setState(prev => ({...prev, transactions: props.transactions}))
-      })
-      .then(() => setBuy(0))
-      .then(() => setDisplayAlert("boughtStocks"))
-  }
-  const handleSell = (event) => {
-    event.preventDefault();
-    axios.post("/api/transactions/sell", { stockSearch, sell, user_profile, competition_id })
-    .then((res) => {
-      res.data.price = parseInt((res.data.price).replace(/[^0-9.-]+/g,""))
-      props.transactions.push(res.data)
-      props.setState(prev => ({...prev, transactions: props.transactions}))
-    })
-    .then(() => setSell(0))
-    .then(() => setDisplayAlert("soldStocks"))
-  }
+  // const handleBuy = (event) => {
+  //   event.preventDefault();
+  //   axios.post("/api/transactions/buy", { stockSearch, buy, user_profile, competition_id })
+  //     .then((res) => {
+  //       res.data.price = parseInt((res.data.price).replace(/[^0-9.-]+/g,""))
+  //       props.transactions.push(res.data)
+  //       props.setState(prev => ({...prev, transactions: props.transactions}))
+  //     })
+  //     .then(() => setBuy(0))
+  //     .then(() => setDisplayAlert("boughtStocks"))
+  // }
+  // const handleSell = (event) => {
+  //   event.preventDefault();
+  //   axios.post("/api/transactions/sell", { stockSearch, sell, user_profile, competition_id })
+  //   .then((res) => {
+  //     res.data.price = parseInt((res.data.price).replace(/[^0-9.-]+/g,""))
+  //     props.transactions.push(res.data)
+  //     props.setState(prev => ({...prev, transactions: props.transactions}))
+  //   })
+  //   .then(() => setSell(0))
+  //   .then(() => setDisplayAlert("soldStocks"))
+  // }
 
 
   return (
