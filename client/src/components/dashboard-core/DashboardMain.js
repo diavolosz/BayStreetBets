@@ -15,6 +15,7 @@ import ProfileEdit from "../dashboard-content/Profile";
 import Organize from "../dashboard-content/Organize";
 import Browse from "../dashboard-content/Browse";
 import Dropdown from "../dashboard-content/Dropdown";
+import Leaderboard from "../dashboard-content/Leaderboard";
 
 export default function Dashboard(props) {
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ export default function Dashboard(props) {
     );
   });
 
-  const [component, setComponent] = useState("EventStatistic");
+  const [component, setComponent] = useState("Leaderboard");
 
   const logout = () => {
     localStorage.clear();
@@ -161,6 +162,7 @@ export default function Dashboard(props) {
         </div>
       </nav>
       <article id="portfolio-side-article">
+        {component === "Leaderboard" && <Leaderboard />}
 
         {component === "EventStatistic" && <EventStatistic
           state={props.state}

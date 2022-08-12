@@ -1,0 +1,46 @@
+#leaderboard-inner-container {
+  height: 90%;
+  width: 90%;
+  margin:  auto;
+  border-radius: 24px;
+  box-shadow: 0px 5px 10px 0px rgba(100, 100, 100, 0.5);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h1 {
+    font-size: 60px;
+  }
+
+  table {
+    width: 80%;
+    margin-top: 2rem;
+    border-collapse:collapse;
+    
+    tr {
+      th {
+        width: 50%;
+        font-size: 35px;
+        border: 2px solid rgb(99, 99, 99);
+        border-left: none;
+        border-right: none;
+        padding: 0.2em;
+      }
+      td {
+        border: 2px solid rgb(99, 99, 99);
+        border-left: none;
+        border-right: none;
+        text-align: center;
+        width: 50%;
+        font-size: 30px;
+        padding: 1em;
+
+        #icon {
+          color: rgb(255, 196, 0);
+          margin-right: 12px;
+        }
+      }
+    }
+  }
+}
