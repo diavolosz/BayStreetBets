@@ -235,7 +235,14 @@ export default function Dashboard(props) {
 
       //       let updatedEquity = props.user_balance.user_balance + marketEquity
 
-      //       console.log (response)
+      //       //console.log (response)
+
+
+      //       portfolioStocksInfo.forEach((stock) => {
+      //         stock.totalAmount += marketEquity
+      //       })
+
+
 
 
       //       props.setState(prev => ({
@@ -282,6 +289,11 @@ export default function Dashboard(props) {
         cashAssets: updatedEquity,
         stockListDetails: portfolioStocksInfo
       }))
+
+
+
+
+
 
 
     })
