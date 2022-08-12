@@ -70,25 +70,47 @@ export const removeFromCompetitionsEnrolled = (state, competitionId) => {
   return newCompetitionsEnrolled;
 };
 
-export const getAllCompetitions = (state) => {
+export const getAllCompetitions = state => {
   const competitions = [];
-  
-  state.user_competitions_created.forEach((competitionObj) => {
+
+  state.user_competitions_created.forEach(competitionObj => {
     competitions.push({ ...competitionObj });
   });
-  state.user_competitions_enrolled.forEach((competitionObj) => {
+  state.user_competitions_enrolled.forEach(competitionObj => {
     competitions.push({ ...competitionObj });
   });
 
-  return competitions
-}
+  return competitions;
+};
 
-const deriveCashFromTransactions = (transactions, startingBalance) => {
+export const deriveCashFromTransactions = (transactions, startingBalance) => {
   return transactions.reduce((total, value) => {
-    if (value.buy_sell === "Buy") {
-      return total - (value.price * value.number_of_shares);
-    }
-    return total + (value.price * value.number_of_shares);
+    return total - value.price * value.number_of_shares;
+    // return total + value.price * value.number_of_shares;
   }, startingBalance);
-}
+};
 
+export const getTransactionsForCompetition = (state, competitionId) => {
+  return state.transactions.filter(competition => {
+    return competition.competition_id === competitionId;
+  });
+};
+
+export const updateTransactions = (state, transaction) => {
+  const transactions = [];
+  state.transactions.forEach(transaction => {
+    transactions.push({ ...transaction });
+  });
+
+  transactions.push(transaction);
+  return transactions;
+};
+
+export const getHolding = (transactions, symbol) => {
+  return transactions.reduce((total, value) => {
+    if (value.symbol === symbol) {
+      return total + value.number_of_shares;
+    }
+    return total;
+  }, 0);
+};
