@@ -230,14 +230,14 @@ export default function Dashboard(props) {
 
       //     .then(response => {
 
-      //       let marketPrice = response.data.iexAskPrice
+      //       let marketPrice = response.data.iexRealtimePrice
 
       //       let marketEquity = stock.shares * marketPrice
 
 
       //       let updatedEquity = props.user_balance.user_balance + marketEquity
 
-      //       //console.log (response)
+      //       console.log (response)
 
 
       //       portfolioStocksInfo.forEach((stock) => {
@@ -245,6 +245,7 @@ export default function Dashboard(props) {
       //       })
 
 
+      //       //console.log(updatedEquity)
 
 
       //       props.setState(prev => ({

@@ -216,7 +216,7 @@ export default function PortfolioChart(props) {
         //       axios.get(`https://cloud.iexapis.com/stable/stock/${stockCall.stock}/quote?token=${process.env.REACT_APP_CLOUD_TOKEN}`)
         //         .then(response => {
 
-        //           let marketPrice = response.data.iexAskPrice
+        //           let marketPrice = response.data.iexRealtimePrice
 
 
         //           console.log("before call", finalPortfolio)
