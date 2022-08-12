@@ -96,7 +96,7 @@ function App() {
             let user_balance_info = null
 
             if (transactions_userBalance[1].data) {
-              current_comp_info = transactions_userBalance[1].data[0]
+              user_balance_info = transactions_userBalance[1].data[0]
             }
 
             

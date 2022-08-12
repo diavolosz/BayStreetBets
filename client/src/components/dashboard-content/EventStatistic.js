@@ -28,8 +28,6 @@ export default function EventStatistic(props) {
       axios.get(`https://cloud.iexapis.com/stable/stock/${event.target[0].value}/chart/5d?token=${process.env.REACT_APP_CLOUD_TOKEN}`)
     ])
 
-    // axios.get(`https://cloud.iexapis.com/stable/stock/${event.target[0].value}/quote?token=${process.env.REACT_APP_CLOUD_TOKEN}`)
-
     .then((response) => {
       setStockSearch(prev => ({
         ...prev,
