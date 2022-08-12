@@ -17,6 +17,92 @@ import Organize from "../dashboard-content/Organize";
 import Browse from "../dashboard-content/Browse";
 import Dropdown from "../dashboard-content/Dropdown";
 
+
+
+const findPortfolioStocksAndSharesPrice = function (transactions) {
+  let stockAndShares = [];
+  let stockTracker = [];
+
+  transactions.map((transaction) => {
+
+    if (stockAndShares.length === 0) {
+      stockAndShares.push({
+        stock: transaction.symbol,
+        shares: transaction.number_of_shares,
+        totalAmount: transaction.number_of_shares * transaction.price
+      })
+
+      stockTracker.push(transaction.symbol)
+    } else {
+
+      stockAndShares.forEach((item, index, array) => {
+        if (transaction.symbol === item.stock) {
+          item.shares += transaction.number_of_shares
+
+          let priceTotal = transaction.number_of_shares * transaction.price
+
+          item.totalAmount += priceTotal
+        }
+
+        if (!stockTracker.includes(transaction.symbol)) {
+          stockAndShares.push({
+            stock: transaction.symbol,
+            shares: transaction.number_of_shares,
+            totalAmount: transaction.number_of_shares * transaction.price
+          })
+
+          stockTracker.push(transaction.symbol)
+        }
+
+
+
+
+        if (index + 1 === array.length) {
+
+
+          if (!stockTracker.includes(transaction.symbol)) {
+
+            stockAndShares.push({
+              stock: transaction.symbol,
+              shares: transaction.number_of_shares,
+              totalAmount: transaction.number_of_shares * transaction.price
+            })
+          }
+
+
+
+        }
+
+
+      })
+
+
+
+
+
+    }
+
+  })
+
+  return stockAndShares
+}
+
+
+const removeZeroStocks = function (portfolioStocksAndShares) {
+
+  for (let index in portfolioStocksAndShares) {
+    if (portfolioStocksAndShares[index].shares === 0) {
+      portfolioStocksAndShares.splice(index, 1)
+    }
+
+  }
+
+  return portfolioStocksAndShares
+}
+
+
+
+
 export default function Dashboard(props) {
   const navigate = useNavigate();
 
@@ -75,8 +161,14 @@ export default function Dashboard(props) {
 
   useEffect(() => {
 
-    Promise.all ([
+    Promise.all([
       axios.post("/api/charts/portfolio", {
+        data: {
+          user: props.state.user,
+          user_competitions: props.current_competition
+        }
+      }),
+      axios.post("/api/charts/pie", {
         data: {
           user: props.state.user,
           user_competitions: props.current_competition
@@ -84,7 +176,7 @@ export default function Dashboard(props) {
       }),
 
 
-    ]).then (response => {
+    ]).then(response => {
 
       let user_balance_info = response[0].data[0]
 
@@ -94,19 +186,51 @@ export default function Dashboard(props) {
       }))
 
 
-      let currentDate = new Date ().getTime();
+      let currentDate = new Date().getTime();
 
-      let endDate = new Date (props.current_competition.end_date).getTime();
+      let endDate = new Date(props.current_competition.end_date).getTime();
 
       // its rounded so not sure if calc is spot on
-      let dayDifference = Math.round ((endDate - currentDate) / (1000*60*60*24))
+      let dayDifference = Math.round((endDate - currentDate) / (1000 * 60 * 60 * 24))
+
+
+
+      //console.log(response[1].data)
+
+      let newTransactions = response[1].data
+
+      let allPortfolioStocksInfo = findPortfolioStocksAndSharesPrice(newTransactions)
+
+      //console.log(allPortfolioStocksInfo)
+
+
+      let portfolioStocksInfo = removeZeroStocks(allPortfolioStocksInfo)
+
+      //console.log(allPortfolioStocksInfo)
+
+      let updatedStockTotal = 0
+
+      allPortfolioStocksInfo.forEach((stock) => {
+        updatedStockTotal += stock.shares * stock.totalAmount
+      })
+
+      //console.log (updatedStockTotal)
+
+      let updatedEquity = props.user_balance.user_balance + updatedStockTotal
+
+
+      //console.log (updatedEquity)
+
+
+
 
       setPortfolioDetails(prev => ({
         ...prev,
         cash: user_balance_info.user_balance,
-        daysLeft: dayDifference
+        daysLeft: dayDifference,
+        cashAssets: updatedEquity
       }))
-      
+
 
       // console.log (
       //   (new Date (props.current_competition.end_date).getTime() - 
@@ -115,6 +239,12 @@ export default function Dashboard(props) {
       //   )
 
       //date2.getTime() – date1.getTime();
+
+
+
+
+
+
 
 
 
@@ -213,7 +343,13 @@ export default function Dashboard(props) {
           <article>
             <table id="portfolio-table">
               <tbody>
-                {portfolioData}
+                {portfolioData
+
+
+
+
+
+                }
               </tbody>
             </table>
           </article>
