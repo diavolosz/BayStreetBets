@@ -51,7 +51,7 @@ export default function EventStatistic(props) {
   const handleBuy = (event) => {
     event.preventDefault();
     axios.post("/api/transactions/buy", { stockSearch, buy, user_profile, competition_id })
-    .then(() => {setBuy(0)})
+      .then(() => { setBuy(0) })
   }
   const handleSell = (event) => {
     event.preventDefault();
@@ -83,7 +83,7 @@ export default function EventStatistic(props) {
             stockSearch={stockSearch}
             setStockSearch={setStockSearch}
           />
-          {/* {stockSearch.details !== null && ( */}
+          {stockSearch.details !== null && (
             <div id="buy-sell-container">
               <form onSubmit={handleBuy}>
                 <input type="submit" value="BUY" className='buy-button'></input>
@@ -94,7 +94,7 @@ export default function EventStatistic(props) {
                 <input type="number" min="0" value={sell} onChange={event => setSell(event.target.value)} />
               </form>
             </div>
-          {/* )} */}
+          )}
         </div>
       </div>
 
