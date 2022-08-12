@@ -10,8 +10,6 @@ const randomColour = function () {
   return "rgb(" + r + "," + g + "," + b + ")";
 };
 
-
-
 // gets the stocks and totals in portfolio
 const findStocksInPortfolio = function (transactions) {
   let stockAndShares = {};
@@ -106,6 +104,7 @@ export default function AssetChart(props) {
     datasets: []
   })
 
+  // for current comp change
   useEffect(() => {
 
     if (props.transactions !== null) {
@@ -125,7 +124,6 @@ export default function AssetChart(props) {
         let finalAssets = createFinalAssets(newTransactions.data, portfolioStocks)
 
         const colours = [];
-
         for (let length of finalAssets) {
           colours.push(randomColour())
         }
@@ -139,9 +137,7 @@ export default function AssetChart(props) {
           backgroundColor: colours
         }]
 
-        
-        
-        
+
         setpieData(prev => ({
           ...prev,
           labels: labelList,
@@ -155,11 +151,60 @@ export default function AssetChart(props) {
 
       })
 
+    }
+
+  }, [props.current_competition])
+
+  // for transaction change
+  useEffect(() => {
+
+    if (props.transactions !== null) {
+
+      axios.post("/api/charts/pie", {
+        data: {
+          user: props.state.user,
+          user_competitions: props.state.current_competition
+        }
+      }).then(newTransactions => {
+
+        //console.log(newTransactions.data)
+
+
+        let stocksAndShares = findStocksInPortfolio(newTransactions.data)
+        let portfolioStocks = removeZeroStocks(stocksAndShares)
+        let finalAssets = createFinalAssets(newTransactions.data, portfolioStocks)
+
+        const colours = [];
+        for (let length of finalAssets) {
+          colours.push(randomColour())
+        }
+
+        let labelList = finalAssets.map((asset) => `${asset.stock} (${asset.percentage})`)
+
+        //console.log(labelList)
+
+        let datasetList = [{
+          data: finalAssets.map((asset) => asset.amount),
+          backgroundColor: colours
+        }]
+
+
+        setpieData(prev => ({
+          ...prev,
+          labels: labelList,
+          datasets: datasetList
+        }))
+
+        props.setState(prev => ({
+          ...prev,
+          transactions: newTransactions.data
+        }))
+
+      })
 
     }
 
-
-  }, [props.current_competition])
+  }, [props.transaction])
 
 
   return (

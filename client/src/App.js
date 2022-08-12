@@ -58,16 +58,43 @@ function App() {
           // variable for axios requests when user is not in any competitions
           let user_comp_info = null
 
-          if (comps_userComps[2].data.length) {
-            user_comp_info = {
-              id: comps_userComps[2].data[0].id, 
-              name: comps_userComps[2].data[0].name,
-              starting_amount: comps_userComps[2].data[0].starting_amount,
-              start_date: comps_userComps[2].data[0].start_date,
-              end_date: comps_userComps[2].data[0].end_date
 
-            }
+
+
+          //console.log(comps_userComps[2].data)
+
+          if (comps_userComps[2].data.length) {
+
+            // loops through all user competitions, sets first one where end_date is not reached
+            comps_userComps[2].data.forEach((comp) => {
+
+              let currentDate = new Date().getTime()
+
+              let endDate = new Date(comp.end_date).getTime()
+
+              // console.log(new Date())
+              // console.log(new Date(comp.end_date))
+
+              // console.log(currentDate > endDate)
+
+              if (currentDate > endDate === false) {
+
+                user_comp_info = {
+                  id: comps_userComps[2].data[0].id,
+                  name: comps_userComps[2].data[0].name,
+                  starting_amount: comps_userComps[2].data[0].starting_amount,
+                  start_date: comps_userComps[2].data[0].start_date,
+                  end_date: comps_userComps[2].data[0].end_date
+
+                }
+
+              }
+
+            })
+
           }
+
+
 
 
 
@@ -96,8 +123,8 @@ function App() {
 
             if (comps_userComps[2].data.length) {
               current_comp_info = {
-                id: comps_userComps[2].data[0].id, 
-                name: comps_userComps[2].data[0].name, 
+                id: comps_userComps[2].data[0].id,
+                name: comps_userComps[2].data[0].name,
                 starting_amount: comps_userComps[2].data[0].starting_amount,
                 start_date: comps_userComps[2].data[0].start_date,
                 end_date: comps_userComps[2].data[0].end_date
@@ -110,20 +137,27 @@ function App() {
               user_balance_info = transactions_userBalance[1].data[0]
             }
 
-            
+
 
 
             setState(prev => ({
               ...prev,
               user: userEmailID[0].data,
-              user_profile:comps_userComps[3].data,
+
+              user_profile: comps_userComps[3].data,
+
               competitions: comps_userComps[0].data,
+
               user_competitions_created: comps_userComps[1].data.competitionsCreated,
+
               user_competitions_enrolled: comps_userComps[1].data.competitionsEnrolled,
+
               competitions_enrolled: comps_userComps[2].data,
 
               current_competition: current_comp_info,
+
               transactions: transactions_userBalance[0].data,    //specific to user and to competition
+
               user_balance: user_balance_info
             }));
           })

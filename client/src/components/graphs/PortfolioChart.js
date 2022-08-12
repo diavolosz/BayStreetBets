@@ -152,6 +152,7 @@ export default function PortfolioChart(props) {
     labels: [], datasets: []
   })
 
+  // for current comp change
   useEffect(() => {
     if (props.transactions !== null) {
 
@@ -241,10 +242,6 @@ export default function PortfolioChart(props) {
 
 
 
-
-
-
-
         //           setEquityData(prev => ({
         //             ...prev,
         //             labels: labelList,
@@ -254,35 +251,21 @@ export default function PortfolioChart(props) {
         //             }]
         //           }))
 
-
-
-
         //         })
 
         //     }
 
-
         //   })
 
-
         // })
-
-
-
 
         let labelList = finalPortfolio.map((day) => {
           return day.date
         })
 
-
-
         let dataList = finalPortfolio.map((day) => {
           return day.totalEquity
         })
-
-
-
-
 
         setEquityData(prev => ({
           ...prev,
@@ -301,16 +284,136 @@ export default function PortfolioChart(props) {
   }, [props.current_competition])
 
 
+// for current transaction change
+useEffect(() => {
+  if (props.transactions !== null) {
+
+    axios.post("/api/charts/pie", {
+      data: {
+        user: props.state.user,
+        user_competitions: props.state.current_competition
+      }
+    }).then(fetchedTransactions => {
+
+      let newTransactions = fetchedTransactions.data
+
+      let dayList = getListOfDays(newTransactions)
+
+      let finalPortfolio = createFinalPortfolio(dayList, newTransactions, props.current_competition)
+
+
+      let currentStocks = []
+
+      finalPortfolio.forEach((day) => {
+        day.stocksWithShares.forEach((item) => {
+          if (new Date(day.date) >= new Date(item.date)) {
+
+            if (currentStocks.length === 0) {
+
+              currentStocks.push({
+                stock: item.stock,
+                shares: item.shares
+              })
+
+            } else {
+
+              currentStocks.forEach((currentItem) => {
+                if (currentItem.stock !== item.stock) {
+                  currentStocks.push({
+                    stock: item.stock,
+                    shares: item.shares
+                  })
+
+                } else if (currentItem.stock === item.stock) {
+                  currentItem.shares += item.shares
+
+                }
+              })
+            }
+          }
+        })
+
+        day['currentStocks'] = currentStocks
+        currentStocks = []
+      })
+
+      //console.log(finalPortfolio)
+
+      // finalPortfolio.forEach((item) => {
+
+      //   item.stocksWithShares.forEach((stockCall) => {
+
+      //     if (new Date(item.date) >= new Date(stockCall.date)) {
+
+
+      //       axios.get(`https://cloud.iexapis.com/stable/stock/${stockCall.stock}/quote?token=${process.env.REACT_APP_CLOUD_TOKEN}`)
+      //         .then(response => {
+
+      //           let marketPrice = response.data.iexRealtimePrice
+
+
+      //           console.log("before call", finalPortfolio)
+
+
+      //           item.totalEquity += marketPrice * stockCall.shares
+
+      //           console.log("after call", finalPortfolio)
+
+      //         }).then(() => {
+
+
+      //           let labelList = finalPortfolio.map((day) => {
+      //             return day.date
+      //           })
 
 
 
-  // const [userData, setUserData] = useState({
-  //   labels: portfolio.map((item) => item.date),
-  //   datasets: [{
-  //     label: "",
-  //     data: portfolio.map((item) => item.totalEquity)
-  //   }]
-  // })
+      //           let dataList = finalPortfolio.map((day) => {
+      //             return day.totalEquity
+      //           })
+
+
+
+      //           setEquityData(prev => ({
+      //             ...prev,
+      //             labels: labelList,
+      //             datasets: [{
+      //               label: "",
+      //               data: dataList
+      //             }]
+      //           }))
+
+      //         })
+
+      //     }
+
+      //   })
+
+      // })
+
+      let labelList = finalPortfolio.map((day) => {
+        return day.date
+      })
+
+      let dataList = finalPortfolio.map((day) => {
+        return day.totalEquity
+      })
+
+      setEquityData(prev => ({
+        ...prev,
+        labels: labelList,
+        datasets: [{
+          label: "",
+          data: dataList
+        }]
+      }))
+
+
+    })
+  }
+
+
+}, [props.transactions])
 
 
   let delayed;
