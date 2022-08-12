@@ -9,9 +9,9 @@ export default function TransactionHistoryItem(props) {
 
   listed = transactions.transactions ?
 
-    transactions.transactions.map((transaction) => {
+    transactions.transactions.map((transaction, index) => {
       return (
-        <tbody>
+        <tbody key={index}>
           <tr>
             <td>{transaction.symbol}</td>
             <td>{transaction.buy_sell}</td>
