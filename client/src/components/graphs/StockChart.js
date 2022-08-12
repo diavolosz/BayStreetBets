@@ -1,22 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Line } from 'react-chartjs-2'
 import { Chart as ChartJS } from 'chart.js/auto'
 
-
-let quote = [{
-  "symbol": "AAPL",
-  "sector": "electronictechnology",
-  "securityType": "cs",
-  "bidPrice": 0,
-  "bidSize": 0,
-  "askPrice": 0,
-  "askSize": 0,
-  "lastUpdated": 1659732403127,
-  "lastSalePrice": 165.28,
-  "lastSaleSize": 400,
-  "lastSaleTime": 1659729599447,
-  "volume": 973609
-}];
 
 let oneMonth = [{ "close": 38.21, "high": 38.45, "low": 37.7374, "open": 38.21, "priceDate": "2022-07-06", "symbol": "TWTR", "volume": 4870258, "id": "HISTORICAL_PRICES", "key": "TWTR", "subkey": "", "date": "2022-07-06", "updated": 1657653642000, "changeOverTime": 0, "marketChangeOverTime": 0, "uOpen": 38.21, "uClose": 38.21, "uHigh": 38.45, "uLow": 37.7374, "uVolume": 4870258, "fOpen": 38.21, "fClose": 38.21, "fHigh": 38.45, "fLow": 37.7374, "fVolume": 4870258, "label": "Jul 6, 22", "change": 0, "changePercent": 0 },
 { "close": 38.79, "high": 39.51, "low": 38.32, "open": 38.32, "priceDate": "2022-07-07", "symbol": "TWTR", "volume": 13214877, "id": "HISTORICAL_PRICES", "key": "TWTR", "subkey": "", "date": "2022-07-07", "updated": 1657653642000, "changeOverTime": 0.015179272441769125, "marketChangeOverTime": 0.015179272441769125, "uOpen": 38.32, "uClose": 38.79, "uHigh": 39.51, "uLow": 38.32, "uVolume": 13214877, "fOpen": 38.32, "fClose": 38.79, "fHigh": 39.51, "fLow": 38.32, "fVolume": 13214877, "label": "Jul 7, 22", "change": 0.5799999999999983, "changePercent": 0.0152 },
@@ -75,9 +60,37 @@ const animation = {
 };
 
 
+let delayed;
+
+export default function StockChart(props) {
+  const [historicalData, setHistoricalData] = useState({
+    labels: [],
+    datasets: []
+  })
 
 
-export default function StockChart() {
+  useEffect(() => {
+
+    if (props.stockSearch.historical !== null) {
+
+      setHistoricalData({
+        labels: props.stockSearch.historical.map((day) => day.label),
+        datasets: [{
+          label: `${props.companyName} (${props.stockSearch.historical[0].symbol})`,
+          data: props.stockSearch.historical.map((day) => day.close)
+  
+        }]
+      })
+
+
+
+
+    }
+
+
+
+  }, [props.stockSearch])
+
 
   const [userData, setUserData] = useState({
     labels: oneMonth.map((month) => month.label),
@@ -87,11 +100,11 @@ export default function StockChart() {
     }]
   })
 
-  let delayed;
+
 
   return (
 
-    <Line data={userData} options={{
+    <Line data={historicalData} options={{
       maintainAspectRatio: false,
       backgroundColor: 'rgb(0, 0, 255)',
       borderColor: 'rgb(0, 0, 0)',
@@ -111,11 +124,11 @@ export default function StockChart() {
         }
       },
 
-      
 
-      
 
-      
+
+
+
     }} />
 
   )

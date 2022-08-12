@@ -14,33 +14,50 @@ import axios from 'axios'
 
 
 export default function EventStatistic(props) {
+
   const [stockSearch, setStockSearch] = useState ({
-    details: null
+    details: null, 
+    historical: null
   })
 
   const search = function (event) {
     event.preventDefault();
-    console.log(event.target[0].value)
+    //console.log(event.target[0].value)
 
-    // Promise.all ([
-    //   axios.get(`https://cloud.iexapis.com/stable/stock/${event.target[0].value}/quote?token=${process.env.REACT_APP_CLOUD_TOKEN}`)
-    //   axios.get(`https://cloud.iexapis.com/stable/stock/${event.target[0].value}/quote?token=${process.env.REACT_APP_CLOUD_TOKEN}`)
-    // ])
+    Promise.all ([
+      axios.get(`https://cloud.iexapis.com/stable/stock/${event.target[0].value}/quote?token=${process.env.REACT_APP_CLOUD_TOKEN}`),
+      axios.get(`https://cloud.iexapis.com/stable/stock/${event.target[0].value}/chart/5d?token=${process.env.REACT_APP_CLOUD_TOKEN}`)
+    ])
 
-    axios.get(`https://cloud.iexapis.com/stable/stock/${event.target[0].value}/quote?token=${process.env.REACT_APP_CLOUD_TOKEN}`)
 
     .then((response) => {
       setStockSearch(prev => ({
         ...prev,
-        details: response.data
+        details: response[0].data,
+        historical: response[1].data
       }))
 
-      console.log(response.data)
+      console.log(response)
 
-    })
-    .catch(e => {
-      console.log (e)
-    })
+      })
+      .catch(e => {
+        console.log(e)
+      })
+  }
+
+  const [buy, setBuy] = useState(0)
+  const [sell, setSell] = useState(0)
+  const user_profile = props.user_profile
+  const competition_id = props.current_competition
+
+  const handleBuy = (event) => {
+    event.preventDefault();
+    axios.post("/api/transactions/buy", { stockSearch, buy, user_profile, competition_id })
+      .then(() => { setBuy(0) })
+  }
+  const handleSell = (event) => {
+    event.preventDefault();
+    axios.post("/api/transactions/sell", { stockSearch, sell, user_profile, competition_id })
   }
 
 
@@ -55,8 +72,11 @@ export default function EventStatistic(props) {
             <button type='submit'><FontAwesomeIcon className="search-icon" icon={faMagnifyingGlass} /></button>
           </form>
           <div id="stock-chart-container">
+
             <StockChart 
-            
+            stockSearch={stockSearch}
+            setStockSearch={setStockSearch}
+            companyName={stockSearch.details ? stockSearch.details.companyName : null}
             />
           </div>
         </div>
@@ -64,12 +84,23 @@ export default function EventStatistic(props) {
           <div className='detail-title'>
             Core Info and Indicators
           </div>
-          <StockDetails 
-          stockSearch={stockSearch}
-          setStockSearch={setStockSearch}
+          <StockDetails
+            stockSearch={stockSearch}
+            setStockSearch={setStockSearch}
           />
+          {stockSearch.details !== null && (
+            <div id="buy-sell-container">
+              <form onSubmit={handleBuy}>
+                <input type="submit" value="BUY" className='buy-button'></input>
+                <input type="number" min="0" value={buy} onChange={event => setBuy(event.target.value)} />
+              </form>
+              <form onSubmit={handleSell}>
+                <input type="submit" value="SELL" className='sell-button'></input>
+                <input type="number" min="0" value={sell} onChange={event => setSell(event.target.value)} />
+              </form>
+            </div>
+          )}
         </div>
-
       </div>
 
       <div id="portfolio-change-container">
@@ -77,15 +108,15 @@ export default function EventStatistic(props) {
         <div id="protfolio-change-graph">
           <div className='portfolio-chart'>
             <span>User Portfolio Change (Total Equity Change $)</span>
-            <PortfolioChart 
-            state={props.state}
-            setState={props.setState}
-    
-            competitions_enrolled={props.competitions_enrolled}
-            current_competition={props.current_competition}
-            
-            transactions={props.transactions}
-            user_balance={props.user_balance}
+            <PortfolioChart
+              state={props.state}
+              setState={props.setState}
+
+              competitions_enrolled={props.competitions_enrolled}
+              current_competition={props.current_competition}
+
+              transactions={props.transactions}
+              user_balance={props.user_balance}
             />
           </div>
         </div>
@@ -93,14 +124,14 @@ export default function EventStatistic(props) {
         <div id="protfolio-change-chart">
           <div className='pie-chart'>
             <div className='asset-title'>Total Asset Breakdown</div>
-            <AssetChart 
-            state={props.state}
-            setState={props.setState}
-    
-            competitions_enrolled={props.competitions_enrolled}
-            current_competition={props.current_competition}
-            
-            transactions={props.transactions}
+            <AssetChart
+              state={props.state}
+              setState={props.setState}
+
+              competitions_enrolled={props.competitions_enrolled}
+              current_competition={props.current_competition}
+
+              transactions={props.transactions}
             />
           </div>
         </div>

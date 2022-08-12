@@ -15,7 +15,7 @@ export default function Dropdown(props) {
   const renderList = items.map((each, index) => {
     return (
       <li key={index} onClick={() => {
-        props.setState(prev => ({...prev, current_competition: {id: each.id, name: each.name}}))
+        props.setState(prev => ({...prev, current_competition: {id: each.id, name: each.name, starting_amount:each.starting_amount}}))
       }}>
         <FontAwesomeIcon id="list-icon" icon={faChartLine} />
         <span>{each.name}</span>
