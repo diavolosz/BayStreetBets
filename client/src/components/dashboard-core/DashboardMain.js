@@ -164,7 +164,7 @@ export default function Dashboard(props) {
 
 
 
-  
+
 
   useEffect(() => {
 
@@ -221,6 +221,48 @@ export default function Dashboard(props) {
       //console.log(portfolioStocksInfo)
       //console.log(updatedStockTotal)
 
+
+      // portfolioStocksInfo.forEach((stock) => {
+
+      //   axios.get(`https://cloud.iexapis.com/stable/stock/${stock.stock}/quote?token=${process.env.REACT_APP_CLOUD_TOKEN}`)
+
+      //     .then(response => {
+
+      //       let marketPrice = response.data.iexAskPrice
+
+      //       let marketEquity = stock.shares * marketPrice
+
+
+      //       let updatedEquity = props.user_balance.user_balance + marketEquity
+
+      //       console.log (response)
+
+
+      //       props.setState(prev => ({
+      //         ...prev,
+      //         user_balance: user_balance_info,
+      //         transactions: newTransactions
+      //       }))
+
+
+      //       setPortfolioDetails(prev => ({
+      //         ...prev,
+      //         cash: props.state.user_balance.user_balance,
+      //         daysLeft: dayDifference,
+      //         cashAssets: updatedEquity,
+      //         stockListDetails: portfolioStocksInfo
+      //       }))
+
+      //     })
+
+      // })
+
+
+
+
+
+
+
       let updatedEquity = props.user_balance.user_balance + updatedStockTotal
 
 
@@ -241,17 +283,6 @@ export default function Dashboard(props) {
         stockListDetails: portfolioStocksInfo
       }))
 
-
-
-      //console.log(portfolioDetails)
-
-      // console.log (
-      //   (new Date (props.current_competition.end_date).getTime() - 
-      //   new Date (props.current_competition.start_date).getTime())
-      //   / (1000*60*60*24)
-      //   )
-
-      //date2.getTime() – date1.getTime();
 
     })
 
