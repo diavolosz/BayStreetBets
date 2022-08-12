@@ -16,6 +16,7 @@ import ProfileEdit from "../dashboard-content/Profile";
 import Organize from "../dashboard-content/Organize";
 import Browse from "../dashboard-content/Browse";
 import Dropdown from "../dashboard-content/Dropdown";
+import PortfolioList from "./PortfolioList";
 
 
 
@@ -106,39 +107,40 @@ const removeZeroStocks = function (portfolioStocksAndShares) {
 export default function Dashboard(props) {
   const navigate = useNavigate();
 
-  const dataSet = [
-    { symbol: "APPL", price: 166.13, share: 50 },
-    { symbol: "APPL", price: 166.13, share: 50 },
-    { symbol: "APPL", price: 166.13, share: 50 },
-    { symbol: "APPL", price: 166.13, share: 50 },
-    { symbol: "APPL", price: 166.13, share: 50 },
-    { symbol: "APPL", price: 166.13, share: 50 },
-    { symbol: "APPL", price: 166.13, share: 50 },
-    { symbol: "APPL", price: 166.13, share: 50 },
-    { symbol: "APPL", price: 166.13, share: 50 },
-    { symbol: "APPL", price: 166.13, share: 50 },
-    { symbol: "APPL", price: 166.13, share: 50 },
-    { symbol: "APPL", price: 166.13, share: 50 },
-    { symbol: "APPL", price: 166.13, share: 50 },
-    { symbol: "APPL", price: 166.13, share: 50 },
-  ];
+  // const dataSet = [
+  //   { symbol: "APPL", price: 166.13, share: 50 },
+  //   { symbol: "APPL", price: 166.13, share: 50 },
+  //   { symbol: "APPL", price: 166.13, share: 50 },
+  //   { symbol: "APPL", price: 166.13, share: 50 },
+  //   { symbol: "APPL", price: 166.13, share: 50 },
+  //   { symbol: "APPL", price: 166.13, share: 50 },
+  //   { symbol: "APPL", price: 166.13, share: 50 },
+  //   { symbol: "APPL", price: 166.13, share: 50 },
+  //   { symbol: "APPL", price: 166.13, share: 50 },
+  //   { symbol: "APPL", price: 166.13, share: 50 },
+  //   { symbol: "APPL", price: 166.13, share: 50 },
+  //   { symbol: "APPL", price: 166.13, share: 50 },
+  //   { symbol: "APPL", price: 166.13, share: 50 },
+  //   { symbol: "APPL", price: 166.13, share: 50 },
+  // ];
 
-  const portfolioData = dataSet.map((each, index) => {
-    return (
-      <tr key={index}>
-        <td>{each.symbol}</td>
-        <td>${each.price}</td>
-        <td>{each.share}</td>
-      </tr>
-    );
-  });
+  // const portfolioData = dataSet.map((each, index) => {
+  //   return (
+  //     <tr key={index}>
+  //       <td>{each.symbol}</td>
+  //       <td>${each.price}</td>
+  //       <td>{each.share}</td>
+  //     </tr>
+  //   );
+  // });
 
   const [component, setComponent] = useState("EventStatistic");
 
   const [portfolioDetails, setPortfolioDetails] = useState({
     cash: null,
     daysLeft: null,
-    cashAssets: null
+    cashAssets: null,
+    stockListDetails: []
   })
 
   const logout = () => {
@@ -158,6 +160,11 @@ export default function Dashboard(props) {
     });
     navigate("/");
   };
+
+
+
+
+  
 
   useEffect(() => {
 
@@ -180,10 +187,7 @@ export default function Dashboard(props) {
 
       let user_balance_info = response[0].data[0]
 
-      props.setState(prev => ({
-        ...prev,
-        user_balance: user_balance_info
-      }))
+
 
 
       let currentDate = new Date().getTime();
@@ -206,31 +210,40 @@ export default function Dashboard(props) {
 
       let portfolioStocksInfo = removeZeroStocks(allPortfolioStocksInfo)
 
-      //console.log(allPortfolioStocksInfo)
+      //console.log(portfolioStocksInfo)
 
       let updatedStockTotal = 0
 
-      allPortfolioStocksInfo.forEach((stock) => {
+      portfolioStocksInfo.forEach((stock) => {
         updatedStockTotal += stock.shares * stock.totalAmount
       })
 
-      //console.log (updatedStockTotal)
+      //console.log(portfolioStocksInfo)
+      //console.log(updatedStockTotal)
 
       let updatedEquity = props.user_balance.user_balance + updatedStockTotal
 
 
       //console.log (updatedEquity)
 
-
+      props.setState(prev => ({
+        ...prev,
+        user_balance: user_balance_info,
+        transactions: newTransactions
+      }))
 
 
       setPortfolioDetails(prev => ({
         ...prev,
-        cash: user_balance_info.user_balance,
+        cash: props.state.user_balance.user_balance,
         daysLeft: dayDifference,
-        cashAssets: updatedEquity
+        cashAssets: updatedEquity,
+        stockListDetails: portfolioStocksInfo
       }))
 
+
+
+      //console.log(portfolioDetails)
 
       // console.log (
       //   (new Date (props.current_competition.end_date).getTime() - 
@@ -239,18 +252,6 @@ export default function Dashboard(props) {
       //   )
 
       //date2.getTime() – date1.getTime();
-
-
-
-
-
-
-
-
-
-
-
-
 
     })
 
@@ -343,13 +344,12 @@ export default function Dashboard(props) {
           <article>
             <table id="portfolio-table">
               <tbody>
-                {portfolioData
 
+                <PortfolioList
+                  stockList={portfolioDetails.stockListDetails}
 
+                />
 
-
-
-                }
               </tbody>
             </table>
           </article>
