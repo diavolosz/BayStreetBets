@@ -21,5 +21,32 @@ module.exports = db => {
 
   }); 
 
+
+  router.post("/buy", (req, res) => {
+    console.log(req.body)
+    user_id = req.body.user_profile.id
+    competition_id = req.body.competition_id.id
+    transaction_date = new Date()
+    buy_amount = req.body.buy
+    share_price = req.body.stockSearch.details.latestPrice
+    stock_symbol = req.body.stockSearch.details.symbol
+    type = "Buy"
+
+    db.query(`INSERT INTO transactions(buy_sell, symbol, price, number_of_shares, transaction_date, user_id, competition_id) VALUES($1, $2, $3, $4, $5, $6, $7);`, [type, stock_symbol, share_price, buy_amount, transaction_date, user_id, competition_id])
+  })
+
+  router.post("/sell", (req, res) => {
+    console.log(req.body)
+    user_id = req.body.user_profile.id
+    competition_id = req.body.competition_id.competition_id
+    transaction_date = new Date()
+    sell_amount = -(req.body.sell)
+    share_price = req.body.stockSearch.details.latestPrice
+    stock_symbol = req.body.stockSearch.details.symbol
+    type = "Sell"
+
+    db.query(`INSERT INTO transactions(buy_sell, symbol, price, number_of_shares, transaction_date, user_id, competition_id) VALUES($1, $2, $3, $4, $5, $6, $7);`, [type, stock_symbol, share_price, sell_amount, transaction_date, user_id, competition_id])
+  })
+
   return router;
 };

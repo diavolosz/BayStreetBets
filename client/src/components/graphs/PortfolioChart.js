@@ -98,19 +98,46 @@ const createFinalPortfolio = function (listOfDays, transactions, current_competi
   let finalPortfolio = [];
   let totalBuyAmount = 0;
 
-  listOfDays.map((day) => {
+  let persisted = []
 
+  listOfDays.map((day) => {
 
     transactions.map((transaction, index, item) => {
       if (day === transaction.transaction_date) {
         totalBuyAmount += transaction.number_of_shares * transaction.price
+
+        persisted.push({
+          stock: transaction.symbol,
+          shares: transaction.number_of_shares,
+          date: convertDate(transaction.transaction_date)
+        })
+
       }
 
       if (index + 1 === item.length) {
-        finalPortfolio.push({
-          date: convertDate(day),
-          totalEquity: current_competition.starting_amount - totalBuyAmount
-        })
+        // added start amount to dropdown, but is in money format, this changse to num for calc
+        if (typeof current_competition.starting_amount === 'string') {
+          let slicedNum = current_competition.starting_amount.slice(1, current_competition.starting_amount.length)
+
+          let formatNum = slicedNum.replace(',', '')
+          let finalNum = Number(formatNum)
+
+          finalPortfolio.push({
+            date: convertDate(day),
+            totalEquity: finalNum - totalBuyAmount,
+            stocksWithShares: persisted
+          })
+
+        } else {
+
+
+          finalPortfolio.push({
+            date: convertDate(day),
+            totalEquity: current_competition.starting_amount - totalBuyAmount,
+            stocksWithShares: persisted
+          })
+        }
+
       }
     })
   })
@@ -126,36 +153,148 @@ export default function PortfolioChart(props) {
   })
 
   useEffect(() => {
-
-    // axios.post("/api/transactions")
-
     if (props.transactions !== null) {
 
-      let dayList = getListOfDays(props.transactions)
-  
-      let finalPortfolio = createFinalPortfolio(dayList, props.transactions, props.current_competition)
-  
-  
-      let labelList = finalPortfolio.map((day) => {
-        return day.date
+      axios.post("/api/charts/pie", {
+        data: {
+          user: props.state.user,
+          user_competitions: props.state.current_competition
+        }
+      }).then(fetchedTransactions => {
+
+        let newTransactions = fetchedTransactions.data
+
+        let dayList = getListOfDays(newTransactions)
+
+        let finalPortfolio = createFinalPortfolio(dayList, newTransactions, props.current_competition)
+
+
+        let currentStocks = []
+
+        finalPortfolio.forEach((day) => {
+          day.stocksWithShares.forEach((item) => {
+            if (new Date(day.date) >= new Date(item.date)) {
+
+              if (currentStocks.length === 0) {
+
+                currentStocks.push({
+                  stock: item.stock,
+                  shares: item.shares
+                })
+
+              } else {
+
+                currentStocks.forEach((currentItem) => {
+                  if (currentItem.stock !== item.stock) {
+                    currentStocks.push({
+                      stock: item.stock,
+                      shares: item.shares
+                    })
+
+                  } else if (currentItem.stock === item.stock) {
+                    currentItem.shares += item.shares
+
+                  }
+                })
+              }
+            }
+          })
+
+          day['currentStocks'] = currentStocks
+          currentStocks = []
+        })
+
+        //console.log(finalPortfolio)
+
+        // finalPortfolio.forEach((item) => {
+
+        //   item.stocksWithShares.forEach((stockCall) => {
+
+        //     if (new Date(item.date) >= new Date(stockCall.date)) {
+
+
+        //       axios.get(`https://cloud.iexapis.com/stable/stock/${stockCall.stock}/quote?token=${process.env.REACT_APP_CLOUD_TOKEN}`)
+        //         .then(response => {
+
+        //           let marketPrice = response.data.close
+
+
+        //           console.log("before call", finalPortfolio)
+
+
+        //           item.totalEquity += marketPrice * stockCall.shares
+
+        //           console.log("after call", finalPortfolio)
+
+        //         }).then(() => {
+
+
+        //           let labelList = finalPortfolio.map((day) => {
+        //             return day.date
+        //           })
+
+
+
+        //           let dataList = finalPortfolio.map((day) => {
+        //             return day.totalEquity
+        //           })
+
+
+
+
+
+
+
+        //           setEquityData(prev => ({
+        //             ...prev,
+        //             labels: labelList,
+        //             datasets: [{
+        //               label: "",
+        //               data: dataList
+        //             }]
+        //           }))
+
+
+
+
+        //         })
+
+        //     }
+
+
+        //   })
+
+
+        // })
+
+
+
+
+        let labelList = finalPortfolio.map((day) => {
+          return day.date
+        })
+
+
+
+        let dataList = finalPortfolio.map((day) => {
+          return day.totalEquity
+        })
+
+
+
+
+
+        setEquityData(prev => ({
+          ...prev,
+          labels: labelList,
+          datasets: [{
+            label: "",
+            data: dataList
+          }]
+        }))
+
+
       })
-  
-      // console.log(labelList)
-  
-      let dataList = finalPortfolio.map((day) => {
-        return day.totalEquity
-      })
-  
-      //console.log (dataList)
-  
-      setEquityData(prev => ({
-        ...prev,
-        labels: labelList,
-        datasets: [{
-          label: "",
-          data: dataList
-        }]
-      }))
     }
 
 
