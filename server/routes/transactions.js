@@ -32,7 +32,12 @@ module.exports = db => {
     stock_symbol = req.body.stockSearch.details.symbol
     type = "Buy"
 
-    db.query(`INSERT INTO transactions(buy_sell, symbol, price, number_of_shares, transaction_date, user_id, competition_id) VALUES($1, $2, $3, $4, $5, $6, $7);`, [type, stock_symbol, share_price, buy_amount, transaction_date, user_id, competition_id])
+    db.query(`INSERT INTO transactions(buy_sell, symbol, price, number_of_shares, transaction_date, user_id, competition_id) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *;`, [type, stock_symbol, share_price, buy_amount, transaction_date, user_id, competition_id])
+    .then((result) => {
+      const transaction = result.rows[0]
+      delete transaction.id
+      res.json(transaction)
+    })
   })
 
   router.post("/sell", (req, res) => {
@@ -45,7 +50,12 @@ module.exports = db => {
     stock_symbol = req.body.stockSearch.details.symbol
     type = "Sell"
 
-    db.query(`INSERT INTO transactions(buy_sell, symbol, price, number_of_shares, transaction_date, user_id, competition_id) VALUES($1, $2, $3, $4, $5, $6, $7);`, [type, stock_symbol, share_price, sell_amount, transaction_date, user_id, competition_id])
+    db.query(`INSERT INTO transactions(buy_sell, symbol, price, number_of_shares, transaction_date, user_id, competition_id) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *;`, [type, stock_symbol, share_price, sell_amount, transaction_date, user_id, competition_id])
+    .then((result) => {
+      const transaction = result.rows[0]
+      delete transaction.id
+      res.json(transaction)
+    })
   })
 
   return router;

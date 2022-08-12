@@ -55,11 +55,11 @@ export default function EventStatistic(props) {
     axios.post("/api/transactions/buy", { stockSearch, buy, user_profile, competition_id })
       .then((res) => {
         // console.log(res.data.price);
-        res.data.price = parseFloat((res.data.price).replace(/[^0-9.-]+/g,""))
-        console.log(props.transactions);
-        console.log(res.data);
+        res.data.price = parseInt((res.data.price).replace(/[^0-9.-]+/g,""))
+        // console.log(props.transactions);
+        // console.log(res.data);
         props.transactions.push(res.data)
-        console.log(props.transactions);
+        // console.log(props.transactions);
 
 
         props.setState(prev => ({...prev, transactions: props.transactions}))
@@ -68,6 +68,11 @@ export default function EventStatistic(props) {
   const handleSell = (event) => {
     event.preventDefault();
     axios.post("/api/transactions/sell", { stockSearch, sell, user_profile, competition_id })
+    .then((res) => {
+      res.data.price = parseInt((res.data.price).replace(/[^0-9.-]+/g,""))
+      props.transactions.push(res.data)
+      props.setState(prev => ({...prev, transactions: props.transactions}))
+    })
   }
 
 
