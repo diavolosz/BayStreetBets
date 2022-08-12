@@ -6,8 +6,9 @@ import {
   faRightFromBracket,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, Navigate } from "react-router";
+import axios from 'axios';
 
 import EventStatistic from "../dashboard-content/EventStatistic";
 import TransactionHistory from "../dashboard-content/TransactionHistory";
@@ -48,6 +49,12 @@ export default function Dashboard(props) {
 
   const [component, setComponent] = useState("EventStatistic");
 
+  const [portfolioDetails, setPortfolioDetails] = useState({
+    cash: null,
+    daysLeft: null,
+    cashAssets: null
+  })
+
   const logout = () => {
     localStorage.clear();
 
@@ -65,6 +72,62 @@ export default function Dashboard(props) {
     });
     navigate("/");
   };
+
+  useEffect(() => {
+
+    Promise.all ([
+      axios.post("/api/charts/portfolio", {
+        data: {
+          user: props.state.user,
+          user_competitions: props.current_competition
+        }
+      }),
+
+    ]).then (response => {
+
+      let user_balance_info = response[0].data[0]
+
+      props.setState(prev => ({
+        ...prev,
+        user_balance: user_balance_info
+      }))
+
+      setPortfolioDetails(prev => ({
+        ...prev,
+        cash: user_balance_info.user_balance,
+      }))
+      
+
+    })
+
+
+
+
+
+
+
+
+
+
+
+  }, [props.current_competition])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   // const [toggle, setToggle] = useState(false)
   // const toggleClick = () => {
@@ -110,15 +173,15 @@ export default function Dashboard(props) {
         <div id="user-details">
           <div className="user-details-block">
             <span className="user-details-section">Cash on Hand:</span>
-            <span>$ 14650</span>
+            <span>{portfolioDetails.cash ? `$${portfolioDetails.cash}` : 'NONE'}</span>
           </div>
           <div className="user-details-block">
             <span className="user-details-section">Days Left:</span>
-            <span>9 Days</span>
+            <span>{portfolioDetails.daysLeft ? `${portfolioDetails.daysLeft} Days` : 'NOTHING'}</span>
           </div>
           <div className="user-details-block">
             <span className="user-details-section">CASH & ASSET:</span>
-            <span>$ 20000</span>
+            <span>{portfolioDetails.cashAssets ? `$${portfolioDetails.cashAssets}` : 'empty, such poor'}</span>
           </div>
         </div>
 
@@ -142,7 +205,9 @@ export default function Dashboard(props) {
 
           <article>
             <table id="portfolio-table">
-              <tbody>{portfolioData}</tbody>
+              <tbody>
+                {portfolioData}
+              </tbody>
             </table>
           </article>
         </div>
