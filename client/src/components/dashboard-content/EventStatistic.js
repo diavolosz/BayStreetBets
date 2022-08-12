@@ -78,6 +78,10 @@ export default function EventStatistic(props) {
       setDisplayAlert("ErrorAlert-overBuy")
       return setBuy(0);
     }
+    if (buy === 0) {
+      setDisplayAlert("ErrorAlert-missingValue")
+      return;
+    }
 
     axios
       .post("/api/transactions/buy", {
@@ -121,6 +125,10 @@ export default function EventStatistic(props) {
       setDisplayAlert("ErrorAlert-overSold")
       return setSell(0);
     }
+    if (sell === 0) {
+      setDisplayAlert("ErrorAlert-missingValue")
+      return;
+    }
     axios
       .post("/api/transactions/sell", {
         stockSearch,
@@ -151,13 +159,14 @@ export default function EventStatistic(props) {
     <div id="portfolio-inner-container">
       {displayAlert === "BoughtStocks" && <BuyAlert setDisplayAlert={() => setDisplayAlert}/>}
       {displayAlert === "SoldStocks" && <SellAlert setDisplayAlert={() => setDisplayAlert}/>}      
-      {displayAlert === "ErrorAlert-overBuy" && <ErrorAlert setDisplayAlert={() => setDisplayAlert} message={"Not enough cash."}/>}
+      {displayAlert === "ErrorAlert-overBuy" && <ErrorAlert setDisplayAlert={() => setDisplayAlert} message={"Not enough cash for the action."}/>}
       {displayAlert === "ErrorAlert-overSold" && <ErrorAlert setDisplayAlert={() => setDisplayAlert} message={"You don't own enough shares."}/>}
+      {displayAlert === "ErrorAlert-missingValue" && <ErrorAlert setDisplayAlert={() => setDisplayAlert} message={"You must enter a number to buy/sell."}/>}
 
       <div id="search-box">
         <div className="stock-chart">
           <form className="stock-search-box" onSubmit={search}>
-            <input type="text" placeholder="Search Stock ..." name="symbol" />
+            <input type="text" placeholder="Search Stock Symbol..." name="symbol" />
             <button type="submit">
               <FontAwesomeIcon
                 className="search-icon"
