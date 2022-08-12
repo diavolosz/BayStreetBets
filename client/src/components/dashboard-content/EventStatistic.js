@@ -53,7 +53,17 @@ export default function EventStatistic(props) {
   const handleBuy = (event) => {
     event.preventDefault();
     axios.post("/api/transactions/buy", { stockSearch, buy, user_profile, competition_id })
-      .then(() => { setBuy(0) })
+      .then((res) => {
+        // console.log(res.data.price);
+        res.data.price = parseFloat((res.data.price).replace(/[^0-9.-]+/g,""))
+        console.log(props.transactions);
+        console.log(res.data);
+        props.transactions.push(res.data)
+        console.log(props.transactions);
+
+
+        props.setState(prev => ({...prev, transactions: props.transactions}))
+      })
   }
   const handleSell = (event) => {
     event.preventDefault();
