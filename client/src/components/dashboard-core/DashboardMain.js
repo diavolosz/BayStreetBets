@@ -83,6 +83,7 @@ export default function Dashboard(props) {
         }
       }),
 
+
     ]).then (response => {
 
       let user_balance_info = response[0].data[0]
@@ -92,34 +93,40 @@ export default function Dashboard(props) {
         user_balance: user_balance_info
       }))
 
+
+      let currentDate = new Date ().getTime();
+
+      let endDate = new Date (props.current_competition.end_date).getTime();
+
+      // its rounded so not sure if calc is spot on
+      let dayDifference = Math.round ((endDate - currentDate) / (1000*60*60*24))
+
       setPortfolioDetails(prev => ({
         ...prev,
         cash: user_balance_info.user_balance,
+        daysLeft: dayDifference
       }))
       
+
+      // console.log (
+      //   (new Date (props.current_competition.end_date).getTime() - 
+      //   new Date (props.current_competition.start_date).getTime())
+      //   / (1000*60*60*24)
+      //   )
+
+      //date2.getTime() – date1.getTime();
+
+
+
+
+
+
 
     })
 
 
 
-
-
-
-
-
-
-
-
   }, [props.current_competition])
-
-
-
-
-
-
-
-
-
 
 
 
