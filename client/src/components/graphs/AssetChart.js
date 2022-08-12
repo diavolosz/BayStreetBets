@@ -3,14 +3,6 @@ import { Pie } from 'react-chartjs-2'
 import { Chart as ChartJS } from 'chart.js/auto'
 import axios from 'axios';
 
-let assets = [
-  { stock: 'AAPL', amount: 159.60, percentage: '8%' },
-  { stock: 'TSLA', amount: 1000, percentage: '54%' },
-  { stock: 'TWTR', amount: 53.60, percentage: '3%' },
-  { stock: 'GOOGL', amount: 500, percentage: '27%' },
-  { stock: 'LCID', amount: 120.20, percentage: '8%' },
-]
-
 const randomColour = function () {
   const r = Math.floor(Math.random() * 255);
   const g = Math.floor(Math.random() * 255);
@@ -109,7 +101,10 @@ const createFinalAssets = function (transactions, stocksToAdd) {
 
 export default function AssetChart(props) {
 
-  const [pieData, setpieData] = useState({ labels: [], datasets: [] })
+  const [pieData, setpieData] = useState({
+    labels: [],
+    datasets: []
+  })
 
   useEffect(() => {
 
@@ -127,7 +122,7 @@ export default function AssetChart(props) {
 
         let stocksAndShares = findStocksInPortfolio(newTransactions.data)
         let portfolioStocks = removeZeroStocks(stocksAndShares)
-        let finalAssets = createFinalAssets(props.transactions, portfolioStocks)
+        let finalAssets = createFinalAssets(newTransactions.data, portfolioStocks)
 
         const colours = [];
 
@@ -144,20 +139,21 @@ export default function AssetChart(props) {
           backgroundColor: colours
         }]
 
-        props.setState(prev => ({
-          ...prev,
-          transactions: newTransactions.data
-        }))
-
+        
+        
+        
         setpieData(prev => ({
           ...prev,
           labels: labelList,
           datasets: datasetList
         }))
 
-      })
+        props.setState(prev => ({
+          ...prev,
+          transactions: newTransactions.data
+        }))
 
-     
+      })
 
 
     }
@@ -175,14 +171,16 @@ export default function AssetChart(props) {
           arc: {
             borderWidth: 0
           }
+        },
+        plugins: {
+          datalabels: {
+            display: false
+          }
         }
 
-      }} 
-      
-      
-      
-      
-      />
+      }}
+
+    />
   )
 
 }

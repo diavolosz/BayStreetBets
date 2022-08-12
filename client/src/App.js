@@ -60,9 +60,16 @@ function App() {
 
           if (comps_userComps[2].data.length) {
             user_comp_info = {
-              id: comps_userComps[2].data[0].id, name: comps_userComps[2].data[0].name
+              id: comps_userComps[2].data[0].id, 
+              name: comps_userComps[2].data[0].name,
+              starting_amount: comps_userComps[2].data[0].starting_amount,
+              start_date: comps_userComps[2].data[0].start_date,
+              end_date: comps_userComps[2].data[0].end_date
+
             }
           }
+
+
 
           // let user_comp_info = !comps_userComps[2].data ? {
           //   id: comps_userComps[2].data[0].id, name: comps_userComps[2].data[0].name
@@ -89,7 +96,11 @@ function App() {
 
             if (comps_userComps[2].data.length) {
               current_comp_info = {
-                id: comps_userComps[2].data[0].id, name: comps_userComps[2].data[0].name, starting_amount: comps_userComps[2].data[0].starting_amount
+                id: comps_userComps[2].data[0].id, 
+                name: comps_userComps[2].data[0].name, 
+                starting_amount: comps_userComps[2].data[0].starting_amount,
+                start_date: comps_userComps[2].data[0].start_date,
+                end_date: comps_userComps[2].data[0].end_date
               }
             }
 
