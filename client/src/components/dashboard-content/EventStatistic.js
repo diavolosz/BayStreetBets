@@ -6,6 +6,7 @@ import PortfolioChart from "../graphs/PortfolioChart";
 import StockDetails from "../graphs/StockDetails";
 import SellAlert from './eventStatistic-content/SellAlert'
 import BuyAlert from './eventStatistic-content/BuyAlert'
+import ErrorAlert from "./eventStatistic-content/ErrorAlert";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
@@ -28,7 +29,6 @@ export default function EventStatistic(props) {
 
   const search = function (event) {
     event.preventDefault();
-    //console.log(event.target[0].value)
 
     Promise.all([
       axios.get(
@@ -53,32 +53,6 @@ export default function EventStatistic(props) {
       });
   };
 
-
-  // const user_profile = props.user_profile
-  // const competition_id = props.current_competition
-  
-  // const handleBuy = (event) => {
-  //   event.preventDefault();
-  //   axios.post("/api/transactions/buy", { stockSearch, buy, user_profile, competition_id })
-  //     .then((res) => {
-  //       res.data.price = parseInt((res.data.price).replace(/[^0-9.-]+/g,""))
-  //       props.transactions.push(res.data)
-  //       props.setState(prev => ({...prev, transactions: props.transactions}))
-  //     })
-  //     .then(() => setBuy(0))
-  //     .then(() => setDisplayAlert("boughtStocks"))
-  // }
-  // const handleSell = (event) => {
-  //   event.preventDefault();
-  //   axios.post("/api/transactions/sell", { stockSearch, sell, user_profile, competition_id })
-  //   .then((res) => {
-  //     res.data.price = parseInt((res.data.price).replace(/[^0-9.-]+/g,""))
-  //     props.transactions.push(res.data)
-  //     props.setState(prev => ({...prev, transactions: props.transactions}))
-  //   })
-  //   .then(() => setSell(0))
-  //   .then(() => setDisplayAlert("soldStocks"))
-  // }
   const [buy, setBuy] = useState(0);
   const [sell, setSell] = useState(0);
   const [displayAlert, setDisplayAlert] = useState("")
@@ -101,7 +75,8 @@ export default function EventStatistic(props) {
     );
 
     if (cash < stockSearch.details.latestPrice * buy) {
-      return alert("No enough cash.");
+      setDisplayAlert("ErrorAlert-overBuy")
+      return setBuy(0);
     }
 
     axios
@@ -117,7 +92,7 @@ export default function EventStatistic(props) {
           const convertedPrice = parseInt(price.replace(/[^0-9.-]+/g, ""));
           response.data.price = convertedPrice;
           setBuy(0);
-          setDisplayAlert("boughtStocks");
+          setDisplayAlert("BoughtStocks");
           const updatedTransactions = updateTransactions(
             props.state,
             response.data
@@ -143,7 +118,8 @@ export default function EventStatistic(props) {
     );
 
     if (sharesOwned < parseInt(sell)) {
-      return alert("You don't own enough shares.");
+      setDisplayAlert("ErrorAlert-overSold")
+      return setSell(0);
     }
     axios
       .post("/api/transactions/sell", {
@@ -158,7 +134,7 @@ export default function EventStatistic(props) {
           const convertedPrice = parseInt(price.replace(/[^0-9.-]+/g, ""));
           response.data.price = convertedPrice;
           setSell(0);
-          setDisplayAlert("soldStocks");
+          setDisplayAlert("SoldStocks");
           const updatedTransactions = updateTransactions(
             props.state,
             response.data
@@ -173,8 +149,11 @@ export default function EventStatistic(props) {
 
   return (
     <div id="portfolio-inner-container">
-      {displayAlert === "boughtStocks" && <BuyAlert setDisplayAlert={() => setDisplayAlert}/>}
-      {displayAlert === "soldStocks" && <SellAlert setDisplayAlert={() => setDisplayAlert}/>}
+      {displayAlert === "BoughtStocks" && <BuyAlert setDisplayAlert={() => setDisplayAlert}/>}
+      {displayAlert === "SoldStocks" && <SellAlert setDisplayAlert={() => setDisplayAlert}/>}      
+      {displayAlert === "ErrorAlert-overBuy" && <ErrorAlert setDisplayAlert={() => setDisplayAlert} message={"Not enough cash."}/>}
+      {displayAlert === "ErrorAlert-overSold" && <ErrorAlert setDisplayAlert={() => setDisplayAlert} message={"You don't own enough shares."}/>}
+
       <div id="search-box">
         <div className="stock-chart">
           <form className="stock-search-box" onSubmit={search}>
