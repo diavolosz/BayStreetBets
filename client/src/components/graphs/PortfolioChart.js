@@ -204,20 +204,65 @@ export default function PortfolioChart(props) {
           currentStocks = []
         })
 
-        console.log(finalPortfolio)
+        //console.log(finalPortfolio)
 
-        //console.log (stocksAndShares)
+        // finalPortfolio.forEach((item) => {
+
+        //   item.stocksWithShares.forEach((stockCall) => {
+
+        //     if (new Date(item.date) >= new Date(stockCall.date)) {
 
 
-        // stocksAndShares.forEach((item) => {
+        //       axios.get(`https://cloud.iexapis.com/stable/stock/${stockCall.stock}/quote?token=${process.env.REACT_APP_CLOUD_TOKEN}`)
+        //         .then(response => {
 
-        //   Promise.all ([
-        //     axios.get(`https://cloud.iexapis.com/stable/stock/${item.stock}/quote?token=${process.env.REACT_APP_CLOUD_TOKEN}`)
-        //   ]).then(response => {
+        //           let marketPrice = response.data.close
+
+
+        //           console.log("before call", finalPortfolio)
+
+
+        //           item.totalEquity += marketPrice * stockCall.shares
+
+        //           console.log("after call", finalPortfolio)
+
+        //         }).then(() => {
+
+
+        //           let labelList = finalPortfolio.map((day) => {
+        //             return day.date
+        //           })
+
+
+
+        //           let dataList = finalPortfolio.map((day) => {
+        //             return day.totalEquity
+        //           })
+
+
+
+
+
+
+
+        //           setEquityData(prev => ({
+        //             ...prev,
+        //             labels: labelList,
+        //             datasets: [{
+        //               label: "",
+        //               data: dataList
+        //             }]
+        //           }))
+
+
+
+
+        //         })
+
+        //     }
 
 
         //   })
-
 
 
         // })
@@ -234,8 +279,6 @@ export default function PortfolioChart(props) {
         let dataList = finalPortfolio.map((day) => {
           return day.totalEquity
         })
-
-
 
 
 
