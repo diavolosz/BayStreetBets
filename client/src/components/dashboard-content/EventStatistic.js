@@ -3,6 +3,8 @@ import StockChart from '../graphs/StockChart'
 import AssetChart from '../graphs/AssetChart'
 import PortfolioChart from '../graphs/PortfolioChart'
 import StockDetails from '../graphs/StockDetails'
+import SellAlert from './eventStatistic-content/SellAlert'
+import BuyAlert from './eventStatistic-content/BuyAlert'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
@@ -47,23 +49,20 @@ export default function EventStatistic(props) {
 
   const [buy, setBuy] = useState(0)
   const [sell, setSell] = useState(0)
+  const [displayAlert, setDisplayAlert] = useState("")
   const user_profile = props.user_profile
   const competition_id = props.current_competition
-
+  
   const handleBuy = (event) => {
     event.preventDefault();
     axios.post("/api/transactions/buy", { stockSearch, buy, user_profile, competition_id })
       .then((res) => {
-        // console.log(res.data.price);
         res.data.price = parseInt((res.data.price).replace(/[^0-9.-]+/g,""))
-        // console.log(props.transactions);
-        // console.log(res.data);
         props.transactions.push(res.data)
-        // console.log(props.transactions);
-
-
         props.setState(prev => ({...prev, transactions: props.transactions}))
       })
+      .then(() => setBuy(0))
+      .then(() => setDisplayAlert("boughtStocks"))
   }
   const handleSell = (event) => {
     event.preventDefault();
@@ -73,12 +72,15 @@ export default function EventStatistic(props) {
       props.transactions.push(res.data)
       props.setState(prev => ({...prev, transactions: props.transactions}))
     })
+    .then(() => setSell(0))
+    .then(() => setDisplayAlert("soldStocks"))
   }
 
 
   return (
     <div id="portfolio-inner-container">
-
+      {displayAlert === "boughtStocks" && <BuyAlert setDisplayAlert={() => setDisplayAlert}/>}
+      {displayAlert === "soldStocks" && <SellAlert setDisplayAlert={() => setDisplayAlert}/>}
       <div id="search-box">
         <div className='stock-chart'>
 
