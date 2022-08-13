@@ -113,10 +113,11 @@ const removeZeroStocks = function (portfolioStocksAndShares) {
 
 
 
+
 export default function Dashboard(props) {
   const navigate = useNavigate();
 
-  const [component, setComponent] = useState("EventStatistic");
+  const [component, setComponent] = useState('EventStatistic');
 
   const [portfolioDetails, setPortfolioDetails] = useState({
     cash: null,
@@ -251,7 +252,6 @@ export default function Dashboard(props) {
       props.setState(prev => ({
         ...prev,
         user_balance: user_balance_info,
-
       }))
 
 
@@ -272,9 +272,10 @@ export default function Dashboard(props) {
       }))
 
 
+
     })
 
-    //console.log (props)
+
 
   }, [props.current_competition, props.transactions])
 
@@ -286,7 +287,16 @@ export default function Dashboard(props) {
 
   // const [graph, setGraph] = useState("graph 1")
 
+
+
+
+
+
+
   return (
+
+
+
     <div id="page-container">
       <nav id="portfolio-side-nav">
         <div id="company-name">
@@ -297,14 +307,26 @@ export default function Dashboard(props) {
           <ul>
             <li
               id="side-nav-dashboard"
+
+
+
               onClick={() => {
+
+
+
                 if (portfolioDetails.daysLeft <= 0) {
                   setComponent("Leaderboard")
                 } else {
                   setComponent("EventStatistic");
                 }
+
+
+
               }}
             >
+
+
+
               <FontAwesomeIcon icon={faClipboard} />
               <Dropdown
                 title="Dashboard"
@@ -312,7 +334,7 @@ export default function Dashboard(props) {
                 setState={props.setState}
                 state={props.state}
                 current_competition={props.current_competition}
-                setComponent={setComponent}
+
                 daysLeft={portfolioDetails.daysLeft}
               />
             </li>

@@ -25,6 +25,7 @@ function App() {
 
 
 
+
   const userFromLocalStorage = localStorage.getItem("user");
   // console.log(userFromLocalStorage)
   const navigate = useNavigate();
@@ -169,6 +170,8 @@ function App() {
       user_balance={state.user_balance}
 
       user_profile={state.user_profile}
+
+
     />
     :
     <HomePage />

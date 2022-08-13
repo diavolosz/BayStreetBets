@@ -28,6 +28,8 @@ export default function EventStatistic(props) {
     historical: null,
   });
 
+
+
   const search = function (event) {
     event.preventDefault();
 
@@ -61,6 +63,65 @@ export default function EventStatistic(props) {
         console.log(e);
       });
   };
+
+
+
+  // temp for testing
+  const [users, setUsers] = useState([])
+  const [text, setText] = useState('')
+  const [suggestions, setSuggestions] = useState([])
+
+
+
+
+
+
+
+  useEffect(() => {
+    const loadUsers = async () => {
+      const response = await axios.get('https://reqres.in/api/users?page=2');
+
+
+      setUsers(response.data.data)
+    }
+
+    loadUsers();
+
+
+  }, [])
+
+  const onSuggestHandler = (text) => {
+    setText(text);
+    setSuggestions([]);
+  }
+
+
+
+
+  const onChangehandler = (text) => {
+
+    let matches = []
+
+    if (text.length > 0) {
+      matches = users.filter(user => {
+        const userFiltered = new RegExp(`${text}`, "gi")
+        return user.email.match(userFiltered)
+      })
+    }
+
+    console.log("matches", matches)
+
+    setSuggestions(matches)
+    setText(text)
+
+  }
+
+
+
+
+
+
+
 
   const [buy, setBuy] = useState(0);
   const [sell, setSell] = useState(0);
@@ -186,16 +247,63 @@ export default function EventStatistic(props) {
 
       <div id="search-box">
         <div className="stock-chart">
-          <form className="stock-search-box" onSubmit={search}>
-            <input type="text" placeholder="Search Stock Symbol..." name="symbol" />
+
+
+
+
+
+          <form className="stock-search-box"
+            onSubmit={search}
+            onChange={e => onChangehandler(e.target.value)}
+            autoComplete="off"
+          >
+
+
+            <input type="text" placeholder="Search Stock Symbol..." name="symbol" value={text}
+            onChange={onChangehandler}
+            onBlur={() => {
+              setTimeout (() => {
+                setSuggestions([])
+              }, 50)
+            }}
+            />
+
+
+
+
+
             <button type="submit">
               <FontAwesomeIcon
                 className="search-icon"
                 icon={faMagnifyingGlass}
               />
             </button>
+
           </form>
+
+
+
+
           <div id="stock-chart-container">
+
+
+
+            {suggestions && suggestions.map((suggestion, i) =>
+              <div
+                key={i}
+                className='suggestion-box'
+                onClick={() => onSuggestHandler(suggestion.email)}
+              >
+                {suggestion.email}
+              </div>
+            )}
+
+
+
+
+
+
+
             <StockChart
               stockSearch={stockSearch}
               setStockSearch={setStockSearch}
@@ -211,6 +319,11 @@ export default function EventStatistic(props) {
             stockSearch={stockSearch}
             setStockSearch={setStockSearch}
           />
+
+
+
+
+
           {stockSearch.details !== null && (
             <div id="buy-sell-container">
               <form onSubmit={handleBuy}>

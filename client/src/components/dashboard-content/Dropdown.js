@@ -27,6 +27,8 @@ export default function Dropdown(props) {
               end_date: each.end_date
             }
           }))
+
+
       }}>
         <FontAwesomeIcon id="list-icon" icon={faChartLine} />
         <span>{each.name}</span>
