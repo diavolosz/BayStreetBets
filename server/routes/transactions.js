@@ -6,11 +6,13 @@ module.exports = db => {
       return res.json(null);
     }
 
-    console.log("req.body.data will give user", req.body.data);
+    //console.log("req.body.data will give user", req.body.data);
+
     const userID = req.body.data.user.id;
 
+
     db.query(
-      `SELECT buy_sell, symbol, price::money::numeric::int, number_of_shares, transaction_date, user_id, competition_id FROM transactions WHERE user_id = $1;`,
+      `SELECT buy_sell, symbol, price::money::numeric::int, number_of_shares, transaction_date, user_id, competition_id FROM transactions WHERE user_id = $1 ;`,
       [userID]
     )
       .then(result => {
@@ -21,6 +23,8 @@ module.exports = db => {
         console.log("transaction error", e);
       });
   });
+
+  
 
   router.post("/buy", (req, res) => {
     console.log(req.body);

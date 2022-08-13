@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 export default function TransactionHistoryItem(props) {
   const { transactions } = props;
 
-  //console.log (transactions.transactions)
+  //console.log (transactions)
 
   let listed;
 

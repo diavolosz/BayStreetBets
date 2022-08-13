@@ -65,33 +65,14 @@ function App() {
 
           if (comps_userComps[2].data.length) {
 
-            // loops through all user competitions, sets first one where end_date is not reached
-            comps_userComps[2].data.forEach((comp) => {
+            user_comp_info = {
+              id: comps_userComps[2].data[0].id,
+              name: comps_userComps[2].data[0].name,
+              starting_amount: comps_userComps[2].data[0].starting_amount,
+              start_date: comps_userComps[2].data[0].start_date,
+              end_date: comps_userComps[2].data[0].end_date
 
-              let currentDate = new Date().getTime()
-
-              let endDate = new Date(comp.end_date).getTime()
-
-              // console.log(new Date())
-              // console.log(new Date(comp.end_date))
-
-              // console.log(currentDate > endDate)
-
-              if (currentDate > endDate === false) {
-
-                user_comp_info = {
-                  id: comps_userComps[2].data[0].id,
-                  name: comps_userComps[2].data[0].name,
-                  starting_amount: comps_userComps[2].data[0].starting_amount,
-                  start_date: comps_userComps[2].data[0].start_date,
-                  end_date: comps_userComps[2].data[0].end_date
-
-                }
-
-              }
-
-            })
-
+            }
           }
 
 

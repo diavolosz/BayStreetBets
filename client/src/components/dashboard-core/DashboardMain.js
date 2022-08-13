@@ -26,7 +26,10 @@ const findPortfolioStocksAndSharesPrice = function (transactions) {
   let stockAndShares = [];
   let stockTracker = [];
 
+  //console.log (transactions)
+
   transactions.map((transaction) => {
+
 
     if (stockAndShares.length === 0) {
       stockAndShares.push({
@@ -70,6 +73,9 @@ const findPortfolioStocksAndSharesPrice = function (transactions) {
               shares: transaction.number_of_shares,
               totalAmount: transaction.number_of_shares * transaction.price
             })
+
+
+
           }
 
 
@@ -86,6 +92,8 @@ const findPortfolioStocksAndSharesPrice = function (transactions) {
     }
 
   })
+
+
 
   return stockAndShares
 }
@@ -174,7 +182,12 @@ export default function Dashboard(props) {
 
       let allPortfolioStocksInfo = findPortfolioStocksAndSharesPrice(newTransactions)
 
+      
+
       //console.log(allPortfolioStocksInfo)
+
+
+
       let portfolioStocksInfo = removeZeroStocks(allPortfolioStocksInfo)
 
       //console.log(portfolioStocksInfo)
@@ -251,7 +264,7 @@ export default function Dashboard(props) {
 
     })
 
-
+    //console.log (props)
 
   }, [props.current_competition, props.transactions])
 

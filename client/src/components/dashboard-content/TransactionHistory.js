@@ -5,6 +5,8 @@ import "../../stylesheet/TransactionHistory.scss"
 import TransactionHistoryItem from './TransactionHistoryItem';
 
 
+import { getTransactionsForCompetition } from "../../helpers/selectors";
+
 export default function TransactionHistory(props) {
   const [transactionData, setTransactionData] = useState({
     transactions: props.transactions
@@ -21,21 +23,26 @@ export default function TransactionHistory(props) {
       })
     ]).then((newTransactions) => {
 
+      console.log (newTransactions[0].data)
+
       props.setState(prev => ({
         ...prev,
         transactions: newTransactions[0].data
       }));
 
-      props.setState(prev => ({
-        ...prev,
-        transactions: newTransactions[0].data
-      }))
+      // setTransactionData(prev => ({
+      //   ...prev,
+      //   transactionData: newTransactions[0].data
+      // }))
+
 
 
       setTransactionData(prev => ({
         ...prev,
-        transactionData: newTransactions[0].data
+        transactions: getTransactionsForCompetition(props.state, props.current_competition.id)
       }))
+
+
 
 
       // let listed = newTransactions[0].data.map((transaction) => {
