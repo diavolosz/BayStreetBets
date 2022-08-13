@@ -214,7 +214,6 @@ export default function Dashboard(props) {
           <ul>
             <li
               id="side-nav-dashboard"
-              // onClick={() => {setComponent(portfolioDetails.leaderboardState)}}
             >
               <FontAwesomeIcon icon={faClipboard} />
               <Dropdown
