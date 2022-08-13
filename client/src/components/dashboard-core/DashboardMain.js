@@ -26,7 +26,6 @@ const findPortfolioStocksAndSharesPrice = function (transactions) {
   let stockAndShares = [];
   let stockTracker = [];
 
-  //console.log (transactions)
 
   transactions.map((transaction) => {
 
@@ -288,7 +287,11 @@ export default function Dashboard(props) {
             <li
               id="side-nav-dashboard"
               onClick={() => {
-                setComponent("EventStatistic");
+                if (portfolioDetails.daysLeft <= 0) {
+                  setComponent("Leaderboard")
+                } else {
+                  setComponent("EventStatistic");
+                }
               }}
             >
               <FontAwesomeIcon icon={faClipboard} />
