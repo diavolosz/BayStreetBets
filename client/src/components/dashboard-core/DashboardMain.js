@@ -116,7 +116,7 @@ const removeZeroStocks = function (portfolioStocksAndShares) {
 export default function Dashboard(props) {
   const navigate = useNavigate();
 
-  const [component, setComponent] = useState("Leaderboard");
+  const [component, setComponent] = useState("EventStatistic");
 
   const [portfolioDetails, setPortfolioDetails] = useState({
     cash: null,
@@ -183,7 +183,7 @@ export default function Dashboard(props) {
 
       let allPortfolioStocksInfo = findPortfolioStocksAndSharesPrice(newTransactions)
 
-      
+
 
       //console.log(allPortfolioStocksInfo)
 
@@ -273,6 +273,8 @@ export default function Dashboard(props) {
 
 
 
+
+
     })
 
     //console.log (props)
@@ -298,13 +300,13 @@ export default function Dashboard(props) {
           <ul>
             <li
               id="side-nav-dashboard"
-              onClick={() => {
-                if (portfolioDetails.daysLeft <= 0) {
-                  setComponent("Leaderboard")
-                } else {
-                  setComponent("EventStatistic");
-                }
-              }}
+            onClick={() => {
+              if (portfolioDetails.daysLeft <= 0) {
+                setComponent("Leaderboard")
+              } else {
+                setComponent("EventStatistic");
+              }
+            }}
             >
               <FontAwesomeIcon icon={faClipboard} />
               <Dropdown
