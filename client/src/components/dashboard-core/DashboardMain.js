@@ -26,87 +26,52 @@ const findPortfolioStocksAndSharesPrice = function (transactions) {
   let stockAndShares = [];
   let stockTracker = [];
 
-
   transactions.map((transaction) => {
-
-
     if (stockAndShares.length === 0) {
       stockAndShares.push({
         stock: transaction.symbol,
         shares: transaction.number_of_shares,
         totalAmount: transaction.number_of_shares * transaction.price
       })
-
       stockTracker.push(transaction.symbol)
     } else {
-
       stockAndShares.forEach((item, index, array) => {
         if (transaction.symbol === item.stock) {
           item.shares += transaction.number_of_shares
-
           let priceTotal = transaction.number_of_shares * transaction.price
-
           item.totalAmount += priceTotal
         }
-
         if (!stockTracker.includes(transaction.symbol)) {
           stockAndShares.push({
             stock: transaction.symbol,
             shares: transaction.number_of_shares,
             totalAmount: transaction.number_of_shares * transaction.price
           })
-
           stockTracker.push(transaction.symbol)
         }
-
-
-
-
         if (index + 1 === array.length) {
-
-
           if (!stockTracker.includes(transaction.symbol)) {
-
             stockAndShares.push({
               stock: transaction.symbol,
               shares: transaction.number_of_shares,
               totalAmount: transaction.number_of_shares * transaction.price
             })
-
-
-
           }
-
-
-
         }
-
-
       })
-
-
-
-
-
     }
-
   })
-
-
-
   return stockAndShares
 }
 
 
 const removeZeroStocks = function (portfolioStocksAndShares) {
-
   for (let index in portfolioStocksAndShares) {
     if (portfolioStocksAndShares[index].shares === 0) {
       portfolioStocksAndShares.splice(index, 1)
     }
 
   }
-
   return portfolioStocksAndShares
 }
 
@@ -122,7 +87,8 @@ export default function Dashboard(props) {
     cash: null,
     daysLeft: null,
     cashAssets: null,
-    stockListDetails: []
+    stockListDetails: [],
+    leaderboardState: null,
   })
 
   const logout = () => {
@@ -143,13 +109,7 @@ export default function Dashboard(props) {
     navigate("/");
   };
 
-
-
-
-
-  // for current comp change
   useEffect(() => {
-
     Promise.all([
       axios.post("/api/charts/portfolio", {
         data: {
@@ -162,91 +122,22 @@ export default function Dashboard(props) {
           user: props.state.user,
           competition: props.current_competition
         }
-      }),
-
-
+      })
     ]).then(response => {
-
-      // console.log (props.current_competition)
-
       let user_balance_info = response[0].data[0]
-
       let currentDate = new Date().getTime();
       let endDate = new Date(props.current_competition.end_date).getTime();
-
-      // its rounded so not sure if calc is spot on
       let dayDifference = Math.round((endDate - currentDate) / (1000 * 60 * 60 * 24))
-
-      //console.log(response[1].data)
-
       let newTransactions = response[1].data
-
       let allPortfolioStocksInfo = findPortfolioStocksAndSharesPrice(newTransactions)
-
-
-
-      //console.log(allPortfolioStocksInfo)
-
-
-
       let portfolioStocksInfo = removeZeroStocks(allPortfolioStocksInfo)
-
-      //console.log(portfolioStocksInfo)
-
       let updatedStockTotal = 0
 
       portfolioStocksInfo.forEach((stock) => {
         updatedStockTotal += stock.shares * stock.totalAmount
       })
 
-
-      // portfolioStocksInfo.forEach((stock) => {
-
-      //   axios.get(`https://cloud.iexapis.com/stable/stock/${stock.stock}/quote?token=${process.env.REACT_APP_CLOUD_TOKEN}`)
-
-      //     .then(response => {
-
-      //       let marketPrice = response.data.iexRealtimePrice
-
-      //       let marketEquity = stock.shares * marketPrice
-
-
-      //       let updatedEquity = props.user_balance.user_balance + marketEquity
-
-      //       console.log (response)
-
-
-      //       portfolioStocksInfo.forEach((stock) => {
-      //         stock.totalAmount += marketEquity
-      //       })
-
-
-      //       //console.log(updatedEquity)
-
-
-      //       props.setState(prev => ({
-      //         ...prev,
-      //         user_balance: user_balance_info,
-      //         transactions: newTransactions
-      //       }))
-
-
-      //       setPortfolioDetails(prev => ({
-      //         ...prev,
-      //         cash: props.state.user_balance.user_balance,
-      //         daysLeft: dayDifference,
-      //         cashAssets: updatedEquity,
-      //         stockListDetails: portfolioStocksInfo
-      //       }))
-
-      //     })
-
-      // })
-
       let updatedEquity = user_balance_info.user_balance + updatedStockTotal
-
-
-      //console.log (updatedEquity)
 
       props.setState(prev => ({
         ...prev,
@@ -254,37 +145,26 @@ export default function Dashboard(props) {
 
       }))
 
-
-      // setPortfolioDetails(prev => ({
-      //   ...prev,
-      //   cash: props.state.user_balance.user_balance,
-      //   daysLeft: dayDifference,
-      //   cashAssets: updatedEquity,
-      //   stockListDetails: portfolioStocksInfo
-      // }))
+      let LeaderboardStatus = ""
+      if (dayDifference < 0) {
+        LeaderboardStatus = "Leaderboard"
+      }
+      if (dayDifference > 0) {
+        LeaderboardStatus = "EventStatistic"
+      }
 
       setPortfolioDetails(prev => ({
         ...prev,
         cash: user_balance_info.user_balance,
         daysLeft: dayDifference,
         cashAssets: updatedEquity,
-        stockListDetails: portfolioStocksInfo
+        stockListDetails: portfolioStocksInfo,
+        leaderboardState: LeaderboardStatus
       }))
-
-
+      setComponent(LeaderboardStatus)
     })
-
-    //console.log (props)
-
   }, [props.current_competition, props.transactions])
 
-
-  // const [toggle, setToggle] = useState(false)
-  // const toggleClick = () => {
-  //   setToggle(!toggle)
-  // }
-
-  // const [graph, setGraph] = useState("graph 1")
 
   return (
     <div id="page-container">
@@ -297,13 +177,6 @@ export default function Dashboard(props) {
           <ul>
             <li
               id="side-nav-dashboard"
-              onClick={() => {
-                if (portfolioDetails.daysLeft <= 0) {
-                  setComponent("Leaderboard")
-                } else {
-                  setComponent("EventStatistic");
-                }
-              }}
             >
               <FontAwesomeIcon icon={faClipboard} />
               <Dropdown
@@ -312,8 +185,6 @@ export default function Dashboard(props) {
                 setState={props.setState}
                 state={props.state}
                 current_competition={props.current_competition}
-                setComponent={setComponent}
-                daysLeft={portfolioDetails.daysLeft}
               />
             </li>
             <li onClick={() => setComponent("Browse")}>
@@ -363,12 +234,7 @@ export default function Dashboard(props) {
           <article>
             <table id="portfolio-table">
               <tbody>
-
-                <PortfolioList
-                  stockList={portfolioDetails.stockListDetails}
-
-                />
-
+                <PortfolioList stockList={portfolioDetails.stockListDetails}/>
               </tbody>
             </table>
           </article>
