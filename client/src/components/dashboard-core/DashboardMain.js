@@ -26,87 +26,52 @@ const findPortfolioStocksAndSharesPrice = function (transactions) {
   let stockAndShares = [];
   let stockTracker = [];
 
-
   transactions.map((transaction) => {
-
-
     if (stockAndShares.length === 0) {
       stockAndShares.push({
         stock: transaction.symbol,
         shares: transaction.number_of_shares,
         totalAmount: transaction.number_of_shares * transaction.price
       })
-
       stockTracker.push(transaction.symbol)
     } else {
-
       stockAndShares.forEach((item, index, array) => {
         if (transaction.symbol === item.stock) {
           item.shares += transaction.number_of_shares
-
           let priceTotal = transaction.number_of_shares * transaction.price
-
           item.totalAmount += priceTotal
         }
-
         if (!stockTracker.includes(transaction.symbol)) {
           stockAndShares.push({
             stock: transaction.symbol,
             shares: transaction.number_of_shares,
             totalAmount: transaction.number_of_shares * transaction.price
           })
-
           stockTracker.push(transaction.symbol)
         }
-
-
-
-
         if (index + 1 === array.length) {
-
-
           if (!stockTracker.includes(transaction.symbol)) {
-
             stockAndShares.push({
               stock: transaction.symbol,
               shares: transaction.number_of_shares,
               totalAmount: transaction.number_of_shares * transaction.price
             })
-
-
-
           }
-
-
-
         }
-
-
       })
-
-
-
-
-
     }
-
   })
-
-
-
   return stockAndShares
 }
 
 
 const removeZeroStocks = function (portfolioStocksAndShares) {
-
   for (let index in portfolioStocksAndShares) {
     if (portfolioStocksAndShares[index].shares === 0) {
       portfolioStocksAndShares.splice(index, 1)
     }
 
   }
-
   return portfolioStocksAndShares
 }
 
@@ -180,7 +145,6 @@ export default function Dashboard(props) {
 
       }))
 
-
       let LeaderboardStatus = ""
       if (dayDifference < 0) {
         LeaderboardStatus = "Leaderboard"
@@ -188,7 +152,6 @@ export default function Dashboard(props) {
       if (dayDifference > 0) {
         LeaderboardStatus = "EventStatistic"
       }
-
 
       setPortfolioDetails(prev => ({
         ...prev,
@@ -271,12 +234,7 @@ export default function Dashboard(props) {
           <article>
             <table id="portfolio-table">
               <tbody>
-
-                <PortfolioList
-                  stockList={portfolioDetails.stockListDetails}
-
-                />
-
+                <PortfolioList stockList={portfolioDetails.stockListDetails}/>
               </tbody>
             </table>
           </article>
