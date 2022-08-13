@@ -137,7 +137,7 @@ function App() {
 
               current_competition: current_comp_info,
 
-              transactions: transactions_userBalance[0].data,    //specific to user and to competition
+              transactions: transactions_userBalance[0].data || [],    //specific to user and to competition
 
               user_balance: user_balance_info
             }));
