@@ -17,15 +17,6 @@ export default function Dropdown(props) {
     return (
       <li key={index} onClick={() => {
 
-        // axios.post("/api/transactions/history", {
-        //   data: {
-        //     user: props.state.user,
-        //     competition: props.current_competition
-        //   }
-        // }).then((response) => {
-
-        //   let newTransactions = response.data
-
           props.setState(prev => ({
             ...prev,
             current_competition: {
@@ -34,24 +25,8 @@ export default function Dropdown(props) {
               starting_amount: each.starting_amount,
               start_date: each.start_date,
               end_date: each.end_date
-            },
-
-            // transactions: newTransactions
-
+            }
           }))
-
-          
-          
-        // })
-        
-        
-
-
-
-
-
-
-
       }}>
         <FontAwesomeIcon id="list-icon" icon={faChartLine} />
         <span>{each.name}</span>

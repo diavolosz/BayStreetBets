@@ -26,7 +26,6 @@ const findPortfolioStocksAndSharesPrice = function (transactions) {
   let stockAndShares = [];
   let stockTracker = [];
 
-  //console.log (transactions)
 
   transactions.map((transaction) => {
 
@@ -117,7 +116,7 @@ const removeZeroStocks = function (portfolioStocksAndShares) {
 export default function Dashboard(props) {
   const navigate = useNavigate();
 
-  const [component, setComponent] = useState("Leaderboard");
+  const [component, setComponent] = useState("EventStatistic");
 
   const [portfolioDetails, setPortfolioDetails] = useState({
     cash: null,
@@ -184,7 +183,7 @@ export default function Dashboard(props) {
 
       let allPortfolioStocksInfo = findPortfolioStocksAndSharesPrice(newTransactions)
 
-      
+
 
       //console.log(allPortfolioStocksInfo)
 
@@ -273,7 +272,6 @@ export default function Dashboard(props) {
       }))
 
 
-
     })
 
     //console.log (props)
@@ -300,7 +298,11 @@ export default function Dashboard(props) {
             <li
               id="side-nav-dashboard"
               onClick={() => {
-                setComponent("EventStatistic");
+                if (portfolioDetails.daysLeft <= 0) {
+                  setComponent("Leaderboard")
+                } else {
+                  setComponent("EventStatistic");
+                }
               }}
             >
               <FontAwesomeIcon icon={faClipboard} />
@@ -310,6 +312,8 @@ export default function Dashboard(props) {
                 setState={props.setState}
                 state={props.state}
                 current_competition={props.current_competition}
+                setComponent={setComponent}
+                daysLeft={portfolioDetails.daysLeft}
               />
             </li>
             <li onClick={() => setComponent("Browse")}>
