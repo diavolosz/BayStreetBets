@@ -3,6 +3,7 @@ import '../../stylesheet/Dropdown.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChartLine } from '@fortawesome/free-solid-svg-icons'
 import { getAllCompetitions } from "../../helpers/selectors"
+import axios from "axios"
 
 export default function Dropdown(props) {
   const [open, setOpen] = useState(false)
@@ -15,16 +16,42 @@ export default function Dropdown(props) {
   const renderList = items.map((each, index) => {
     return (
       <li key={index} onClick={() => {
-        props.setState(prev => ({
-          ...prev,
-          current_competition: {
-            id: each.id,
-            name: each.name,
-            starting_amount: each.starting_amount,
-            start_date: each.start_date,
-            end_date: each.end_date
-          }
-        }))
+
+        // axios.post("/api/transactions/history", {
+        //   data: {
+        //     user: props.state.user,
+        //     competition: props.current_competition
+        //   }
+        // }).then((response) => {
+
+        //   let newTransactions = response.data
+
+          props.setState(prev => ({
+            ...prev,
+            current_competition: {
+              id: each.id,
+              name: each.name,
+              starting_amount: each.starting_amount,
+              start_date: each.start_date,
+              end_date: each.end_date
+            },
+
+            // transactions: newTransactions
+
+          }))
+
+          
+          
+        // })
+        
+        
+
+
+
+
+
+
+
       }}>
         <FontAwesomeIcon id="list-icon" icon={faChartLine} />
         <span>{each.name}</span>

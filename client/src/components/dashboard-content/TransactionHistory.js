@@ -9,13 +9,13 @@ import { getTransactionsForCompetition } from "../../helpers/selectors";
 
 export default function TransactionHistory(props) {
   const [transactionData, setTransactionData] = useState({
-    transactions: props.transactions
+    transactions: null
   })
 
 
   useEffect(() => {
     Promise.all([
-      axios.post("/api/transactions", {
+      axios.post("/api/transactions/history", {
         data: {
           user: props.state.user,
           competition: props.current_competition
@@ -23,24 +23,19 @@ export default function TransactionHistory(props) {
       })
     ]).then((newTransactions) => {
 
-      console.log (newTransactions[0].data)
-
-      props.setState(prev => ({
-        ...prev,
-        transactions: newTransactions[0].data
-      }));
-
-      // setTransactionData(prev => ({
-      //   ...prev,
-      //   transactionData: newTransactions[0].data
-      // }))
-
-
+      //console.log (newTransactions[0].data)
 
       setTransactionData(prev => ({
         ...prev,
-        transactions: getTransactionsForCompetition(props.state, props.current_competition.id)
+        transactions: newTransactions[0].data
       }))
+
+
+
+      // setTransactionData(prev => ({
+      //   ...prev,
+      //   transactions: getTransactionsForCompetition(props.state, props.current_competition.id)
+      // }))
 
 
 
@@ -62,7 +57,7 @@ export default function TransactionHistory(props) {
 
 
 
-  }, [props.current_competition])
+  }, [props.current_competition, props.transactions])
 
   return (
     <div id="transaction-history-container">

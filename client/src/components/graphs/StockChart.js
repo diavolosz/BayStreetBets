@@ -78,28 +78,13 @@ export default function StockChart(props) {
         datasets: [{
           label: `${props.companyName} (${props.stockSearch.historical[0].symbol})`,
           data: props.stockSearch.historical.map((day) => day.close)
-  
+
         }]
       })
 
-
-
-
     }
 
-
-
   }, [props.stockSearch])
-
-
-  const [userData, setUserData] = useState({
-    labels: oneMonth.map((month) => month.label),
-    datasets: [{
-      label: "Twitter (TWTR) $USD",
-      data: oneMonth.map((month) => month.close)
-    }]
-  })
-
 
 
   return (

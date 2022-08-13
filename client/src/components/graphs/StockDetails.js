@@ -7,19 +7,19 @@ import '../../stylesheet/StockDetails.scss'
 import StockDetailsItem from './StockDetailsItem'
 
 export default function StockDetails(props) {
-  const [itemDetails, setItemDetails] = useState ({
-    details: 'empty'
+  const [itemDetails, setItemDetails] = useState({
+    details: []
   })
 
-  useEffect (() => {
+  useEffect(() => {
     
-    setItemDetails ({
-      details: props.stockSearch.details
-    })
+    if (props.stockSearch.details !== null) {
+      setItemDetails({
+        details: props.stockSearch.details
+      })
+    }
 
-
-
-  },[props.stockSearch])
+  }, [props.stockSearch])
 
   return (
     <div className='stock-details'>

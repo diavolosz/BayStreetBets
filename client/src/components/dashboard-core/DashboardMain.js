@@ -158,15 +158,17 @@ export default function Dashboard(props) {
           user_competitions: props.current_competition
         }
       }),
-      axios.post("/api/charts/pie", {
+      axios.post("/api/transactions/history", {
         data: {
           user: props.state.user,
-          user_competitions: props.current_competition
+          competition: props.current_competition
         }
       }),
 
 
     ]).then(response => {
+
+      // console.log (props.current_competition)
 
       let user_balance_info = response[0].data[0]
 
@@ -242,7 +244,7 @@ export default function Dashboard(props) {
 
       // })
 
-      let updatedEquity = props.user_balance.user_balance + updatedStockTotal
+      let updatedEquity = user_balance_info.user_balance + updatedStockTotal
 
 
       //console.log (updatedEquity)
@@ -254,13 +256,23 @@ export default function Dashboard(props) {
       }))
 
 
+      // setPortfolioDetails(prev => ({
+      //   ...prev,
+      //   cash: props.state.user_balance.user_balance,
+      //   daysLeft: dayDifference,
+      //   cashAssets: updatedEquity,
+      //   stockListDetails: portfolioStocksInfo
+      // }))
+
       setPortfolioDetails(prev => ({
         ...prev,
-        cash: props.state.user_balance.user_balance,
+        cash: user_balance_info.user_balance,
         daysLeft: dayDifference,
         cashAssets: updatedEquity,
         stockListDetails: portfolioStocksInfo
       }))
+
+
 
     })
 
@@ -297,6 +309,7 @@ export default function Dashboard(props) {
                 items={props.user_competitions_enrolled}
                 setState={props.setState}
                 state={props.state}
+                current_competition={props.current_competition}
               />
             </li>
             <li onClick={() => setComponent("Browse")}>
