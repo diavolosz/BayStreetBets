@@ -272,9 +272,6 @@ export default function Dashboard(props) {
       }))
 
 
-
-
-
     })
 
     //console.log (props)
@@ -300,13 +297,13 @@ export default function Dashboard(props) {
           <ul>
             <li
               id="side-nav-dashboard"
-            onClick={() => {
-              if (portfolioDetails.daysLeft <= 0) {
-                setComponent("Leaderboard")
-              } else {
-                setComponent("EventStatistic");
-              }
-            }}
+              onClick={() => {
+                if (portfolioDetails.daysLeft <= 0) {
+                  setComponent("Leaderboard")
+                } else {
+                  setComponent("EventStatistic");
+                }
+              }}
             >
               <FontAwesomeIcon icon={faClipboard} />
               <Dropdown
@@ -315,6 +312,8 @@ export default function Dashboard(props) {
                 setState={props.setState}
                 state={props.state}
                 current_competition={props.current_competition}
+                setComponent={setComponent}
+                daysLeft={portfolioDetails.daysLeft}
               />
             </li>
             <li onClick={() => setComponent("Browse")}>
