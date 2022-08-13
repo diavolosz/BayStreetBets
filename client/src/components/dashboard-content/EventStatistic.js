@@ -41,13 +41,21 @@ export default function EventStatistic(props) {
     ])
 
       .then(response => {
-        setStockSearch(prev => ({
-          ...prev,
-          details: response[0].data,
-          historical: response[1].data,
-        }));
 
-        //console.log(response);
+        if (!response[1].data || !response[0].data) {
+
+          setStockSearch(prev => ({
+
+            ...prev,
+            details: response[0].data,
+            historical: response[1].data,
+
+          }))
+
+        } else {
+          event.target[0].value = "Stock not found, please search another stock"
+        }
+
       })
       .catch(e => {
         console.log(e);
@@ -72,14 +80,14 @@ export default function EventStatistic(props) {
     let castedStartingAmount;
 
     if (typeof props.current_competition.starting_amount === 'string') {
-       castedStartingAmount = Number(
+      castedStartingAmount = Number(
         props.current_competition.starting_amount.replace(/[^0-9.-]+/g, "")
       );
     } else {
-       castedStartingAmount = props.current_competition.starting_amount
+      castedStartingAmount = props.current_competition.starting_amount
     }
 
-    
+
     const cash = deriveCashFromTransactions(
       transactionsForCompetition,
       castedStartingAmount
@@ -170,11 +178,11 @@ export default function EventStatistic(props) {
 
   return (
     <div id="portfolio-inner-container">
-      {displayAlert === "BoughtStocks" && <BuyAlert setDisplayAlert={() => setDisplayAlert}/>}
-      {displayAlert === "SoldStocks" && <SellAlert setDisplayAlert={() => setDisplayAlert}/>}      
-      {displayAlert === "ErrorAlert-overBuy" && <ErrorAlert setDisplayAlert={() => setDisplayAlert} message={"Not enough cash for the action."}/>}
-      {displayAlert === "ErrorAlert-overSold" && <ErrorAlert setDisplayAlert={() => setDisplayAlert} message={"You don't own enough shares."}/>}
-      {displayAlert === "ErrorAlert-missingValue" && <ErrorAlert setDisplayAlert={() => setDisplayAlert} message={"You must enter a number to buy/sell."}/>}
+      {displayAlert === "BoughtStocks" && <BuyAlert setDisplayAlert={() => setDisplayAlert} />}
+      {displayAlert === "SoldStocks" && <SellAlert setDisplayAlert={() => setDisplayAlert} />}
+      {displayAlert === "ErrorAlert-overBuy" && <ErrorAlert setDisplayAlert={() => setDisplayAlert} message={"Not enough cash for the action."} />}
+      {displayAlert === "ErrorAlert-overSold" && <ErrorAlert setDisplayAlert={() => setDisplayAlert} message={"You don't own enough shares."} />}
+      {displayAlert === "ErrorAlert-missingValue" && <ErrorAlert setDisplayAlert={() => setDisplayAlert} message={"You must enter a number to buy/sell."} />}
 
       <div id="search-box">
         <div className="stock-chart">
