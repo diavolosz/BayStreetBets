@@ -65,62 +65,52 @@ export default function EventStatistic(props) {
   };
 
 
+  // temp for testing for autofill
 
-  // temp for testing
-  const [users, setUsers] = useState([])
-  const [text, setText] = useState('')
-  const [suggestions, setSuggestions] = useState([])
-
-
+  // const [users, setUsers] = useState([])
+  // const [text, setText] = useState('')
+  // const [suggestions, setSuggestions] = useState([])
 
 
+  // const onSuggestHandler = (text) => {
+  //   setText(text);
+  //   setSuggestions([]);
+  // }
+
+  // const onChangehandler = (text) => {
+
+  //   let matches = []
+
+  //   if (text.length > 0) {
+  //     matches = users.filter(user => {
+  //       const userFiltered = new RegExp(`${text}`, "gi")
+  //       return user.email.match(userFiltered)
+  //     })
+  //   }
+
+  //   console.log("matches", matches)
+
+  //   setSuggestions(matches)
+  //   setText(text)
+
+  // }
+
+  // useEffect(() => {
+
+  //   let searching = onChangehandler(text)
+
+  //   const loadUsers = async () => {
+  //     const response = await axios.get(`https://cloud.iexapis.com/stable/stock/search/tsla?token=${process.env.REACT_APP_CLOUD_TOKEN}`);
 
 
+  //     console.log (response)
+  //     setUsers(response.data.data)
+  //   }
 
-  useEffect(() => {
-    const loadUsers = async () => {
-      const response = await axios.get('https://reqres.in/api/users?page=2');
-
-
-      setUsers(response.data.data)
-    }
-
-    loadUsers();
+  //   loadUsers();
 
 
-  }, [])
-
-  const onSuggestHandler = (text) => {
-    setText(text);
-    setSuggestions([]);
-  }
-
-
-
-
-  const onChangehandler = (text) => {
-
-    let matches = []
-
-    if (text.length > 0) {
-      matches = users.filter(user => {
-        const userFiltered = new RegExp(`${text}`, "gi")
-        return user.email.match(userFiltered)
-      })
-    }
-
-    console.log("matches", matches)
-
-    setSuggestions(matches)
-    setText(text)
-
-  }
-
-
-
-
-
-
+  // }, [])
 
 
   const [buy, setBuy] = useState(0);
@@ -248,29 +238,21 @@ export default function EventStatistic(props) {
       <div id="search-box">
         <div className="stock-chart">
 
-
-
-
-
           <form className="stock-search-box"
             onSubmit={search}
-            onChange={e => onChangehandler(e.target.value)}
+            // onChange={e => onChangehandler(e.target.value)}
             autoComplete="off"
           >
 
-
-            <input type="text" placeholder="Search Stock Symbol..." name="symbol" value={text}
-            onChange={onChangehandler}
-            onBlur={() => {
-              setTimeout (() => {
-                setSuggestions([])
-              }, 50)
-            }}
+            <input type="text" placeholder="Search Stock Symbol..." name="symbol"
+            //value={text}
+            // onChange={onChangehandler}
+            // onBlur={() => {
+            //   setTimeout(() => {
+            //     setSuggestions([])
+            //   }, 50)
+            // }}
             />
-
-
-
-
 
             <button type="submit">
               <FontAwesomeIcon
@@ -278,17 +260,11 @@ export default function EventStatistic(props) {
                 icon={faMagnifyingGlass}
               />
             </button>
-
           </form>
-
-
-
 
           <div id="stock-chart-container">
 
-
-
-            {suggestions && suggestions.map((suggestion, i) =>
+            {/* {suggestions && suggestions.map((suggestion, i) =>
               <div
                 key={i}
                 className='suggestion-box'
@@ -296,13 +272,7 @@ export default function EventStatistic(props) {
               >
                 {suggestion.email}
               </div>
-            )}
-
-
-
-
-
-
+            )} */}
 
             <StockChart
               stockSearch={stockSearch}
@@ -319,10 +289,6 @@ export default function EventStatistic(props) {
             stockSearch={stockSearch}
             setStockSearch={setStockSearch}
           />
-
-
-
-
 
           {stockSearch.details !== null && (
             <div id="buy-sell-container">
