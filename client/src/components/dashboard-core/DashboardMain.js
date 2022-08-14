@@ -181,6 +181,13 @@ export default function Dashboard(props) {
         }
       })
     ]).then(response => {
+
+      // empties portfolio list so when switching to empty comp it shows empty properly
+      setPortfolioDetails(prev => ({
+        ...prev,
+        stockListDetails: [],
+      }))
+
       let user_balance_info = response[0].data[0]
 
       let currentDate = new Date().getTime();
@@ -216,7 +223,7 @@ export default function Dashboard(props) {
       }
 
 
-      //console.log (newTransactions)
+      // console.log (portfolioDetails.stockListDetails)
 
 
 
@@ -235,7 +242,7 @@ export default function Dashboard(props) {
       //       let updatedEquity = props.user_balance.user_balance + marketEquity
 
 
-      //       portfolioStocksInfo.forEach((stock) => {
+      //       allPortfolioStocksInfo.forEach((stock) => {
       //         stock.totalAmount += marketEquity
       //       })
 
@@ -262,7 +269,7 @@ export default function Dashboard(props) {
       //         cash: props.state.user_balance.user_balance,
       //         daysLeft: dayDifference,
       //         cashAssets: updatedEquity,
-      //         stockListDetails: portfolioStocksInfo,
+      //         stockListDetails: allPortfolioStocksInfo,
       //         leaderboardState: LeaderboardStatus
       //       }))
 
