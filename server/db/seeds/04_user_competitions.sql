@@ -19,7 +19,7 @@ INSERT INTO user_competitions (user_balance, user_id, competition_id) VALUES (40
 
 
 
-INSERT INTO user_competitions (user_balance, user_id, competition_id) VALUES (3000.00, 3, 11);
+INSERT INTO user_competitions (user_balance, user_id, competition_id) VALUES (3000.00, 3, 9);
 
 
 
