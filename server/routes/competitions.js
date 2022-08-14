@@ -27,6 +27,9 @@ module.exports = db => {
     const end_date = req.body["4"][1].slice(0, 10);
     const userJwt = req.body["user"];
 
+    if (new Date(start_date) < new Date()) {
+      res.sendStatus(422);
+    }
     // Check if user is logged in
     jwt.verify(userJwt, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
       // Return 401 if JWT verification fails
