@@ -1,4 +1,6 @@
 import axios from "axios";
+import { useState } from "react"
+import ErrorAlert from "../eventStatistic-content/ErrorAlert.js"
 import {
   removeFromUserCompetitionCreated,
   removeFromCompetitions,
@@ -8,6 +10,8 @@ import {
 
 export default function BrowseListItem(props) {
   // const { index, user_id, name, description, starting_amount, created } = props
+
+  const [displayAlert, setDisplayAlert] = useState(false)
 
   const deleteCompetition = () => {
     axios
@@ -71,49 +75,69 @@ export default function BrowseListItem(props) {
   };
 
   const joinCompetition = () => {
-    const headers = {
-      user: localStorage.getItem("user"),
+    const end_date = new Date(props.end_date).getTime()
+    const current_date = Date.now()
+    if (current_date > end_date) {
+      return setDisplayAlert(true)
+    } else {
+      const headers = {
+        user: localStorage.getItem("user"),
+      };
+
+      axios
+        .post(
+          "/api/competitions/join",
+          {
+            creatorId: props.user_id,
+            competitionId: props.id,
+            startingBalance: props.starting_amount,
+          },
+          {
+            headers,
+          }
+        )
+        .then(response => {
+          const updatedCompetitionsEnrolled = addToCompetitionsEnrolled(
+            props.state,
+            response.data
+          );
+
+          if (response.status === 200) {
+            props.setState(prev => ({
+              ...prev,
+              user_competitions_enrolled: updatedCompetitionsEnrolled,
+            }));
+          }
+        });
+      }
     };
 
-    axios
-      .post(
-        "/api/competitions/join",
-        {
-          creatorId: props.user_id,
-          competitionId: props.id,
-          startingBalance: props.starting_amount,
-        },
-        {
-          headers,
-        }
-      )
-      .then(response => {
-        const updatedCompetitionsEnrolled = addToCompetitionsEnrolled(
-          props.state,
-          response.data
-        );
-
-        if (response.status === 200) {
-          props.setState(prev => ({
-            ...prev,
-            user_competitions_enrolled: updatedCompetitionsEnrolled,
-          }));
-        }
-      });
-  };
+  const renderDate = (date) => {
+    const formattedDate = new Date(date);
+    return formattedDate.toDateString();
+   };
 
   return (
     <div className="event-item">
+      {displayAlert === true && <ErrorAlert setDisplayAlert={() => setDisplayAlert} message={"Cannot join an expired event"} />}
+
       <div className="general-info-box">
         <span>
           <strong>Creator: </strong>
           {props.user_id}
         </span>
-        {/* <span><strong>Max Participant: </strong>{participant}</span> */}
-        {/* <span><strong>Duration: </strong>{duration} Days</span> */}
+        {/* <span><strong>Max Participant: </strong>{props.participant}</span> */}
         <span>
           <strong>Starting Amount: </strong>
           {props.starting_amount}
+        </span>
+        <span>
+          <strong>Start Date: </strong>
+          {renderDate(props.start_date)}
+        </span>
+        <span>
+          <strong>End Date: </strong>
+          {renderDate(props.end_date)}
         </span>
       </div>
       <div className="description-info-box">
