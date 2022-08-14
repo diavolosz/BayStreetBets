@@ -112,6 +112,11 @@ export default function BrowseListItem(props) {
       }
     };
 
+  const renderDate = (date) => {
+    const formattedDate = new Date(date);
+    return formattedDate.toDateString();
+   };
+
   return (
     <div className="event-item">
       {displayAlert === true && <ErrorAlert setDisplayAlert={() => setDisplayAlert} message={"Cannot join an expired event"} />}
@@ -122,10 +127,17 @@ export default function BrowseListItem(props) {
           {props.user_id}
         </span>
         {/* <span><strong>Max Participant: </strong>{props.participant}</span> */}
-        {/* <span><strong>End Date: </strong>{props.endDate}</span> */}
         <span>
           <strong>Starting Amount: </strong>
           {props.starting_amount}
+        </span>
+        <span>
+          <strong>Start Date: </strong>
+          {renderDate(props.start_date)}
+        </span>
+        <span>
+          <strong>End Date: </strong>
+          {renderDate(props.end_date)}
         </span>
       </div>
       <div className="description-info-box">
