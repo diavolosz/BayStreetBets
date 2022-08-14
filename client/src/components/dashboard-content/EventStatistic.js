@@ -33,11 +33,11 @@ export default function EventStatistic(props) {
   const search = function (event) {
     event.preventDefault();
 
-    const end_date = new Date(props.current_competition.start_date).getTime()
-    const current_date = Date.now()
-    if (current_date < end_date) {
-      return setDisplayAlert("EarlyEvent")
-    } else {
+    // const end_date = new Date(props.current_competition.start_date).getTime()
+    // const current_date = Date.now()
+    // if (current_date < end_date) {
+    //   return setDisplayAlert("EarlyEvent")
+    // } else {
       Promise.all([
         axios.get(
           `https://cloud.iexapis.com/stable/stock/${event.target[0].value}/quote?token=${process.env.REACT_APP_CLOUD_TOKEN}`
@@ -60,7 +60,7 @@ export default function EventStatistic(props) {
         .catch(e => {
           console.log(e);
         });
-      }
+      // }
    };
 
   const [buy, setBuy] = useState(0);
