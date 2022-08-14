@@ -26,54 +26,109 @@ const findPortfolioStocksAndSharesPrice = function (transactions) {
   let stockAndShares = [];
   let stockTracker = [];
 
-  transactions.map((transaction) => {
+
+
+  transactions.forEach((transaction) => {
+
+    //console.log(stockAndShares)
+
     if (stockAndShares.length === 0) {
+
       stockAndShares.push({
         stock: transaction.symbol,
         shares: transaction.number_of_shares,
         totalAmount: transaction.number_of_shares * transaction.price
       })
+
       stockTracker.push(transaction.symbol)
+
     } else {
-      stockAndShares.forEach((item, index, array) => {
-        if (transaction.symbol === item.stock) {
-          item.shares += transaction.number_of_shares
-          let priceTotal = transaction.number_of_shares * transaction.price
-          item.totalAmount += priceTotal
-        }
-        if (!stockTracker.includes(transaction.symbol)) {
-          stockAndShares.push({
-            stock: transaction.symbol,
-            shares: transaction.number_of_shares,
-            totalAmount: transaction.number_of_shares * transaction.price
-          })
-          stockTracker.push(transaction.symbol)
-        }
-        if (index + 1 === array.length) {
-          if (!stockTracker.includes(transaction.symbol)) {
-            stockAndShares.push({
-              stock: transaction.symbol,
-              shares: transaction.number_of_shares,
-              totalAmount: transaction.number_of_shares * transaction.price
-            })
+
+      //console.log(stockTracker.includes(transaction.symbol))
+
+      if (!stockTracker.includes(transaction.symbol)) {
+
+        stockAndShares.push({
+          stock: transaction.symbol,
+          shares: transaction.number_of_shares,
+          totalAmount: transaction.number_of_shares * transaction.price
+        })
+
+        stockTracker.push(transaction.symbol)
+
+      } else {
+        stockAndShares.forEach((item, index, array) => {
+
+          if (item.stock === transaction.symbol) {
+            item.shares += transaction.number_of_shares
+            item.totalAmount += transaction.number_of_shares * transaction.price
           }
-        }
-      })
+
+          //console.log("before splice",item)
+
+          if (item.shares < 1) {
+
+            stockAndShares.splice(index, 1)
+
+            let itemToRemove = stockTracker.indexOf(item.stock);
+
+            stockTracker.splice(itemToRemove, 1)
+          }
+
+        })
+
+
+        //console.log( stockTracker)
+      }
+
     }
+
+    // else {
+
+    //   stockAndShares.forEach((item, index, array) => {
+    //     if (transaction.symbol === item.stock) {
+    //       item.shares += transaction.number_of_shares
+    //       let priceTotal = transaction.number_of_shares * transaction.price
+    //       item.totalAmount += priceTotal
+    //     }
+
+
+
+
+    //     if (!stockTracker.includes(transaction.symbol)) {
+    //       stockAndShares.push({
+    //         stock: transaction.symbol,
+    //         shares: transaction.number_of_shares,
+    //         totalAmount: transaction.number_of_shares * transaction.price
+    //       })
+    //       stockTracker.push(transaction.symbol)
+
+    //     }
+
+
+
+    //     if (index + 1 === array.length) {
+    //       if (!stockTracker.includes(transaction.symbol)) {
+    //         stockAndShares.push({
+    //           stock: transaction.symbol,
+    //           shares: transaction.number_of_shares,
+    //           totalAmount: transaction.number_of_shares * transaction.price
+    //         })
+    //       }
+    //     }
+    //   })
+
+
+    // }
   })
+
+
+  //console.log ("final stocks and shares", stockAndShares)
+  //console.log("end tracker", stockTracker)
+
   return stockAndShares
 }
 
-
-const removeZeroStocks = function (portfolioStocksAndShares) {
-  for (let index in portfolioStocksAndShares) {
-    if (portfolioStocksAndShares[index].shares === 0) {
-      portfolioStocksAndShares.splice(index, 1)
-    }
-
-  }
-  return portfolioStocksAndShares
-}
 
 
 
@@ -90,6 +145,8 @@ export default function Dashboard(props) {
     stockListDetails: [],
     leaderboardState: null,
   })
+
+  const [compState, setCompState] = useState('')
 
   const logout = () => {
     localStorage.clear();
@@ -125,15 +182,99 @@ export default function Dashboard(props) {
       })
     ]).then(response => {
       let user_balance_info = response[0].data[0]
+
       let currentDate = new Date().getTime();
+      let startDate = new Date(props.current_competition.start_date).getTime();
       let endDate = new Date(props.current_competition.end_date).getTime();
       let dayDifference = Math.round((endDate - currentDate) / (1000 * 60 * 60 * 24))
+
+
+
       let newTransactions = response[1].data
       let allPortfolioStocksInfo = findPortfolioStocksAndSharesPrice(newTransactions)
-      let portfolioStocksInfo = removeZeroStocks(allPortfolioStocksInfo)
       let updatedStockTotal = 0
 
-      portfolioStocksInfo.forEach((stock) => {
+
+
+      // console.log("not started", currentDate < startDate)
+
+
+      // console.log("finished", currentDate > endDate)
+
+
+      // console.log("inbetween", currentDate < endDate && currentDate > startDate)
+
+
+      if (currentDate > endDate) {
+        setCompState('finished')
+      } else if (currentDate < endDate && currentDate > startDate) {
+        dayDifference = Math.round((endDate - currentDate) / (1000 * 60 * 60 * 24))
+        setCompState('in progress')
+      } else if (currentDate < startDate) {
+        dayDifference = Math.round((startDate - currentDate) / (1000 * 60 * 60 * 24))
+        setCompState('not started')
+      }
+
+
+      //console.log (newTransactions)
+
+
+
+      // allPortfolioStocksInfo.forEach((stock) => {
+
+      //   axios.get(`https://cloud.iexapis.com/stable/stock/${stock.stock}/quote?token=${process.env.REACT_APP_CLOUD_TOKEN}`)
+
+      //     .then(response => {
+
+      //       let marketPrice = response.data.close
+
+      //       let marketEquity = stock.shares * marketPrice
+
+      //       marketEquity = parseInt(marketEquity.toFixed(2))
+
+      //       let updatedEquity = props.user_balance.user_balance + marketEquity
+
+
+      //       portfolioStocksInfo.forEach((stock) => {
+      //         stock.totalAmount += marketEquity
+      //       })
+
+
+
+
+      //       props.setState(prev => ({
+      //         ...prev,
+      //         user_balance: user_balance_info,
+
+      //       }))
+
+      //       let LeaderboardStatus = ""
+      //       if (dayDifference < 0) {
+      //         LeaderboardStatus = "Leaderboard"
+      //       }
+      //       if (dayDifference > 0) {
+      //         LeaderboardStatus = "EventStatistic"
+      //       }
+
+
+      //       setPortfolioDetails(prev => ({
+      //         ...prev,
+      //         cash: props.state.user_balance.user_balance,
+      //         daysLeft: dayDifference,
+      //         cashAssets: updatedEquity,
+      //         stockListDetails: portfolioStocksInfo,
+      //         leaderboardState: LeaderboardStatus
+      //       }))
+
+      //       setComponent(LeaderboardStatus)
+
+      //     })
+
+      // })
+
+
+
+      allPortfolioStocksInfo.forEach((stock) => {
         updatedStockTotal += stock.shares * stock.totalAmount
       })
 
@@ -158,10 +299,14 @@ export default function Dashboard(props) {
         cash: user_balance_info.user_balance,
         daysLeft: dayDifference,
         cashAssets: updatedEquity,
-        stockListDetails: portfolioStocksInfo,
+        stockListDetails: allPortfolioStocksInfo,
         leaderboardState: LeaderboardStatus
       }))
       setComponent(LeaderboardStatus)
+
+
+
+
     })
   }, [props.current_competition, props.transactions])
 
@@ -203,12 +348,63 @@ export default function Dashboard(props) {
             <span className="user-details-section">Cash on Hand:</span>
             <span>{portfolioDetails.cash ? `$${portfolioDetails.cash}` : 'NONE'}</span>
           </div>
-          <div className="user-details-block">
+
+          {compState === 'finished' ? (
+
+            <div className="user-details-block">
+              <span className="user-details-section">Competition Finished</span>
+              {/* <span>Finished</span> */}
+            </div>
+
+          ) : null}
+
+
+          {compState === 'in progress' ? (
+
+            <div className="user-details-block">
+              <span className="user-details-section">Days Left:</span>
+              <span>{`${portfolioDetails.daysLeft} left`}</span>
+            </div>
+
+          ) : null}
+
+
+          {compState === 'not started' ? (
+
+            <div className="user-details-block">
+              <span className="user-details-section">Days to start:</span>
+              <span>{`${portfolioDetails.daysLeft} left`}</span>
+            </div>
+
+          ) : null}
+
+
+          {/* <div className="user-details-block">
+
             <span className="user-details-section">Days Left:</span>
-            <span>{portfolioDetails.daysLeft ? `${portfolioDetails.daysLeft} Days` : 'NOTHING'}</span>
-          </div>
+
+            {compState === 'finished' ? (
+              <span>Finished</span>
+            ) : null}
+
+            {compState === 'in progress' ? (
+              <span>{portfolioDetails.daysLeft}</span>
+            ) : null}
+
+            {compState === 'not started' ? (
+              <span>Not Started</span>
+            ) : null} */}
+
+
+          {/* <span className="user-details-section">Days Left:</span>
+            <span>{portfolioDetails.daysLeft ? `${portfolioDetails.daysLeft} Days` : 'NOTHING'}</span> */}
+
+          {/* 
+          </div> */}
+
+
           <div className="user-details-block">
-            <span className="user-details-section">CASH & ASSET:</span>
+            <span className="user-details-section">Total Equity:</span>
             <span>{portfolioDetails.cashAssets ? `$${portfolioDetails.cashAssets}` : 'empty, such poor'}</span>
           </div>
         </div>
@@ -234,7 +430,7 @@ export default function Dashboard(props) {
           <article>
             <table id="portfolio-table">
               <tbody>
-                <PortfolioList stockList={portfolioDetails.stockListDetails}/>
+                <PortfolioList stockList={portfolioDetails.stockListDetails} />
               </tbody>
             </table>
           </article>
