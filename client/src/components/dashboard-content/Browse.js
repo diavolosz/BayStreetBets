@@ -51,7 +51,7 @@ export default function Browse(props) {
             deleteOption={deleteOption}
             setState={props.setState}
             state={props.state}
-            endDate={end_date}
+            end_date={end_date}
             // participant={participant}
           />
         )

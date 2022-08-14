@@ -75,8 +75,7 @@ export default function BrowseListItem(props) {
   };
 
   const joinCompetition = () => {
-    console.log(props.endDate)
-    const end_date = new Date(props.endDate).getTime()
+    const end_date = new Date(props.end_date).getTime()
     const current_date = Date.now()
     if (current_date > end_date) {
       return setDisplayAlert(true)
@@ -123,7 +122,7 @@ export default function BrowseListItem(props) {
           {props.user_id}
         </span>
         {/* <span><strong>Max Participant: </strong>{props.participant}</span> */}
-        <span><strong>End Date: </strong>{props.endDate}</span>
+        {/* <span><strong>End Date: </strong>{props.endDate}</span> */}
         <span>
           <strong>Starting Amount: </strong>
           {props.starting_amount}
