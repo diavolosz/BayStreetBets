@@ -131,7 +131,6 @@ export default function EventStatistic(props) {
 
   const handleSell = event => {
     event.preventDefault();
-    //console.log(props.state);
     const transactionsForCompetition = getTransactionsForCompetition(
       props.state,
       props.current_competition.id

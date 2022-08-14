@@ -96,18 +96,18 @@ export default function BrowseListItem(props) {
         const current_date = Date.now()
         if (current_date > end_date) {
           return setDisplayAlert(true)
-        }
-    
-        const updatedCompetitionsEnrolled = addToCompetitionsEnrolled(
-          props.state,
-          response.data
-        );
-
-        if (response.status === 200) {
-          props.setState(prev => ({
-            ...prev,
-            user_competitions_enrolled: updatedCompetitionsEnrolled,
-          }));
+        } else {
+          const updatedCompetitionsEnrolled = addToCompetitionsEnrolled(
+            props.state,
+            response.data
+          );
+  
+          if (response.status === 200) {
+            props.setState(prev => ({
+              ...prev,
+              user_competitions_enrolled: updatedCompetitionsEnrolled,
+            }));
+          }
         }
       });
   };
