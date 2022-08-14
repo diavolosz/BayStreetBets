@@ -15,9 +15,7 @@ INSERT INTO competitions (name, description, starting_amount, start_date, end_da
 INSERT INTO competitions (name, description, starting_amount, start_date, end_date, created_date, user_id) VALUES ('ryanmichaelsidneyseventh', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tempus egestas sed sed risus pretium quam vulputate dignissim.', 70000.00, '2022-09-10 00:00:00-05', '2022-09-17 00:00:00-05', '2022-08-01 00:00:00-05', 2);
 INSERT INTO competitions (name, description, starting_amount, start_date, end_date, created_date, user_id) VALUES ('ryanmichaelsidneyeigth', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tempus egestas sed sed risus pretium quam vulputate dignissim.', 70000.00, '2022-09-10 00:00:00-05', '2022-09-17 00:00:00-05', '2022-08-01 00:00:00-05', 3);
 
-INSERT INTO competitions (name, description, starting_amount, start_date, end_date, created_date, user_id) VALUES ('In progress comp', 'In progress comp', 1000.00, '2022-08-10 00:00:00-05', '2022-08-17 00:00:00-05', '2022-08-01 00:00:00-05', 3);
 
 
-INSERT INTO competitions (name, description, starting_amount, start_date, end_date, created_date, user_id) VALUES ('comp not started', 'comp not started', 5000.00, '2022-10-10 00:00:00-05', '2022-10-30 00:00:00-05', '2022-08-01 00:00:00-05', 3);
 
 INSERT INTO competitions (name, description, starting_amount, start_date, end_date, created_date, user_id) VALUES ('comp over', 'comp over', 5000.00, '2022-07-07 00:00:00-05', '2022-07-30 00:00:00-05', '2022-07-01 00:00:00-05', 3);

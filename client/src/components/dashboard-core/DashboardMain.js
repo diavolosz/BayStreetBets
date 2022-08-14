@@ -185,6 +185,9 @@ export default function Dashboard(props) {
       // empties portfolio list so when switching to empty comp it shows empty properly
       setPortfolioDetails(prev => ({
         ...prev,
+        cash: null,
+        daysLeft: null,
+        cashAssets: null,
         stockListDetails: [],
       }))
 

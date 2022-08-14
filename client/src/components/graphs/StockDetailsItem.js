@@ -37,7 +37,7 @@ export default function StockDetailsItem(props) {
 
       <div className='info-block'>
         <h5>Currency</h5>
-        <p>${props.details.currency}</p>
+        <p>{props.details.currency}</p>
       </div>
 
       <div className='info-block'>
