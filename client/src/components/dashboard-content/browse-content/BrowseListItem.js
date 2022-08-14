@@ -102,6 +102,11 @@ export default function BrowseListItem(props) {
       });
   };
 
+  const renderDate = (date) => {
+    const formattedDate = new Date(date);
+    return formattedDate.toDateString();
+   };
+
   return (
     <div className="event-item">
       <div className="general-info-box">
@@ -114,6 +119,14 @@ export default function BrowseListItem(props) {
         <span>
           <strong>Starting Amount: </strong>
           {props.starting_amount}
+        </span>
+        <span>
+          <strong>Start Date: </strong>
+          {renderDate(props.start_date)}
+        </span>
+        <span>
+          <strong>End Date: </strong>
+          {renderDate(props.end_date)}
         </span>
       </div>
       <div className="description-info-box">
