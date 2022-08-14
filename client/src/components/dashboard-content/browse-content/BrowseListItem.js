@@ -1,4 +1,6 @@
 import axios from "axios";
+import { useState } from "react"
+import ErrorAlert from "../eventStatistic-content/ErrorAlert.js"
 import {
   removeFromUserCompetitionCreated,
   removeFromCompetitions,
@@ -8,6 +10,8 @@ import {
 
 export default function BrowseListItem(props) {
   // const { index, user_id, name, description, starting_amount, created } = props
+
+  const [displayAlert, setDisplayAlert] = useState(false)
 
   const deleteCompetition = () => {
     axios
@@ -88,6 +92,12 @@ export default function BrowseListItem(props) {
         }
       )
       .then(response => {
+        const end_date = new Date(response.data.end_date).getTime()
+        const current_date = Date.now()
+        if (current_date > end_date) {
+          return setDisplayAlert(true)
+        }
+    
         const updatedCompetitionsEnrolled = addToCompetitionsEnrolled(
           props.state,
           response.data
@@ -104,6 +114,8 @@ export default function BrowseListItem(props) {
 
   return (
     <div className="event-item">
+      {displayAlert === true && <ErrorAlert setDisplayAlert={() => setDisplayAlert} message={"Cannot join an expired event"}/>}
+
       <div className="general-info-box">
         <span>
           <strong>Creator: </strong>
