@@ -75,54 +75,55 @@ export default function BrowseListItem(props) {
   };
 
   const joinCompetition = () => {
-    const headers = {
-      user: localStorage.getItem("user"),
-    };
+    console.log(props.endDate)
+    const end_date = new Date(props.endDate).getTime()
+    const current_date = Date.now()
+    if (current_date > end_date) {
+      return setDisplayAlert(true)
+    } else {
+      const headers = {
+        user: localStorage.getItem("user"),
+      };
 
-    axios
-      .post(
-        "/api/competitions/join",
-        {
-          creatorId: props.user_id,
-          competitionId: props.id,
-          startingBalance: props.starting_amount,
-        },
-        {
-          headers,
-        }
-      )
-      .then(response => {
-        const end_date = new Date(response.data.end_date).getTime()
-        const current_date = Date.now()
-        if (current_date > end_date) {
-          return setDisplayAlert(true)
-        } else {
+      axios
+        .post(
+          "/api/competitions/join",
+          {
+            creatorId: props.user_id,
+            competitionId: props.id,
+            startingBalance: props.starting_amount,
+          },
+          {
+            headers,
+          }
+        )
+        .then(response => {
           const updatedCompetitionsEnrolled = addToCompetitionsEnrolled(
             props.state,
             response.data
           );
-  
+
           if (response.status === 200) {
             props.setState(prev => ({
               ...prev,
               user_competitions_enrolled: updatedCompetitionsEnrolled,
             }));
           }
-        }
-      });
-  };
+        });
+      }
+    };
 
   return (
     <div className="event-item">
-      {displayAlert === true && <ErrorAlert setDisplayAlert={() => setDisplayAlert} message={"Cannot join an expired event"}/>}
+      {displayAlert === true && <ErrorAlert setDisplayAlert={() => setDisplayAlert} message={"Cannot join an expired event"} />}
 
       <div className="general-info-box">
         <span>
           <strong>Creator: </strong>
           {props.user_id}
         </span>
-        {/* <span><strong>Max Participant: </strong>{participant}</span> */}
-        {/* <span><strong>Duration: </strong>{duration} Days</span> */}
+        {/* <span><strong>Max Participant: </strong>{props.participant}</span> */}
+        <span><strong>End Date: </strong>{props.endDate}</span>
         <span>
           <strong>Starting Amount: </strong>
           {props.starting_amount}

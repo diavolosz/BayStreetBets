@@ -39,7 +39,7 @@ export default function Browse(props) {
   const eventInfoDisplay = (data, deleteOption = false) => {
     return (
       data.map((each, index) => {
-        const { id, user_id, name, description, starting_amount } = each
+        const { id, user_id, name, description, starting_amount, end_date } = each
         return (
           <BrowseListItem
             key={id}
@@ -51,6 +51,8 @@ export default function Browse(props) {
             deleteOption={deleteOption}
             setState={props.setState}
             state={props.state}
+            endDate={end_date}
+            // participant={participant}
           />
         )
       })
