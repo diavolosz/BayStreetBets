@@ -17,6 +17,16 @@ INSERT INTO user_competitions (user_balance, user_id, competition_id) VALUES (40
 INSERT INTO user_competitions (user_balance, user_id, competition_id) VALUES (40000.00, 3, 8);
 
 
+
+INSERT INTO user_competitions (user_balance, user_id, competition_id) VALUES (1000.00, 3, 9);
+
+INSERT INTO user_competitions (user_balance, user_id, competition_id) VALUES (5000.00, 3, 10);
+
+INSERT INTO user_competitions (user_balance, user_id, competition_id) VALUES (3000.00, 3, 11);
+
+
+
+
 -- UPDATING BALANCES FROM EACH TRANSACTION
 
 UPDATE user_competitions SET user_balance = 9000.00 WHERE user_id = 1 AND competition_id = 1;
