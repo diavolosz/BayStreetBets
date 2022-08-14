@@ -23,6 +23,8 @@ import axios from "axios";
 
 export default function EventStatistic(props) {
 
+  const [displayAlert, setDisplayAlert] = useState("")
+
   const [stockSearch, setStockSearch] = useState({
     details: null,
     historical: null,
@@ -31,40 +33,38 @@ export default function EventStatistic(props) {
   const search = function (event) {
     event.preventDefault();
 
-    Promise.all([
-      axios.get(
-        `https://cloud.iexapis.com/stable/stock/${event.target[0].value}/quote?token=${process.env.REACT_APP_CLOUD_TOKEN}`
-      ),
-      axios.get(
-        `https://cloud.iexapis.com/stable/stock/${event.target[0].value}/chart/5d?token=${process.env.REACT_APP_CLOUD_TOKEN}`
-      ),
-    ])
-
-      .then(response => {
-
-        if (response[1].data || response[0].data) {
-
-          setStockSearch(prev => ({
-
-            ...prev,
-            details: response[0].data,
-            historical: response[1].data,
-
-          }))
-
-        } else {
-          event.target[0].value = "Stock not found, please search another stock"
-        }
-
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  };
+    const end_date = new Date(props.current_competition.start_date).getTime()
+    const current_date = Date.now()
+    if (current_date < end_date) {
+      return setDisplayAlert("EarlyEvent")
+    } else {
+      Promise.all([
+        axios.get(
+          `https://cloud.iexapis.com/stable/stock/${event.target[0].value}/quote?token=${process.env.REACT_APP_CLOUD_TOKEN}`
+        ),
+        axios.get(
+          `https://cloud.iexapis.com/stable/stock/${event.target[0].value}/chart/5d?token=${process.env.REACT_APP_CLOUD_TOKEN}`
+        ),
+      ])
+        .then(response => {
+          if (response[1].data || response[0].data) {
+            setStockSearch(prev => ({
+              ...prev,
+              details: response[0].data,
+              historical: response[1].data,
+            }))
+          } else {
+            event.target[0].value = "Stock not found, please search another stock"
+          }
+        })
+        .catch(e => {
+          console.log(e);
+        });
+      }
+   };
 
   const [buy, setBuy] = useState(0);
   const [sell, setSell] = useState(0);
-  const [displayAlert, setDisplayAlert] = useState("")
   const user_profile = props.user_profile;
   const competition_id = props.current_competition;
 
@@ -177,6 +177,7 @@ export default function EventStatistic(props) {
 
   return (
     <div id="portfolio-inner-container">
+      {displayAlert === "EarlyEvent" && <ErrorAlert setDisplayAlert={() => setDisplayAlert} message={"Event has not started yet. Please return on start date."} />}
       {displayAlert === "BoughtStocks" && <BuyAlert setDisplayAlert={() => setDisplayAlert} />}
       {displayAlert === "SoldStocks" && <SellAlert setDisplayAlert={() => setDisplayAlert} />}
       {displayAlert === "ErrorAlert-overBuy" && <ErrorAlert setDisplayAlert={() => setDisplayAlert} message={"Not enough cash for the action."} />}
