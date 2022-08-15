@@ -47,6 +47,9 @@ export default function EventStatistic(props) {
       ),
     ])
       .then(response => {
+
+        console.log (response)
+
         if (response[1].data || response[0].data) {
           setStockSearch(prev => ({
             ...prev,

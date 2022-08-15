@@ -7,4 +7,6 @@ INSERT INTO competitions (name, description, starting_amount, start_date, end_da
 INSERT INTO competitions (name, description, starting_amount, start_date, end_date, created_date, user_id) VALUES ('Value investing', 'Year-long investing competition', 50000.00, '2020-12-12 00:00:00-05', '2021-12-12 00:00:00-05', '2020-12-01 00:00:00-05', 3);
 
 
+
+
 INSERT INTO competitions (name, description, starting_amount, start_date, end_date, created_date, user_id) VALUES ('Biotech', 'Try your hand at the biotech sector', 50000.00, '2021-12-12 00:00:00-05', '2022-12-12 00:00:00-05', '2021-12-01 00:00:00-05', 1);

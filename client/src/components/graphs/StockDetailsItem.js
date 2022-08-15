@@ -21,18 +21,18 @@ export default function StockDetailsItem(props) {
       </div>
 
       <div className='info-block'>
-        <h5>Low</h5>
-        <p>${props.details.low}</p>
+        <h5>Ask Price</h5>
+        <p>${props.details.iexAskPrice}</p>
+      </div>
+
+      <div className='info-block'>
+        <h5>Bid Price</h5>
+        <p>${props.details.iexBidPrice}</p>
       </div>
 
       <div className='info-block'>
         <h5>52 Week Low</h5>
         <p>${props.details.week52Low}</p>
-      </div>
-
-      <div className='info-block'>
-        <h5>High</h5>
-        <p>${props.details.high}</p>
       </div>
 
       <div className='info-block'>
@@ -51,8 +51,8 @@ export default function StockDetailsItem(props) {
       </div>
 
       <div className='info-block'>
-        <h5>Average Total Volume</h5>
-        <p>{props.details.volume}</p>
+        <h5>Volume</h5>
+        <p>{props.details.avgTotalVolume}</p>
       </div>
 
     </Fragment>

@@ -113,16 +113,15 @@ module.exports = db => {
 
     //console.log (req.body.data)
     const competitionID = req.body.data.user_competitions.id
-    const competitionName = req.body.data.user_competitions.name
-    const competitionStartDate = req.body.data.user_competitions.start_date
-    const competitionEndDate = req.body.data.user_competitions.end_date
-    const competitionStartingAmount = req.body.data.user_competitions.starting_amount
 
 
     db.query(
-      `SELECT id, user_id FROM competitions WHERE name = $1 AND starting_amount = $2 AND start_date = $3 AND end_date = $4;`, [competitionName, competitionStartingAmount, competitionStartDate, competitionEndDate]).then(result => {
+      `SELECT users.email, user_competitions.final_equity  
+      FROM user_competitions
+      JOIN users ON user_competitions.user_id = users.id
+      WHERE competition_id = $1;`, [competitionID]).then(result => {
 
-        //console.log(result.rows)
+        //console.log(resultows)
 
         return res.json(result.rows);
 
