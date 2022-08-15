@@ -94,7 +94,7 @@ export default function Organize(props) {
 
   return (
     <div id="organize-inner-container">
-      <h1>Choose Event Duration</h1>
+      <h1>Enter Event Details</h1>
       <div id="calender-container">
         <img src="img/bear.png" className="bull-bear" />
         <div id="calender">

@@ -29,10 +29,10 @@ input:focus {
       font-size: 20px;
 
       span {
-        height: 70px;
+        height: 65px;
         width: 25%;
         padding-top: 10px;
-        top: 0px;
+        top: 25px;
         position: relative;
         text-align: center;
         background-color: rgb(70, 70, 70);
@@ -43,13 +43,14 @@ input:focus {
 
         &:hover {
           cursor: pointer;
-          background-color: rgb(225, 221, 221);
+          background-color: rgb(4, 117, 0);
+          top: 20px;
         }
 
       }
 
       .active {
-        background-color: rgb(106, 0, 255);
+        background-color: rgb(4, 117, 0);
       }
 
 
