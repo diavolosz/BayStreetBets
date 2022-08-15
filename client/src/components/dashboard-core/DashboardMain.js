@@ -5,6 +5,8 @@ import {
   faPersonCirclePlus,
   faRightFromBracket,
   faUser,
+  faMagnifyingGlass,
+  faCalendarDays
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { useNavigate, Navigate } from "react-router";
@@ -343,11 +345,11 @@ export default function Dashboard(props) {
               />
             </li>
             <li onClick={() => setComponent("Browse")}>
-              <FontAwesomeIcon icon={faClipboard} />
+              <FontAwesomeIcon icon={faMagnifyingGlass} />
               <span>Browse</span>
             </li>
             <li onClick={() => setComponent("Organize")}>
-              <FontAwesomeIcon icon={faClipboard} />
+              <FontAwesomeIcon icon={faCalendarDays} />
               <span>Organize Event</span>
             </li>
           </ul>

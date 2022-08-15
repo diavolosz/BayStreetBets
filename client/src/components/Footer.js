@@ -15,11 +15,11 @@ export default function Footer() {
       <div id="footer-title">BAYSTREETBETS</div>
       <div id="footer-copyright">Copyright &copy; 2022 BayStreetsBets Inc.</div>
       <div id="footer-links">
-        <Link to="/legal-stuff" className="footer-links-item">Legal Stuff</Link>
+        <p className="footer-links-item">Legal Stuff</p>
         <span className="footer-links-item">|</span>
-        <Link to="/private-policy" className="footer-links-item">Privacy Policy</Link>
+        <p className="footer-links-item">Privacy Policy</p>
         <span className="footer-links-item">|</span>
-        <Link to="/about-us" className="footer-links-item">About Us</Link>
+        <p className="footer-links-item">About Us</p>
       </div>
     </footer>
   );
