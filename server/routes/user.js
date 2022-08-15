@@ -19,8 +19,9 @@ module.exports = db => {
     db.query(`SELECT * FROM competitions WHERE user_id = $1;`, [id])
       .then(result => {
         competitions["competitionsCreated"] = result.rows;
+        // SELECT * FROM competitions JOIN user_competitions ON competitions.id = user_competitions.competition_id WHERE user_competitions.user_id = $1 AND competitions.user_id != $2;
         return db.query(
-          `SELECT * FROM competitions JOIN user_competitions ON competitions.id = user_competitions.competition_id WHERE user_competitions.user_id = $1 AND competitions.user_id != $2;`,
+          `SELECT competitions.id, competitions.name, competitions.description, competitions.starting_amount, competitions.start_date, competitions.end_date, competitions.created_date, competitions.user_id, user_competitions.user_balance, user_competitions.competition_id FROM competitions JOIN user_competitions ON competitions.id = user_competitions.competition_id WHERE user_competitions.user_id = $1 AND competitions.user_id != $2;`,
           [id, id]
         );
       })
