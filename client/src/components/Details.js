@@ -42,16 +42,19 @@ export default function Details() {
 
       <AwesomeSlider id="description-block-3">
         <div data-aos="fade-up" data-aos-duration="2500" className="item">
-          <img className="block-3-img" src="img/stock5.jpg" alt="stock4" />
+          <img className="block-3-img" src="img/stock5.png" alt="stock4" />
         </div>
         <div data-aos="fade-up" data-aos-duration="2500" className="item">
-          <img className="block-3-img" src="img/stock5.jpg" alt="stock4" />
+          <img className="block-3-img" src="img/stock7.png" alt="stock4" />
         </div>
         <div data-aos="fade-up" data-aos-duration="2500" className="item">
-          <img className="block-3-img" src="img/stock5.jpg" alt="stock4" />
+          <img className="block-3-img" src="img/stock8.png" alt="stock4" />
         </div>
         <div data-aos="fade-up" data-aos-duration="2500" className="item">
-          <img className="block-3-img" src="img/stock5.jpg" alt="stock4" />
+          <img className="block-3-img" src="img/stock9.png" alt="stock4" />
+        </div>
+        <div data-aos="fade-up" data-aos-duration="2500" className="item">
+          <img className="block-3-img" src="img/stock6.png" alt="stock4" />
         </div>
       </AwesomeSlider>
 
