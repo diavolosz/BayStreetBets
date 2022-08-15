@@ -146,7 +146,7 @@ export default function EventStatistic(props) {
         props.state,
         props.current_competition.id
       );
-
+      console.log(props.state)
       const sharesOwned = getHolding(
         transactionsForCompetition,
         stockSearch.details.symbol
