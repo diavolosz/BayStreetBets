@@ -33,7 +33,7 @@ min-width: 320px;
 
       #dash-board-dropdown-item {
         font-size: 16px;
-        margin: 0 1rem;
+        margin: 0 0.3rem 0 0.5rem;
 
         li {
           position: relative;
@@ -73,9 +73,14 @@ min-width: 320px;
         justify-content: flex-start;
         align-items: flex-start;
 
+        svg {
+          width: 22px;
+        }
+
         &:hover {
           cursor: pointer;
         }
+
 
         p {
           margin-left: 1rem;
@@ -220,6 +225,10 @@ min-width: 320px;
 
       li {
         width: 100%;
+
+        svg {
+          width: 22px;
+        }
 
         &:hover {
           cursor: pointer;

@@ -23,9 +23,9 @@ root.render(
   <Router>
     <Routes>
       <Route path="/" element={<App />}></Route>
-      <Route path="/legal-stuff" element={<LegalStuff />}></Route>
+      {/* <Route path="/legal-stuff" element={<LegalStuff />}></Route>
       <Route path="/private-policy" element={<PrivatePolicy />}></Route>
-      <Route path="/about-us" element={<AboutUs />}></Route>
+      <Route path="/about-us" element={<AboutUs />}></Route> */}
 
       <Route path="/login" element={<Login />}></Route>
       <Route path="/signup" element={<Signup />}></Route>

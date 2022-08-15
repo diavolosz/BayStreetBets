@@ -46,58 +46,73 @@
 // styling for content advertisement 
 #description-block-2 {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   width: 80%;
   margin: 22% auto;
 
   #inner-container-3 {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 30%;
-    position: relative;
-    bottom: 13em;
-    margin-right: 2em;
+    gap: 8rem;
+
 
     #img3 {
-      height: 400px;
-      width: 100%;
+      height: 25rem;
+      width: 35rem;
       object-fit: cover;
       position: relative;
       overflow: hidden;
     }
 
-    #small-quote-3 {
-      width: 90%;
-      margin-top: 13px;
-      font-size: 25px;
+    div {
+      width: 35rem;
       color: white;
-      font-weight: 300;
+      font-size: 28px;
+      margin-top: 1rem;
+      
+
+      #small-quote-3 {
+        font-size: 55px;
+        font-weight: bold;
+      }
+
+      #small-paragraph-3 {
+        margin-top: 2rem;
+      }
     }
   }
 
   #inner-container-4 {
+    margin-top: 10rem;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 50%;
-    margin-left: 3em;
+    gap: 8rem;
 
 
     #img4 {
-      height: 300px;
-      width: 100%;
+      height: 25rem;
+      width: 35rem;
       object-fit: cover;
       position: relative;
       overflow: hidden;
     }
 
-    #small-quote-4 {
-      width: 90%;
-      margin-top: 13px;
-      font-size: 25px;
+    div {
+      width: 35rem;
       color: white;
-      font-weight: 300;
+      font-size: 28px;
+      margin-top: 1rem;
+      
+
+      #small-paragraph-4 {
+        margin-top: 2rem;
+      }
+      
+      #small-quote-4 {
+        font-size: 55px;
+        font-weight: bold;
+      }
+
     }
   }
 }
