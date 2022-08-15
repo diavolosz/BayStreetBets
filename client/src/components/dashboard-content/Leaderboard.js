@@ -21,22 +21,9 @@ export default function Leaderboard(props) {
 
 
 
-
-
-
-
-
-
   useEffect(() => {
 
     let getUsers = []
-
-
-    Promise.all([
-
-
-
-    ])
 
 
 
@@ -52,138 +39,22 @@ export default function Leaderboard(props) {
 
       let users = response.data
 
-
-
-
-
-
-
-      users.forEach((user) => {
-
-        axios.post("/api/competitions/leaderboard", {
-          data: {
-            user_id: user.user_id,
-            comp_id: user.id
-          }
-        }).then(results => {
-          //console.log("fromleaderboard",results.data)
-
-
-          let userInfo = results.data[0]
-
-
-
-
-
-
-
-          //console.log("usersinfo", userInfo)
-
-
-
-
-          axios.post("/api/user/information", {
-            data: {
-              user_id: userInfo.user_id
-            }
-          }).then(reply => {
-
-            //console.log ("getting name", reply.data[0])
-
-            let userName = reply.data[0]
-
-
-
-
-
-
-
-            getUsers.push({
-              email: userName.email,
-              final_equity: userInfo.final_equity
-
-
-            })
-
-
-
-            //console.log(allUsers[0])
-
-
-
-            getUsers.sort((a, b) => {
-              return Number(a.final_equity.replace(/[^0-9.-]+/g, "")) - Number(b.final_equity.replace(/[^0-9.-]+/g, ""))
-            })
-
-            setAllUsers(getUsers)
-
-
-
-
-
-          })
-
-          // .then(() => {
-
-          //   //console.log(allUsers)
-          //   //console.log('before', allUsers)
-
-
-
-          //   //console.log ("before sort", allUsers)
-
-          //   getUsers.sort((a, b) => {
-          //     return Number(a.final_equity.replace(/[^0-9.-]+/g, "")) - Number(b.final_equity.replace(/[^0-9.-]+/g, ""))
-          //   })
-
-          //   // //console.log("after sort", getUsers)
-
-          //   setAllUsers(getUsers)
-
-
-
-
-          //   //console.log('after', allUsers)
-
-
-
-
-
-
-
-          // })
-
-
-        })
-
-
-
-
-
-
+      //console.log (response.data)
+
+      users.sort((b, a) => {
+        return Number(a.final_equity.replace(/[^0-9.-]+/g, "")) 
+        - 
+        Number(b.final_equity.replace(/[^0-9.-]+/g, ""))
       })
 
+      console.log(users)
+
+      let list = users.slice(0, 4)
+
+      setAllUsers(list)
 
 
-      // console.log('before', allUsers)
-
-
-
-      // //console.log ("before sort", allUsers)
-
-      // getUsers.sort((a, b) => {
-      //   return Number(a.final_equity.replace(/[^0-9.-]+/g, "")) - Number(b.final_equity.replace(/[^0-9.-]+/g, ""))
-      // })
-
-      // // //console.log("after sort", getUsers)
-
-      // setAllUsers(getUsers)
-
-
-
-
-      // //console.log('after', allUsers)
-
+      
 
 
     })

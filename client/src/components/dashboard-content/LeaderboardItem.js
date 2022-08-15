@@ -9,19 +9,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 export default function LeaderboardItem(props) {
-  console.log(props.users)
+  //console.log(props.users)
 
   let list;
 
+  let position = ['Third', 'Second', 'First']
+
   if (props.users[0].totalEquity !== null) {
 
-    list = props.users.map((user) => {
+    list = props.users.map((user, index) => {
       return (
 
-<tr>
-<td><FontAwesomeIcon id="icon" icon={faCrown} /> First </td>
-<td>{user.email}</td>
-</tr>
+        <tr>
+          <td><FontAwesomeIcon id="icon" icon={faCrown} /> {position[2 - index]} </td>
+          <td>{user.email}</td>
+        </tr>
 
 
       )
