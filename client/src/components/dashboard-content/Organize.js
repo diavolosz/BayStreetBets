@@ -35,13 +35,6 @@ export default function Organize(props) {
       type: "number",
       required: true,
     },
-    {
-      name: "max_participant",
-      placeholder: "Maximum Participants",
-      value: "",
-      type: "number",
-      required: true,
-    },
   ]);
 
   const inputFields = formValues.map(formInput => {
