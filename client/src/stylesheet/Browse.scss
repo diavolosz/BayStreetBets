@@ -36,21 +36,25 @@ input:focus {
         position: relative;
         text-align: center;
         background-color: rgb(70, 70, 70);
-        color: white;
+        color: rgb(172, 172, 172);
         font-weight: 600;
         border-radius: 18px 18px 0 0;
         transition: 0.3s;
 
         &:hover {
           cursor: pointer;
-          background-color: rgb(4, 117, 0);
+          background-color: rgb(40, 40, 40);
           top: 20px;
         }
 
       }
 
       .active {
-        background-color: rgb(4, 117, 0);
+        color: rgb(56, 43, 2);
+        background-image: linear-gradient(rgb(251, 230, 137) 15%,
+        rgba(255, 255, 255, 0.968) 40%,
+        rgb(241, 208, 61) 70%);
+
       }
 
 
