@@ -65,16 +65,91 @@ export default function Browse(props) {
   const [search, setSearch] = useState("")
   const [displaySearch, setDisplaySearch] = useState({})
 
+  // const [buttonState, setButtonState] = useState({
+  //   browse: 1,
+  //   myEvent: 0
+  // })
+
+
+  // const handleButtonState = (onOff) => {
+
+  //   if (onOff === 1) {
+  //     return setButtonState({
+  //       browse: 1,
+  //       myEvent: 0
+  //     })
+
+
+  //   } else {
+  //     return setButtonState({
+  //       browse: 0,
+  //       myEvent: 1
+  //     })
+  //   }
+
+  // }
+
+
+
+
+
+
+  const [buttonState, setButtonState] = useState({
+    browse: {
+      showing: true
+    },
+    myEvent: {
+      showing: false
+    }
+  })
+
+
+  const handleButtonState = (onOff) => {
+
+    if (onOff === 1) {
+      return setButtonState({
+        browse: {
+          showing: true
+        },
+        myEvent: {
+          showing: false
+        }
+      })
+
+
+    } else {
+      return setButtonState({
+        browse: {
+          showing: false
+        },
+        myEvent: {
+          showing: true
+        }
+      })
+    }
+
+  }
+
+
+
+let toggleShowBrowse = buttonState.browse.showing ? 'active' : null
+let toggleShowEvents = buttonState.myEvent.showing ? 'active' : null
+
+
+
+
+
+
   const handleSubmitEvent = (event) => {
     event.preventDefault()
-    console.log(search)
+    //console.log(search)
 
     axios.post('/api/competitions/search', { search })
-    .then((res) => {
-      console.log(res.data.rows)
-      setDisplaySearch(res.data.rows)
-      setDisplayEvent("searchEvent")
-    })
+      .then((res) => {
+        console.log(res.data.rows)
+        setDisplaySearch(res.data.rows)
+        setDisplayEvent("searchEvent")
+      })
 
   }
 
@@ -82,8 +157,28 @@ export default function Browse(props) {
     <div id="browse-inner-container">
       <div id="search-box-container">
         <div id="search-box-buttons">
-          <span onClick={() => setDisplayEvent("browseEvent")}>BROWSE EVENT</span>
-          <span onClick={() => setDisplayEvent("myEvent")}>MY EVENT</span>
+
+          <span onClick={() => {
+            setDisplayEvent("browseEvent")
+            handleButtonState(1)
+          }}
+          className = {`${toggleShowBrowse}`}
+          
+          >BROWSE EVENT</span>
+
+
+
+          <span onClick={() => {
+            setDisplayEvent("myEvent")
+            handleButtonState(0)
+          }}
+          className = {`${toggleShowEvents}`}
+          >MY EVENT</span>
+
+
+
+
+
         </div>
         <form id="search-box-search-bar" onSubmit={handleSubmitEvent}>
           <input

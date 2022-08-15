@@ -21,13 +21,23 @@ export default function StockDetailsItem(props) {
       </div>
 
       <div className='info-block'>
+        <h5>Low</h5>
+        <p>${props.details.low}</p>
+      </div>
+
+      <div className='info-block'>
+        <h5>52 Week Low</h5>
+        <p>${props.details.week52Low}</p>
+      </div>
+
+      <div className='info-block'>
         <h5>High</h5>
         <p>${props.details.high}</p>
       </div>
 
       <div className='info-block'>
-        <h5>Low</h5>
-        <p>${props.details.low}</p>
+        <h5>52 Week High</h5>
+        <p>${props.details.week52High}</p>
       </div>
 
       <div className='info-block'>
