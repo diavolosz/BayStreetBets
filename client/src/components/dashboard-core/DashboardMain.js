@@ -252,6 +252,91 @@ export default function Dashboard(props) {
 
 
 
+      // THE IF ADDS A CHECK TO ADD A FINA LEQUITY TO USER_COMPETITIONS SO LEADERBOARD CAN ACCESS THE VALUE
+
+      // if (currentDate > endDate) {
+
+      //   console.log (user_balance_info.user_balance)
+
+      //   axios.post("/api/competitions/final_equity", {
+      //     data: {
+      //       user: props.state.user,
+      //       user_competitions: props.state.current_competition,
+      //       finalEquity: updatedEquity
+      //     }
+      //   }).then (response => {
+
+      //     //console.log (response)
+
+      //     props.setState(prev => ({
+      //       ...prev,
+      //       user_balance: user_balance_info,
+
+      //     }))
+
+      //     let LeaderboardStatus = ""
+      //     if (dayDifference < 0) {
+      //       LeaderboardStatus = "Leaderboard"
+      //     }
+      //     if (dayDifference > 0) {
+      //       LeaderboardStatus = "EventStatistic"
+      //     }
+
+      //     setPortfolioDetails(prev => ({
+      //       ...prev,
+      //       cash: user_balance_info.user_balance,
+      //       daysLeft: dayDifference,
+      //       cashAssets: updatedEquity,
+      //       stockListDetails: allPortfolioStocksInfo,
+      //       leaderboardState: LeaderboardStatus
+      //     }))
+      //     setComponent(LeaderboardStatus)
+
+
+
+      //   })
+
+
+
+
+      // } else {
+
+
+      //   props.setState(prev => ({
+      //     ...prev,
+      //     user_balance: user_balance_info,
+
+      //   }))
+
+      //   let LeaderboardStatus = ""
+      //   if (dayDifference < 0) {
+      //     LeaderboardStatus = "Leaderboard"
+      //   }
+      //   if (dayDifference > 0) {
+      //     LeaderboardStatus = "EventStatistic"
+      //   }
+
+      //   setPortfolioDetails(prev => ({
+      //     ...prev,
+      //     cash: user_balance_info.user_balance,
+      //     daysLeft: dayDifference,
+      //     cashAssets: updatedEquity,
+      //     stockListDetails: allPortfolioStocksInfo,
+      //     leaderboardState: LeaderboardStatus
+      //   }))
+      //   setComponent(LeaderboardStatus)
+
+
+      // }
+
+
+
+      // BELOW IS BACKUP CODE IF LEADERBOARD CHECK DOESNT WORK
+
+
+
+
+
       //       props.setState(prev => ({
       //         ...prev,
       //         user_balance: user_balance_info,
@@ -290,29 +375,109 @@ export default function Dashboard(props) {
 
       let updatedEquity = user_balance_info.user_balance + updatedStockTotal
 
-      props.setState(prev => ({
-        ...prev,
-        user_balance: user_balance_info,
 
-      }))
+      if (currentDate > endDate) {
 
-      let LeaderboardStatus = ""
-      if (dayDifference < 0) {
-        LeaderboardStatus = "Leaderboard"
+        //console.log(props.current_competition)
+
+        axios.post("/api/competitions/final_equity", {
+          data: {
+            user: props.state.user,
+            user_competitions: props.state.current_competition,
+            finalEquity: updatedEquity
+          }
+        }).then(response => {
+
+          //console.log (response)
+
+          props.setState(prev => ({
+            ...prev,
+            user_balance: user_balance_info,
+
+          }))
+
+          let LeaderboardStatus = ""
+          if (dayDifference < 0) {
+            LeaderboardStatus = "Leaderboard"
+          }
+          if (dayDifference > 0) {
+            LeaderboardStatus = "EventStatistic"
+          }
+
+          setPortfolioDetails(prev => ({
+            ...prev,
+            cash: user_balance_info.user_balance,
+            daysLeft: dayDifference,
+            cashAssets: updatedEquity,
+            stockListDetails: allPortfolioStocksInfo,
+            leaderboardState: LeaderboardStatus
+          }))
+          setComponent(LeaderboardStatus)
+
+
+
+        })
+
+
+
+
+      } else {
+
+
+        props.setState(prev => ({
+          ...prev,
+          user_balance: user_balance_info,
+
+        }))
+
+        let LeaderboardStatus = ""
+        if (dayDifference < 0) {
+          LeaderboardStatus = "Leaderboard"
+        }
+        if (dayDifference > 0) {
+          LeaderboardStatus = "EventStatistic"
+        }
+
+        setPortfolioDetails(prev => ({
+          ...prev,
+          cash: user_balance_info.user_balance,
+          daysLeft: dayDifference,
+          cashAssets: updatedEquity,
+          stockListDetails: allPortfolioStocksInfo,
+          leaderboardState: LeaderboardStatus
+        }))
+        setComponent(LeaderboardStatus)
+
+
       }
-      if (dayDifference > 0) {
-        LeaderboardStatus = "EventStatistic"
-      }
 
-      setPortfolioDetails(prev => ({
-        ...prev,
-        cash: user_balance_info.user_balance,
-        daysLeft: dayDifference,
-        cashAssets: updatedEquity,
-        stockListDetails: allPortfolioStocksInfo,
-        leaderboardState: LeaderboardStatus
-      }))
-      setComponent(LeaderboardStatus)
+
+
+
+
+      // props.setState(prev => ({
+      //   ...prev,
+      //   user_balance: user_balance_info,
+
+      // }))
+
+      // let LeaderboardStatus = ""
+      // if (dayDifference < 0) {
+      //   LeaderboardStatus = "Leaderboard"
+      // }
+      // if (dayDifference > 0) {
+      //   LeaderboardStatus = "EventStatistic"
+      // }
+
+      // setPortfolioDetails(prev => ({
+      //   ...prev,
+      //   cash: user_balance_info.user_balance,
+      //   daysLeft: dayDifference,
+      //   cashAssets: updatedEquity,
+      //   stockListDetails: allPortfolioStocksInfo,
+      //   leaderboardState: LeaderboardStatus
+      // }))
+      // setComponent(LeaderboardStatus)
 
 
 
@@ -460,7 +625,24 @@ export default function Dashboard(props) {
         </div>
       </nav>
       <article id="portfolio-side-article">
-        {component === "Leaderboard" && <Leaderboard />}
+        {component === "Leaderboard" && <Leaderboard
+
+
+
+
+          state={props.state}
+          setState={props.setState}
+          competitions_enrolled={props.competitions_enrolled}
+          current_competition={props.current_competition}
+          transactions={props.transactions}
+          user_balance={props.user_balance}
+          user_profile={props.user_profile}
+
+
+
+
+
+        />}
 
         {component === "EventStatistic" && <EventStatistic
           state={props.state}

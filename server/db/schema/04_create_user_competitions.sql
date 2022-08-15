@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS user_competitions CASCADE;
 CREATE TABLE user_competitions (
   id SERIAL PRIMARY KEY,
   user_balance MONEY NOT NULL,
+  final_equity MONEY,
   
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   competition_id INTEGER REFERENCES competitions(id) ON DELETE CASCADE

@@ -19,7 +19,10 @@ INSERT INTO user_competitions (user_balance, user_id, competition_id) VALUES (40
 
 
 
-INSERT INTO user_competitions (user_balance, user_id, competition_id) VALUES (3000.00, 3, 9);
+INSERT INTO user_competitions (user_balance, user_id, competition_id) VALUES (500000.00, 3, 9);
+
+INSERT INTO user_competitions (user_balance, user_id, competition_id) VALUES (500000.00, 2, 10);
+INSERT INTO user_competitions (user_balance, user_id, competition_id) VALUES (500000.00, 1, 11);
 
 
 
@@ -61,3 +64,13 @@ UPDATE user_competitions SET user_balance = 68200.00 WHERE user_id = 3 AND compe
 UPDATE user_competitions SET user_balance = 69050.00 WHERE user_id = 3 AND competition_id = 8;
 UPDATE user_competitions SET user_balance = 68770.00 WHERE user_id = 3 AND competition_id = 8;
 UPDATE user_competitions SET user_balance = 66770.00 WHERE user_id = 3 AND competition_id = 8;
+
+
+UPDATE user_competitions SET user_balance = 498200.00 WHERE user_id = 3 AND competition_id = 9;
+UPDATE user_competitions SET user_balance = 499050.00, final_equity = 499050.00 WHERE user_id = 3 AND competition_id = 9;
+
+UPDATE user_competitions SET user_balance = 497200.00 WHERE user_id = 2 AND competition_id = 10;
+UPDATE user_competitions SET user_balance = 501200.00, final_equity = 501200.00  WHERE user_id = 2 AND competition_id = 10;
+
+UPDATE user_competitions SET user_balance = 495000.00 WHERE user_id = 1 AND competition_id = 11;
+UPDATE user_competitions SET user_balance = 995000.00, final_equity = 995000.00  WHERE user_id = 1 AND competition_id = 11;

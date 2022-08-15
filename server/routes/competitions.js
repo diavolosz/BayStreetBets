@@ -13,9 +13,9 @@ module.exports = db => {
     const search_item = req.body.search
 
     return db.query(`SELECT * FROM competitions WHERE name LIKE '%${search_item}%' OR description LIKE '%${search_item}%' LIMIT 5;`)
-    .then((result) => {
-      res.json(result)
-    })
+      .then((result) => {
+        res.json(result)
+      })
   })
 
 
@@ -70,13 +70,96 @@ module.exports = db => {
     const userID = req.body.data.user.id;
 
     db.query(`SELECT id, name, starting_amount::money::numeric::int, start_date, end_date FROM competitions WHERE user_id = $1;`, [userID])
-    .then(result => {
+      .then(result => {
 
-      console.log (typeof result.rows)
-      return res.json(result.rows);
-    });
+        //console.log (typeof result.rows)
+        return res.json(result.rows);
+      });
 
   });
+
+
+
+
+
+
+
+  router.post("/final_equity", (req, res) => {
+    if (!req.body.data.user_competitions) {
+      return res.json(null);
+    }
+
+    //console.log (req.body.data)
+
+    const finalEquity = req.body.data.finalEquity
+    const userID = req.body.data.user.id
+    const competitionID = req.body.data.user_competitions.id
+
+    db.query(
+      `UPDATE user_competitions SET user_balance = $1 WHERE user_id = $2 AND competition_id = $3 RETURNING *;`, [finalEquity, userID, competitionID]).then(result => {
+
+        return res.json(result.rows);
+      })
+      .catch(e => {
+        console.log(e)
+      });
+  });
+
+
+  router.post("/users_in_comp", (req, res) => {
+    if (!req.body.data.user_competitions) {
+      return res.json(null);
+    }
+
+    //console.log (req.body.data)
+    const competitionID = req.body.data.user_competitions.id
+    const competitionName = req.body.data.user_competitions.name
+    const competitionStartDate = req.body.data.user_competitions.start_date
+    const competitionEndDate = req.body.data.user_competitions.end_date
+    const competitionStartingAmount = req.body.data.user_competitions.starting_amount
+
+
+    db.query(
+      `SELECT id, user_id FROM competitions WHERE name = $1 AND starting_amount = $2 AND start_date = $3 AND end_date = $4;`, [competitionName, competitionStartingAmount, competitionStartDate, competitionEndDate]).then(result => {
+
+        //console.log(result.rows)
+
+        return res.json(result.rows);
+
+      })
+      .catch(e => {
+        console.log(e)
+      });
+  });
+
+
+  router.post("/leaderboard", (req, res) => {
+    // if (!req.body.data.user_competitions) {
+    //   return res.json(null);
+    // }
+
+    //console.log (req.body.data)
+    let user_id = req.body.data.user_id
+    let comp_id = req.body.data.comp_id
+
+
+    db.query(
+      `SELECT user_id, final_equity FROM user_competitions WHERE user_id = $1 AND competition_id = $2;`, [user_id , comp_id]).then(result => {
+
+        //console.log(result.rows)
+
+        return res.json(result.rows);
+
+      })
+      .catch(e => {
+        console.log(e)
+      });
+  });
+
+
+
+
+
 
   router.delete("/", (req, res) => {
     const userJwt = req.headers.user;
