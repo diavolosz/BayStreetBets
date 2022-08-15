@@ -73,12 +73,12 @@ export default function EventStatistic(props) {
 
   const handleBuy = event => {
     event.preventDefault();
-    // const start_date = new Date(props.current_competition.start_date).getTime()
-    // const current_date = Date.now()
-    // if (current_date < start_date) {
-    //   setDisplayAlert("EarlyEvent")
-    //   return setBuy(0);
-    // } else {
+    const start_date = new Date(props.current_competition.start_date).getTime()
+    const current_date = Date.now()
+    if (current_date < start_date) {
+      setDisplayAlert("EarlyEvent")
+      return setBuy(0);
+    } else {
       const transactionsForCompetition = getTransactionsForCompetition(
         props.state,
         props.current_competition.id
@@ -133,18 +133,18 @@ export default function EventStatistic(props) {
             }));
           }
         });
-      // }
+      }
     };
 
 
     const handleSell = event => {
       event.preventDefault();
-      // const start_date = new Date(props.current_competition.start_date).getTime()
-      // const current_date = Date.now()
-      // if (current_date < start_date) {
-      //   setDisplayAlert("EarlyEvent")
-      //   return setSell(0);
-      // } else {
+      const start_date = new Date(props.current_competition.start_date).getTime()
+      const current_date = Date.now()
+      if (current_date < start_date) {
+        setDisplayAlert("EarlyEvent")
+        return setSell(0);
+      } else {
       const transactionsForCompetition = getTransactionsForCompetition(
         props.state,
         props.current_competition.id
@@ -187,7 +187,7 @@ export default function EventStatistic(props) {
             }));
           }
         });
-      // }
+      }
     };
 
     return (
