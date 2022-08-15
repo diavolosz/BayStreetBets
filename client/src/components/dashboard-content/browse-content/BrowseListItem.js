@@ -122,10 +122,6 @@ export default function BrowseListItem(props) {
       {displayAlert === true && <ErrorAlert setDisplayAlert={() => setDisplayAlert} message={"Cannot join an expired event"} />}
 
       <div className="general-info-box">
-        <span>
-          <strong>Creator: </strong>
-          {props.user_id}
-        </span>
         {/* <span><strong>Max Participant: </strong>{props.participant}</span> */}
         <span>
           <strong>Starting Amount: </strong>
