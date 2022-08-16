@@ -6,6 +6,8 @@ import '../../stylesheet/StockDetails.scss'
 
 export default function StockDetailsItem(props) {
 
+  console.log(props.details)
+
   let block = props.details ?
 
     <Fragment>

@@ -1,5 +1,6 @@
 .react-calendar {
-  width: 350px;
+  width: 100%;
+  height: 90%;
   max-width: 100%;
   background: white;
   border: 1px solid #a0a096;
@@ -82,11 +83,11 @@
 .react-calendar__year-view .react-calendar__tile,
 .react-calendar__decade-view .react-calendar__tile,
 .react-calendar__century-view .react-calendar__tile {
-  padding: 1.3em 0.5em;
+  padding: 2.79em 0.5em;
 }
 .react-calendar__tile {
   max-width: 100%;
-  padding: 8px 6.6667px;
+  padding: 1.45em 6.6667px;
   background: none;
   text-align: center;
   line-height: 16px;

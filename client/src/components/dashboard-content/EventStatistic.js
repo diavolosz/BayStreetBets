@@ -61,6 +61,8 @@ export default function EventStatistic(props) {
         }
       })
       .catch(e => {
+
+
         console.log(e);
       });
     // }
