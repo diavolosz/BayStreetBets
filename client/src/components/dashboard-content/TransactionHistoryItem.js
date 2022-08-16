@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 
+const formateDate = (date) => {
+  return (new Date(date).toLocaleDateString())
+}
+
+
 export default function TransactionHistoryItem(props) {
   const { transactions } = props;
 
-  //console.log (transactions)
+  console.log (transactions)
 
   let listed;
 
@@ -19,6 +24,7 @@ export default function TransactionHistoryItem(props) {
               <td>{`$${Math.abs(
                 transaction.number_of_shares * transaction.price
               )}`}</td>
+              <td>{`${formateDate(transaction.transaction_date)}`}</td>
             </tr>
           </tbody>
         );

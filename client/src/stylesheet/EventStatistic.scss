@@ -36,7 +36,7 @@
         }
 
         input::placeholder {
-          color: white;
+          color: rgb(255, 242, 181) ;
         }
 
         button {
@@ -44,7 +44,7 @@
           height: 100%;
           border: none;
           background-color: rgb(34, 34, 34);
-          color: white;
+          color: rgb(255, 242, 181) ;
           font-size: 18px;
           font-family: "amiri";
           font-weight: 600;
@@ -81,12 +81,12 @@
       .detail-title {
         height: 12%;
         background-color: rgb(34, 34, 34);
-        color: white;
+        color: rgb(255, 242, 181) ;
         border-radius: 0 24px 0 0;
         text-align: center;
         padding: 0.5em;
         font-size: 20px;
-        text-decoration: underline;
+        font-weight: 600;
       }
 
       .stock-details {
@@ -102,10 +102,11 @@
         .info-block {
           color: rgb(0, 0, 0);
           margin: 0 1rem;
+          padding-top: 1rem;
           text-align: center;
           display: flex;
           flex-direction: column;
-          justify-content: center;
+          justify-content: start;
 
           h5 {
             font-weight: 900;

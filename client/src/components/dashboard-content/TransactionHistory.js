@@ -70,6 +70,7 @@ export default function TransactionHistory(props) {
             <th>Shares</th>
             <th>Price per Share</th>
             <th>Total Price</th>
+            <th>Date Placed</th>
           </tr>
         </thead>
         <TransactionHistoryItem 

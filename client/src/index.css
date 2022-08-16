@@ -4,3 +4,6 @@
   box-sizing:border-box; 
 }
 
+::selection {
+  background: rgb(213, 193, 60);
+}
