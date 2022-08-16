@@ -1,14 +1,12 @@
-
 import '../stylesheet/Footer.scss';
 import Aos from 'aos';
 import "aos/dist/aos.css"
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom'
 
 export default function Footer() {
   useEffect(() => {
     Aos.init({duration: 800})
-  }, [])
+  }, []);
   
   return (
     <footer>

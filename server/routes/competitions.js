@@ -9,15 +9,14 @@ module.exports = db => {
   });
 
   router.post("/search", (req, res) => {
-    console.log(req.body)
-    const search_item = req.body.search
+    console.log(req.body);
+    const search_item = req.body.search;
 
     return db.query(`SELECT * FROM competitions WHERE name LIKE '%${search_item}%' OR description LIKE '%${search_item}%' LIMIT 5;`)
       .then((result) => {
-        res.json(result)
+        res.json(result);
       })
   })
-
 
   router.post("/", (req, res) => {
     const name = req.body["0"].value;
@@ -71,33 +70,23 @@ module.exports = db => {
 
     db.query(`SELECT id, name, starting_amount::money::numeric::int, start_date, end_date FROM competitions WHERE user_id = $1;`, [userID])
       .then(result => {
-
-        //console.log (typeof result.rows)
         return res.json(result.rows);
       });
 
   });
 
-
-
-
-
-
-
+  // adds final equity when competition hits end date
   router.post("/final_equity", (req, res) => {
     if (!req.body.data.user_competitions) {
       return res.json(null);
     }
 
-    //console.log (req.body.data)
-
-    const finalEquity = req.body.data.finalEquity
-    const userID = req.body.data.user.id
-    const competitionID = req.body.data.user_competitions.id
+    const finalEquity = req.body.data.finalEquity;
+    const userID = req.body.data.user.id;
+    const competitionID = req.body.data.user_competitions.id;
 
     db.query(
       `UPDATE user_competitions SET user_balance = $1 WHERE user_id = $2 AND competition_id = $3 RETURNING *;`, [finalEquity, userID, competitionID]).then(result => {
-
         return res.json(result.rows);
       })
       .catch(e => {
@@ -105,23 +94,18 @@ module.exports = db => {
       });
   });
 
-
   router.post("/users_in_comp", (req, res) => {
     if (!req.body.data.user_competitions) {
       return res.json(null);
     }
 
-    //console.log (req.body.data)
-    const competitionID = req.body.data.user_competitions.id
-
+    const competitionID = req.body.data.user_competitions.id;
 
     db.query(
       `SELECT users.email, user_competitions.final_equity  
       FROM user_competitions
       JOIN users ON user_competitions.user_id = users.id
       WHERE competition_id = $1;`, [competitionID]).then(result => {
-
-        //console.log(resultows)
 
         return res.json(result.rows);
 
@@ -133,32 +117,17 @@ module.exports = db => {
 
 
   router.post("/leaderboard", (req, res) => {
-    // if (!req.body.data.user_competitions) {
-    //   return res.json(null);
-    // }
-
-    //console.log (req.body.data)
-    let user_id = req.body.data.user_id
-    let comp_id = req.body.data.comp_id
-
+    let user_id = req.body.data.user_id;
+    let comp_id = req.body.data.comp_id;
 
     db.query(
-      `SELECT user_id, final_equity FROM user_competitions WHERE user_id = $1 AND competition_id = $2;`, [user_id , comp_id]).then(result => {
-
-        //console.log(result.rows)
-
+      `SELECT user_id, final_equity FROM user_competitions WHERE user_id = $1 AND competition_id = $2;`, [user_id, comp_id]).then(result => {
         return res.json(result.rows);
-
       })
       .catch(e => {
         console.log(e)
       });
   });
-
-
-
-
-
 
   router.delete("/", (req, res) => {
     const userJwt = req.headers.user;

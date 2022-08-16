@@ -1,17 +1,9 @@
 import { useEffect, useState, Fragment } from 'react'
-import { Line } from 'react-chartjs-2'
-import { Chart as ChartJS } from 'chart.js/auto'
-
-import '../../stylesheet/StockDetails.scss'
 
 export default function StockDetailsItem(props) {
-
-  console.log(props.details)
-
   let block = props.details ?
 
     <Fragment>
-
       <div className='info-block'>
         <h5>Symbol</h5>
         <p>{props.details.symbol}</p>
@@ -56,7 +48,6 @@ export default function StockDetailsItem(props) {
         <h5>Volume</h5>
         <p>{props.details.avgTotalVolume}</p>
       </div>
-
     </Fragment>
 
     :
@@ -65,10 +56,5 @@ export default function StockDetailsItem(props) {
       <h5>START SEARCHING!!!</h5>
     </div>
 
-
-  return (
-
-    block
-
-  )
+  return block
 }

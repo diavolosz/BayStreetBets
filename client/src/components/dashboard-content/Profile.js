@@ -3,7 +3,6 @@ import "../../stylesheet/Profile.scss";
 import axios from "axios";
 
 const ProfileEdit = (props) => {
-  // console.log(props)
   const [formValues, parsedFormData, handleInput, errors] = useForm([
     {
       name: "username",
@@ -59,7 +58,7 @@ const ProfileEdit = (props) => {
       ...formValues
     })
       .then((res) => {
-        props.setState(prev => ({...prev, user_profile: res.data}))
+        props.setState(prev => ({ ...prev, user_profile: res.data }))
         props.setComponent("EventStatistic")
       })
   };

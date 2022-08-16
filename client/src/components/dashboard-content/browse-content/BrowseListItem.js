@@ -9,9 +9,8 @@ import {
 } from "../../../helpers/selectors";
 
 export default function BrowseListItem(props) {
-  // const { index, user_id, name, description, starting_amount, created } = props
 
-  const [displayAlert, setDisplayAlert] = useState(false)
+  const [displayAlert, setDisplayAlert] = useState(false);
 
   const deleteCompetition = () => {
     axios
@@ -33,7 +32,7 @@ export default function BrowseListItem(props) {
           props.state,
           props.id
         );
-        //console.log(props.state.user_competitions_created);
+
         if (response.status === 200) {
           props.setState(prev => ({
             ...prev,
@@ -75,8 +74,9 @@ export default function BrowseListItem(props) {
   };
 
   const joinCompetition = () => {
-    const end_date = new Date(props.end_date).getTime()
-    const current_date = Date.now()
+    const end_date = new Date(props.end_date).getTime();
+    const current_date = Date.now();
+
     if (current_date > end_date) {
       return setDisplayAlert(true)
     } else {

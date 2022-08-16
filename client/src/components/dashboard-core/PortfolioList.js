@@ -1,25 +1,12 @@
 import "../../stylesheet/DashboardMain.scss";
 
-import { useEffect, useState } from "react";
-import { useNavigate, Navigate } from "react-router";
-import axios from 'axios';
-
-
-
-
-
-
-
 export default function PortfolioList(props) {
-  const { stockList } = props
-
-  //console.log (stockList)
-
+  const { stockList } = props;
   let list;
 
   if (stockList !== null) {
-
     list = stockList.map((stock, index) => {
+
       return (
         <tr key={index}>
           <td>{stock.stock}</td>
@@ -30,12 +17,5 @@ export default function PortfolioList(props) {
     });
   }
 
-
-
-  return (
-
-    list
-
-  )
-
+  return list
 }

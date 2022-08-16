@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from 'axios';
 import { useForm } from "../../hooks/useForm";
 import OrganizeCalendar from "./organize-content/OrganizeCalendar";
@@ -8,9 +8,7 @@ import { addToUserCompetitionCreated, addToCompetitions } from "../../helpers/se
 
 import "../../stylesheet/Organize.scss"
 
-
 export default function Organize(props) {
-
   const [calender, setCalender] = useState(null);
   const [displayAlert, setDisplayAlert] = useState("")
   const [formValues, parsedFormData, handleInput, errors] = useForm([
@@ -68,8 +66,8 @@ export default function Organize(props) {
       return setDisplayAlert("ErrorAlert-past");
     }
     
-    
     const submissionValues = { ...formValues, "4": calender, user: localStorage.getItem("user") };
+
     axios.post(`/api/competitions`, submissionValues)
     .then(response => {
       const newCompetition = response.data.rows[0];
@@ -83,7 +81,6 @@ export default function Organize(props) {
       props.setComponent("Browse");
     });
   };
-
 
   return (
     <div id="organize-inner-container">

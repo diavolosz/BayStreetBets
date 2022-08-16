@@ -11,6 +11,8 @@ INSERT INTO transactions (buy_sell, symbol, price, number_of_shares, transaction
 INSERT INTO transactions (buy_sell, symbol, price, number_of_shares, transaction_date, user_id, competition_id) VALUES ('Buy', 'AMZN', 200.00, 20, '2022-08-12 00:00:00-05', 2, 1);
 INSERT INTO transactions (buy_sell, symbol, price, number_of_shares, transaction_date, user_id, competition_id) VALUES ('Buy', 'EW', 300.00, 5, '2022-08-12 00:00:00-05', 2, 1);
 
+INSERT INTO transactions (buy_sell, symbol, price, number_of_shares, transaction_date, user_id, competition_id) VALUES ('Buy', 'AAPL', 500.00, 5, '2022-08-11 00:00:00-05', 2, 3);
+
 
 
 -- INSERT INTO transactions (buy_sell, symbol, price, number_of_shares, transaction_date, user_id, competition_id) VALUES ('Buy', 'BNGO', 100.00, 8, '2022-08-02 00:00:00-05', 2, 3);

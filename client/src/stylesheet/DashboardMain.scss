@@ -8,7 +8,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  // overflow-y: scroll;
 
   #company-name {
     margin: 0;
@@ -163,7 +162,6 @@
       }
     }
 
-
     #portfolio-table-category {
       width: 100%;
       margin: 0 auto;
@@ -220,8 +218,6 @@
     height: 12%;
     width: 100%;
 
-
-
     ul {
       height: 100%;
       width: 60%;
@@ -257,14 +253,9 @@
   flex-direction: row;
 }
 
-
 #portfolio-side-article {
   height: 100vh;
   width: 82%;
   background-color: #ffffff;
   display: flex;
-
-
-
-
 }

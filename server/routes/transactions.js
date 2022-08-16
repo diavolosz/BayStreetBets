@@ -6,17 +6,13 @@ module.exports = db => {
       return res.json(null);
     }
 
-    //console.log("req.body.data will give user", req.body.data);
-
     const userID = req.body.data.user.id;
-
 
     db.query(
       `SELECT buy_sell, symbol, price::money::numeric::int, number_of_shares, transaction_date, user_id, competition_id FROM transactions WHERE user_id = $1 ;`,
       [userID]
     )
       .then(result => {
-        console.log(result.rows);
         return res.json(result.rows);
       })
       .catch(e => {
@@ -29,10 +25,9 @@ module.exports = db => {
     if (!req.body.data.competition) {
       return res.json(null);
     }
-    const userID = req.body.data.user.id
 
-    const competitionID = req.body.data.competition.id
-
+    const userID = req.body.data.user.id;
+    const competitionID = req.body.data.competition.id;
 
     db.query(
       `SELECT buy_sell, symbol, price::money::numeric::int, number_of_shares, transaction_date, user_id, competition_id FROM transactions WHERE user_id = $1 AND competition_id = $2;`, [userID, competitionID]).then(result => {
@@ -45,10 +40,7 @@ module.exports = db => {
 
   });
 
-  
-
   router.post("/buy", (req, res) => {
-    console.log(req.body);
     user_id = req.body.user_profile.id;
     competition_id = req.body.competition_id.id;
     transaction_date = new Date();
@@ -102,7 +94,7 @@ module.exports = db => {
         res.json(result.rows[0]);
       });
     });
-    
+
   });
 
   return router;

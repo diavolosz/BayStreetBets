@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Line } from 'react-chartjs-2'
-import { Chart as ChartJS } from 'chart.js/auto'
+import Chart from 'chart.js/auto';
 import axios from 'axios';
 
-// import helpers?
 let portfolio = [
   { date: "Jul 6, 22", totalEquity: 10000 },
   { date: "Jul 7, 22", totalEquity: 5000 },
@@ -14,40 +13,11 @@ let portfolio = [
 //animation block of code
 const totalDuration = 10000;
 const delayBetweenPoints = totalDuration / portfolio.length;
-const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : ctx.chart.getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
-const animation = {
-  x: {
-    type: 'number',
-    easing: 'linear',
-    duration: delayBetweenPoints,
-    from: NaN, // the point is initially skipped
-    delay(ctx) {
-      if (ctx.type !== 'data' || ctx.xStarted) {
-        return 0;
-      }
-      ctx.xStarted = true;
-      return ctx.index * delayBetweenPoints;
-    }
-  },
-  y: {
-    type: 'number',
-    easing: 'linear',
-    duration: delayBetweenPoints,
-    from: previousY,
-    delay(ctx) {
-      if (ctx.type !== 'data' || ctx.yStarted) {
-        return 0;
-      }
-      ctx.yStarted = true;
-      return ctx.index * delayBetweenPoints;
-    }
-  }
-};
 
 // takes transaction_date to format like "July 2, 22"
 const convertDate = function (dateString) {
-  let year = dateString.slice(2, 4)
-  let month = dateString.slice(5, 7)
+  let year = dateString.slice(2, 4);
+  let month = dateString.slice(5, 7);
 
   if (month === '01') {
     month = 'Jan'
@@ -73,35 +43,33 @@ const convertDate = function (dateString) {
     month = 'Nov'
   } else if (month === '12') {
     month = 'Dec'
-  }
+  };
 
-  let day = dateString.slice(8, 10)
+  let day = dateString.slice(8, 10);
 
-  let date = `${month} ${day}, ${year}`
+  let date = `${month} ${day}, ${year}`;
 
-  return date
-}
+  return date;
+};
 
 const getListOfDays = function (transactions) {
-  let listOfDays = []
+  let listOfDays = [];
 
   transactions.map((transaction) => {
     if (!listOfDays.includes(transaction.transaction_date)) {
       listOfDays.push(transaction.transaction_date)
     }
-  })
+  });
 
-  return listOfDays
+  return listOfDays;
 }
 
 const createFinalPortfolio = function (listOfDays, transactions, current_competition) {
   let finalPortfolio = [];
   let totalBuyAmount = 0;
-
-  let persisted = []
+  let persisted = [];
 
   listOfDays.map((day) => {
-
     transactions.map((transaction, index, item) => {
       if (day === transaction.transaction_date) {
         totalBuyAmount += transaction.number_of_shares * transaction.price
@@ -111,46 +79,42 @@ const createFinalPortfolio = function (listOfDays, transactions, current_competi
           shares: transaction.number_of_shares,
           date: convertDate(transaction.transaction_date)
         })
-
       }
 
       if (index + 1 === item.length) {
         // added start amount to dropdown, but is in money format, this changse to num for calc
         if (typeof current_competition.starting_amount === 'string') {
-          let slicedNum = current_competition.starting_amount.slice(1, current_competition.starting_amount.length)
+          let slicedNum = current_competition.starting_amount.slice(1, current_competition.starting_amount.length);
 
-          let formatNum = slicedNum.replace(',', '')
-          let finalNum = Number(formatNum)
+          let formatNum = slicedNum.replace(',', '');
+          let finalNum = Number(formatNum);
 
           finalPortfolio.push({
             date: convertDate(day),
             totalEquity: finalNum - totalBuyAmount,
             stocksWithShares: persisted
-          })
+          });
 
         } else {
-
 
           finalPortfolio.push({
             date: convertDate(day),
             totalEquity: current_competition.starting_amount - totalBuyAmount,
             stocksWithShares: persisted
-          })
+          });
         }
 
       }
     })
   })
 
-  return finalPortfolio
-}
-
-
+  return finalPortfolio;
+};
 
 export default function PortfolioChart(props) {
   const [equityData, setEquityData] = useState({
     labels: [], datasets: []
-  })
+  });
 
   // for current comp change
   useEffect(() => {
@@ -164,11 +128,8 @@ export default function PortfolioChart(props) {
       }).then(fetchedTransactions => {
 
         let newTransactions = fetchedTransactions.data
-
         let dayList = getListOfDays(newTransactions)
-
         let finalPortfolio = createFinalPortfolio(dayList, newTransactions, props.current_competition)
-
 
         let currentStocks = []
 
@@ -201,71 +162,17 @@ export default function PortfolioChart(props) {
             }
           })
 
-          day['currentStocks'] = currentStocks
-          currentStocks = []
+          day['currentStocks'] = currentStocks;
+          currentStocks = [];
         })
-
-        //console.log(finalPortfolio)
-
-        // finalPortfolio.forEach((item) => {
-
-        //   item.stocksWithShares.forEach((stockCall) => {
-
-        //     if (new Date(item.date) >= new Date(stockCall.date)) {
-
-
-        //       axios.get(`https://cloud.iexapis.com/stable/stock/${stockCall.stock}/quote?token=${process.env.REACT_APP_CLOUD_TOKEN}`)
-        //         .then(response => {
-
-        //           let marketPrice = response.data.iexRealtimePrice
-
-
-        //           console.log("before call", finalPortfolio)
-
-
-        //           item.totalEquity += marketPrice * stockCall.shares
-
-        //           console.log("after call", finalPortfolio)
-
-        //         }).then(() => {
-
-
-        //           let labelList = finalPortfolio.map((day) => {
-        //             return day.date
-        //           })
-
-
-
-        //           let dataList = finalPortfolio.map((day) => {
-        //             return day.totalEquity
-        //           })
-
-
-
-        //           setEquityData(prev => ({
-        //             ...prev,
-        //             labels: labelList,
-        //             datasets: [{
-        //               label: "",
-        //               data: dataList
-        //             }]
-        //           }))
-
-        //         })
-
-        //     }
-
-        //   })
-
-        // })
 
         let labelList = finalPortfolio.map((day) => {
-          return day.date
-        })
+          return day.date;
+        });
 
         let dataList = finalPortfolio.map((day) => {
-          return day.totalEquity
-        })
+          return day.totalEquity;
+        });
 
         setEquityData(prev => ({
           ...prev,
@@ -274,18 +181,10 @@ export default function PortfolioChart(props) {
             label: "",
             data: dataList
           }]
-        }))
-
-
+        }));
       })
     }
-
-
   }, [props.current_competition, props.transactions])
-
-
-
-
 
   let delayed;
 
@@ -310,7 +209,6 @@ export default function PortfolioChart(props) {
         }
       },
 
-
       animation: {
         onComplete: () => {
           delayed = true;
@@ -323,6 +221,7 @@ export default function PortfolioChart(props) {
           return delay;
         },
       },
+
       scales: {
         x: {
           stacked: true,
@@ -331,7 +230,6 @@ export default function PortfolioChart(props) {
           stacked: true
         }
       }
-
     }} />
   )
 }

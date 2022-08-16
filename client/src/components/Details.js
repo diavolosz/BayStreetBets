@@ -7,7 +7,6 @@ import 'react-awesome-slider/dist/styles.css';
 
 export default function Details() {
 
-
   useEffect(() => {
     Aos.init({ duration: 8000 })
   }, [])
@@ -57,7 +56,6 @@ export default function Details() {
           <img className="block-3-img" src="img/stock6.png" alt="stock4" />
         </div>
       </AwesomeSlider>
-
 
     </div>
   );

@@ -6,34 +6,38 @@ import { useState } from 'react'
 import BrowseListItem from './browse-content/BrowseListItem'
 import axios from 'axios'
 
-
 export default function Browse(props) {
 
-
   const eventFilterByIdHelper = (mainArray, filterItemArray1, filterItemArray2) => {
-    let filtered = []
+    let filtered = [];
+
     for (let each of filterItemArray1) {
-      filtered.push(each.id)
-    }
+      filtered.push(each.id);
+    };
+
     if (filterItemArray2) {
       for (let each of filterItemArray2) {
-        filtered.push(each.id)
-      }
-    }
-    let main = []
-    for (let each of mainArray) {
-      main.push(each.id)
-    }
-    let output = main.filter((each) => !filtered.includes(each))
+        filtered.push(each.id);
+      };
+    };
 
+    let main = [];
+
+    for (let each of mainArray) {
+      main.push(each.id);
+    };
+
+    let output = main.filter((each) => !filtered.includes(each));
     let outputArray = []
+
     for (let each of mainArray) {
       if (output.includes(each.id)) {
-        outputArray.push(each)
-      }
-    }
+        outputArray.push(each);
+      };
+    };
+
     return outputArray
-  }
+  };
 
 
   const eventInfoDisplay = (data, deleteOption = false) => {
@@ -57,43 +61,13 @@ export default function Browse(props) {
         )
       })
     )
-  }
+  };
 
   const [displayEvent, setDisplayEvent] = useState("browseEvent");
 
 
-  const [search, setSearch] = useState("")
-  const [displaySearch, setDisplaySearch] = useState({})
-
-  // const [buttonState, setButtonState] = useState({
-  //   browse: 1,
-  //   myEvent: 0
-  // })
-
-
-  // const handleButtonState = (onOff) => {
-
-  //   if (onOff === 1) {
-  //     return setButtonState({
-  //       browse: 1,
-  //       myEvent: 0
-  //     })
-
-
-  //   } else {
-  //     return setButtonState({
-  //       browse: 0,
-  //       myEvent: 1
-  //     })
-  //   }
-
-  // }
-
-
-
-
-
-
+  const [search, setSearch] = useState("");
+  const [displaySearch, setDisplaySearch] = useState({});
   const [buttonState, setButtonState] = useState({
     browse: {
       showing: true
@@ -101,8 +75,7 @@ export default function Browse(props) {
     myEvent: {
       showing: false
     }
-  })
-
+  });
 
   const handleButtonState = (onOff) => {
 
@@ -116,8 +89,8 @@ export default function Browse(props) {
         }
       })
 
-
     } else {
+
       return setButtonState({
         browse: {
           showing: false
@@ -127,22 +100,13 @@ export default function Browse(props) {
         }
       })
     }
+  };
 
-  }
-
-
-
-let toggleShowBrowse = buttonState.browse.showing ? 'active' : null
-let toggleShowEvents = buttonState.myEvent.showing ? 'active' : null
-
-
-
-
-
+  let toggleShowBrowse = buttonState.browse.showing ? 'active' : null;
+  let toggleShowEvents = buttonState.myEvent.showing ? 'active' : null;
 
   const handleSubmitEvent = (event) => {
-    event.preventDefault()
-    //console.log(search)
+    event.preventDefault();
 
     axios.post('/api/competitions/search', { search })
       .then((res) => {
@@ -151,34 +115,27 @@ let toggleShowEvents = buttonState.myEvent.showing ? 'active' : null
         setDisplayEvent("searchEvent")
       })
 
-  }
+  };
 
   return (
     <div id="browse-inner-container">
       <div id="search-box-container">
         <div id="search-box-buttons">
-
           <span onClick={() => {
             setDisplayEvent("browseEvent")
             handleButtonState(1)
           }}
-          className = {`${toggleShowBrowse}`}
-          
-          >BROWSE EVENT</span>
-
-
+            className={`${toggleShowBrowse}`}>
+            BROWSE EVENT
+          </span>
 
           <span onClick={() => {
             setDisplayEvent("myEvent")
             handleButtonState(0)
           }}
-          className = {`${toggleShowEvents}`}
-          >MY EVENT</span>
-
-
-
-
-
+            className={`${toggleShowEvents}`}>
+            MY EVENT
+          </span>
         </div>
         <form id="search-box-search-bar" onSubmit={handleSubmitEvent}>
           <input
