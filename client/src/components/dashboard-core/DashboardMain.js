@@ -153,151 +153,156 @@ export default function Dashboard(props) {
 
       // FOR LIVE UPDATES
 
-      // allPortfolioStocksInfo.forEach((stock) => {
-      //   axios.get(`https://cloud.iexapis.com/stable/stock/${stock.stock}/quote?token=${process.env.REACT_APP_CLOUD_TOKEN}`)
-      //     .then(response => {
+      let updatedEquity = props.user_balance.user_balance
 
-      //       let marketPrice = response.data.close
-      //       let marketEquity = stock.shares * marketPrice
-      //       marketEquity = parseInt(marketEquity.toFixed(2))
+      allPortfolioStocksInfo.forEach((stock) => {
+        axios.get(`https://cloud.iexapis.com/stable/stock/${stock.stock}/quote?token=${process.env.REACT_APP_CLOUD_TOKEN}`)
+          .then(response => {
 
-      //       let updatedEquity = props.user_balance.user_balance + marketEquity
+            let marketPrice = response.data.latestPrice
+            let marketEquity = stock.shares * marketPrice
+            marketEquity = parseInt(marketEquity.toFixed(2))
 
-      //       allPortfolioStocksInfo.forEach((stock) => {
-      //         stock.totalAmount += marketEquity
-      //       });
+            updatedEquity += marketEquity
 
-      //       if (currentDate > endDate) {
+            stock.totalAmount = 0
+            stock.totalAmount += marketEquity
 
-      //         axios.post("/api/competitions/final_equity", {
-      //           data: {
-      //             user: props.state.user,
-      //             user_competitions: props.state.current_competition,
-      //             finalEquity: updatedEquity
-      //           }
-      //         }).then(response => {
-      //           props.setState(prev => ({
-      //             ...prev,
-      //             user_balance: user_balance_info,
-      //           }))
+            if (currentDate > endDate) {
 
-      //           let LeaderboardStatus = ""
-      //           if (dayDifference < 0) {
-      //             LeaderboardStatus = "Leaderboard"
-      //           }
-      //           if (dayDifference > 0) {
-      //             LeaderboardStatus = "EventStatistic"
-      //           }
+              axios.post("/api/competitions/final_equity", {
+                data: {
+                  user: props.state.user,
+                  user_competitions: props.state.current_competition,
+                  finalEquity: updatedEquity
+                }
+              }).then(response => {
+                props.setState(prev => ({
+                  ...prev,
+                  user_balance: user_balance_info,
+                }))
 
-      //           setPortfolioDetails(prev => ({
-      //             ...prev,
-      //             cash: user_balance_info.user_balance,
-      //             daysLeft: dayDifference,
-      //             cashAssets: updatedEquity,
-      //             stockListDetails: allPortfolioStocksInfo,
-      //             leaderboardState: LeaderboardStatus
-      //           }))
+                let LeaderboardStatus = ""
+                if (dayDifference < 0) {
+                  LeaderboardStatus = "Leaderboard"
+                }
+                if (dayDifference > 0) {
+                  LeaderboardStatus = "EventStatistic"
+                }
 
-      //           setComponent(LeaderboardStatus)
-      //         })
+                setPortfolioDetails(prev => ({
+                  ...prev,
+                  cash: user_balance_info.user_balance,
+                  daysLeft: dayDifference,
+                  cashAssets: updatedEquity,
+                  stockListDetails: allPortfolioStocksInfo,
+                  leaderboardState: LeaderboardStatus
+                }))
 
-      //       } else {
+                setComponent(LeaderboardStatus)
+              })
 
-      //         props.setState(prev => ({
-      //           ...prev,
-      //           user_balance: user_balance_info,
+            } else {
 
-      //         }))
+              props.setState(prev => ({
+                ...prev,
+                user_balance: user_balance_info,
 
-      //         let LeaderboardStatus = ""
-      //         if (dayDifference < 0) {
-      //           LeaderboardStatus = "Leaderboard"
-      //         }
-      //         if (dayDifference > 0) {
-      //           LeaderboardStatus = "EventStatistic"
-      //         }
+              }))
 
-      //         setPortfolioDetails(prev => ({
-      //           ...prev,
-      //           cash: user_balance_info.user_balance,
-      //           daysLeft: dayDifference,
-      //           cashAssets: updatedEquity,
-      //           stockListDetails: allPortfolioStocksInfo,
-      //           leaderboardState: LeaderboardStatus
-      //         }))
+              let LeaderboardStatus = ""
+              if (dayDifference < 0) {
+                LeaderboardStatus = "Leaderboard"
+              }
+              if (dayDifference > 0) {
+                LeaderboardStatus = "EventStatistic"
+              }
 
-      //         setComponent(LeaderboardStatus)
-      //       }
-      //     })
-      // })
+              setPortfolioDetails(prev => ({
+                ...prev,
+                cash: user_balance_info.user_balance,
+                daysLeft: dayDifference,
+                cashAssets: updatedEquity,
+                stockListDetails: allPortfolioStocksInfo,
+                leaderboardState: LeaderboardStatus
+              }))
+
+              setComponent(LeaderboardStatus)
+            }
+          })
+      })
 
 
 
       // CURRENT CODE IN USE WITHOUT LIVE UDPATE
 
-      allPortfolioStocksInfo.forEach((stock) => {
-        updatedStockTotal += stock.shares * stock.totalAmount;
-      });
+      // allPortfolioStocksInfo.forEach((stock) => {
+      //   updatedStockTotal += stock.shares * stock.totalAmount;
+      // });
 
-      let updatedEquity = user_balance_info.user_balance + updatedStockTotal;
+      // let updatedEquity = user_balance_info.user_balance + updatedStockTotal;
 
-      if (currentDate > endDate) {
-        axios.post("/api/competitions/final_equity", {
-          data: {
-            user: props.state.user,
-            user_competitions: props.state.current_competition,
-            finalEquity: updatedEquity
-          }
-        }).then(() => {
-          props.setState(prev => ({
-            ...prev,
-            user_balance: user_balance_info,
-          }));
+      // if (currentDate > endDate) {
+      //   axios.post("/api/competitions/final_equity", {
+      //     data: {
+      //       user: props.state.user,
+      //       user_competitions: props.state.current_competition,
+      //       finalEquity: updatedEquity
+      //     }
+      //   }).then(() => {
+      //     props.setState(prev => ({
+      //       ...prev,
+      //       user_balance: user_balance_info,
+      //     }));
 
-          let LeaderboardStatus = ""
-          if (dayDifference < 0) {
-            LeaderboardStatus = "Leaderboard"
-          };
-          if (dayDifference > 0) {
-            LeaderboardStatus = "EventStatistic"
-          };
+      //     let LeaderboardStatus = ""
+      //     if (dayDifference < 0) {
+      //       LeaderboardStatus = "Leaderboard"
+      //     };
+      //     if (dayDifference > 0) {
+      //       LeaderboardStatus = "EventStatistic"
+      //     };
 
-          setPortfolioDetails(prev => ({
-            ...prev,
-            cash: user_balance_info.user_balance,
-            daysLeft: dayDifference,
-            cashAssets: updatedEquity,
-            stockListDetails: allPortfolioStocksInfo,
-            leaderboardState: LeaderboardStatus
-          }))
-          setComponent(LeaderboardStatus)
-        })
+      //     setPortfolioDetails(prev => ({
+      //       ...prev,
+      //       cash: user_balance_info.user_balance,
+      //       daysLeft: dayDifference,
+      //       cashAssets: updatedEquity,
+      //       stockListDetails: allPortfolioStocksInfo,
+      //       leaderboardState: LeaderboardStatus
+      //     }))
+      //     setComponent(LeaderboardStatus)
+      //   })
 
-      } else {
-        props.setState(prev => ({
-          ...prev,
-          user_balance: user_balance_info,
-        }))
+      // } else {
+      //   props.setState(prev => ({
+      //     ...prev,
+      //     user_balance: user_balance_info,
+      //   }))
 
-        let LeaderboardStatus = ""
-        if (dayDifference < 0) {
-          LeaderboardStatus = "Leaderboard"
-        };
-        if (dayDifference > 0) {
-          LeaderboardStatus = "EventStatistic"
-        };
+      //   let LeaderboardStatus = ""
+      //   if (dayDifference < 0) {
+      //     LeaderboardStatus = "Leaderboard"
+      //   };
+      //   if (dayDifference > 0) {
+      //     LeaderboardStatus = "EventStatistic"
+      //   };
 
-        setPortfolioDetails(prev => ({
-          ...prev,
-          cash: user_balance_info.user_balance,
-          daysLeft: dayDifference,
-          cashAssets: updatedEquity,
-          stockListDetails: allPortfolioStocksInfo,
-          leaderboardState: LeaderboardStatus
-        }));
+      //   setPortfolioDetails(prev => ({
+      //     ...prev,
+      //     cash: user_balance_info.user_balance,
+      //     daysLeft: dayDifference,
+      //     cashAssets: updatedEquity,
+      //     stockListDetails: allPortfolioStocksInfo,
+      //     leaderboardState: LeaderboardStatus
+      //   }));
 
-        setComponent(LeaderboardStatus);
-      }
+      //   setComponent(LeaderboardStatus);
+      // }
+
+
+
+
     })
   }, [props.current_competition, props.transactions])
 
