@@ -154,6 +154,25 @@ export default function Dashboard(props) {
       // FOR LIVE UPDATES
 
       let updatedEquity = props.user_balance.user_balance
+      let LeaderboardStatus = ""
+
+      if (currentDate < startDate) {
+
+        LeaderboardStatus = "EventStatistic"
+
+        setPortfolioDetails(prev => ({
+          ...prev,
+          cash: user_balance_info.user_balance,
+          daysLeft: Math.round((startDate - currentDate) / (1000 * 60 * 60 * 24)),
+          cashAssets: user_balance_info.user_balance,
+          stockListDetails: allPortfolioStocksInfo,
+          leaderboardState: LeaderboardStatus
+        }))
+
+        setComponent(LeaderboardStatus)
+
+      }
+
 
       allPortfolioStocksInfo.forEach((stock) => {
         axios.get(`https://cloud.iexapis.com/stable/stock/${stock.stock}/quote?token=${process.env.REACT_APP_CLOUD_TOKEN}`)
@@ -182,7 +201,7 @@ export default function Dashboard(props) {
                   user_balance: user_balance_info,
                 }))
 
-                let LeaderboardStatus = ""
+
                 if (dayDifference < 0) {
                   LeaderboardStatus = "Leaderboard"
                 }

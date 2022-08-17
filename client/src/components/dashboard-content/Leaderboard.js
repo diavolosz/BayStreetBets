@@ -24,14 +24,18 @@ export default function Leaderboard(props) {
     }).then(response => {
       let users = response.data
 
-      users.sort((b, a) => {
-        return Number(a.final_equity.replace(/[^0-9.-]+/g, ""))
-          -
-          Number(b.final_equity.replace(/[^0-9.-]+/g, ""))
-      })
+      if (users[0].final_equity !== null) {
 
-      let list = users.slice(0, 4)
-      setAllUsers(list)
+        users.sort((b, a) => {
+          return Number(a.final_equity.replace(/[^0-9.-]+/g, ""))
+            -
+            Number(b.final_equity.replace(/[^0-9.-]+/g, ""))
+        })
+
+        let list = users.slice(0, 4)
+        setAllUsers(list)
+      }
+
     })
 
   }, [props.current_competition])
